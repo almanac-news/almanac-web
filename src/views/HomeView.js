@@ -9,13 +9,16 @@ import { Link }               from 'react-router';
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
+
 const mapStateToProps = (state) => ({
   counter : state.counter,
   routerState : state.router
 });
+
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(counterActions, dispatch)
 });
+
 export class HomeView extends React.Component {
   static propTypes = {
     actions  : React.PropTypes.object,
