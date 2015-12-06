@@ -41,14 +41,14 @@ describe('(View) Home', function () {
     const h1 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h1');
 
     expect(h1).to.exist;
-    expect(h1.textContent).to.match(/Welcome to the React Redux Starter Kit/);
+    expect(h1.textContent).to.match(/Almanac News/);
   });
 
   it('Should render with an <h2> that includes Sample Counter text.', function () {
     const h2 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h2');
 
     expect(h2).to.exist;
-    expect(h2.textContent).to.match(/Sample Counter/);
+    expect(h2.textContent).to.match(/Counter\/State Placeholder/);
   });
 
   it('Should render props.counter at the end of the sample counter <h2>.', function () {
