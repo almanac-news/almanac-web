@@ -26,6 +26,7 @@ export class TopImage extends Component {
     setParallax(this.refs.parallax, 10);
   }
 
+// FIXME: Component is currently not used, transitionAppear boolean must be used
   render () {
     return (
       <section ref='parallax'>
@@ -33,14 +34,14 @@ export class TopImage extends Component {
           <div className='row'>
             <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center'>
               <ReactCSSTransitionGroup transitionName='title-animation'
-                                       transitionAppear={true}
+                                      //  transitionAppear={true}
                                        transitionAppearTimeout={1300}>
                 <h1 className='title'>
                   Almanac News
                 </h1>
               </ReactCSSTransitionGroup>
               <ReactCSSTransitionGroup transitionName='text-animation'
-                                       transitionAppear={true}
+                                      //  transitionAppear={true}
                                        transitionAppearTimeout={1300}>
                 <p>
                   Your one source of truth for financial news and data.

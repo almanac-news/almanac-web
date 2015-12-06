@@ -14,8 +14,10 @@
     "dev:no-debug": "npm run dev -- --no_debug",
     "test": "node ./node_modules/karma/bin/karma start",
     "test:dev": "npm run test -- --watch",
-    "deploy": "npm run lint && npm run test && npm run compile"
+    "deploy": "npm run lint && npm run test && npm run compile",
+    "validate": "npm ls"
   },
+  "pre-commit": ["lint"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/almanac-news/almanac-news-web-server.git"
@@ -70,6 +72,7 @@
     "phantomjs": "^1.9.17",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.8.0",
+    "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^0.14.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.0",
@@ -83,5 +86,10 @@
     "webpack": "^1.11.0",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.5.0"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
