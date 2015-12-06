@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Tools } from '../layouts/Tools'
+import { Tools } from 'layouts/Tools'
 
 export class AboutView extends React.Component {
   render () {
