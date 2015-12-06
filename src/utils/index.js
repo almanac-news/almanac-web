@@ -43,3 +43,30 @@ export function createDevToolsWindow (store) {
     );
   }, 10);
 }
+
+/*
+ * Is mobile or tablet?
+ *
+ * @return {Boolean}
+ */
+export function isMobileAndTablet() {
+  window.innerWidth <= 800 && window.innerHeight <= 600
+    ? true
+    : false;
+}
+
+/*
+ * Add parallax effect to element
+ *
+ * @param {Object} DOM element
+ * @param {Integer} Animation speed, default: 30
+ */
+export function setParallax(elem, speed = 30) {
+  const top = (window.pageYOffset - elem.offsetTop) / speed;
+
+  isMobileAndTablet
+    ? elem.style.backgroundPosition = `0px ${ top }px`
+    : null;
+}
+
+
