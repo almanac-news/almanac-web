@@ -1,4 +1,6 @@
 import React from 'react';
+
+/* global styling imported */
 import 'styles/core.scss';
 
 export default class CoreLayout extends React.Component {

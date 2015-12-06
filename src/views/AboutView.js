@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Tools } from 'layouts/Tools'
+
+/* components */
+import { Tools } from 'layouts/Tools/Tools';
 
 export class AboutView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>This is the about view!</h1>
+        <h1>About</h1>
         <hr />
         <Tools />
+        <hr />
         <Link to='/'>Back To Home View</Link>
       </div>
     );
