@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 /* components */
 
-export class NewsView extends React.Component {
+export class NewsPageView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
@@ -15,4 +15,4 @@ export class NewsView extends React.Component {
   }
 }
 
-export default NewsView;
+export default NewsPageView;
