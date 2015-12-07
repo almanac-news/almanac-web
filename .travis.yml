@@ -8,8 +8,7 @@ install:
   - npm run build
 
 script:
-  - npm run lint
-  - npm test
+  - npm run deploy
 
 notifications:
   webhooks:
