@@ -38,6 +38,14 @@ export class News extends Component {
   //   super(props);
   //   // TODO: pass dummy data in through here?
   // }
+  // componentDidMount: function() {
+  //   $.get(this.props.source, function(result) {
+  //     var data = result[0];
+  //     if (this.isMounted()) {
+  //       // this.
+  //     }
+  //   }.bind(this));
+  // },
 
   render () {
     return (
