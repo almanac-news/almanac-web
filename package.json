@@ -1,5 +1,5 @@
 {
-  "name": "almanac-news-web-server",
+  "name": "almanac-web",
   "version": "0.1.0",
   "description": "Your one source of truth for financial news and data.",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "lint": "eslint ./src/**/*.js",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "webpack",
-    "start": "npm run dev",
+    "start": "node --harmony bin/server",
     "dev": "node --harmony bin/server",
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
@@ -17,10 +17,14 @@
     "deploy": "npm run lint && npm run test && npm run compile",
     "validate": "npm ls"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/almanac-news/almanac-news-web-server.git"
+    "url": "git+https://github.com/almanac-web/almanac-web.git"
   },
   "author": "David Tsai",
   "license": "MIT",
@@ -86,10 +90,5 @@
     "webpack": "^1.11.0",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.5.0"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }
