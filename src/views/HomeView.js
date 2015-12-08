@@ -39,6 +39,10 @@ export class HomeView extends React.Component {
         <News />
         <hr />
         <Link to='/about'>Go To About View</Link>
+        {/* Temporary way to test the NewsView */}
+        <br/>
+        {/* Demo of bit.ly shortened URL, random Trump news article */}
+        <Link to='/news/1RztcJr'>Demo Unique News Page View</Link>
       </div>
     );
   }

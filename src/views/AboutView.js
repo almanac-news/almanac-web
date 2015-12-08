@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 /* components */
-import { Tools } from 'layouts/Tools/Tools';
+import { Tools } from 'components/Tools/Tools';
 
 export class AboutView extends React.Component {
   render () {
