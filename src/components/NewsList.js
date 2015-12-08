@@ -10,12 +10,14 @@ export class NewsList extends Component {
     return (
         <div>
           { this.props.data.map(function (newsItem) {
-            return <NewsCard
-              id = { newsItem.id }
-              title = { newsItem.title }
-              abstract = { newsItem.abstract }
-              date = { newsItem.date }
-            />;
+            return (
+              <NewsCard
+                id = { newsItem.id }
+                title = { newsItem.title }
+                abstract = { newsItem.abstract }
+                date = { newsItem.date }
+              />
+            );
           })
         }
         </div>
