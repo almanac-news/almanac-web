@@ -1,0 +1,29 @@
+{
+  "news": [
+    {
+      "title": "A News Article",
+      "abstract": "Some micro news text.",
+      "id": "1RztcJr"
+    },
+    {
+      "title": "Another Article",
+      "abstract": "Some micro news text.",
+      "id": "1RztcJr"
+    },
+    {
+      "title": "This is Clearly the Best News Article",
+      "abstract": "Some micro news text.",
+      "id": "1RztcJr"
+    },
+    {
+      "title": "Is this a News Article?",
+      "abstract": "Some micro news text.",
+      "id": "1RztcJr"
+    },
+    {
+      "title": "BREAKING: A News Article",
+      "abstract": "Some micro news text.",
+      "id": "1RztcJr"
+    }
+  ]
+}
