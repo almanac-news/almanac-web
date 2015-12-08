@@ -11,15 +11,19 @@ export class NewsList extends Component {
         <div>
           { this.props.data.map(function (newsItem) {
             return (
-              <NewsCard
-                id = { newsItem.id }
-                title = { newsItem.title }
-                abstract = { newsItem.abstract }
-                date = { newsItem.date }
-              />
+              <div>
+                <NewsCard
+                  id = { newsItem.id }
+                  title = { newsItem.title }
+                  abstract = { newsItem.abstract }
+                  date = { newsItem.date }
+                />
+                <br />
+              </div>
             );
           })
         }
+
         </div>
     );
   }
