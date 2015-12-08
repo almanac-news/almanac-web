@@ -12,6 +12,7 @@ export class NewsList extends Component {
           { this.props.data.map(function (newsItem) {
             return (
               <NewsCard
+                key = { newsItem.id }
                 id = { newsItem.id }
                 title = { newsItem.title }
                 abstract = { newsItem.abstract }

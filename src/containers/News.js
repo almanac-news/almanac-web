@@ -11,25 +11,25 @@ const dummyData = [
   {
     title: 'Another Article',
     abstract: 'Some micro news text.',
-    id: '1RztcJr',
+    id: '1XQzgT9',
     date: Date.now()
   },
   {
     title: 'This is Clearly the Best News Article',
     abstract: 'Some micro news text.',
-    id: '1RztcJr',
+    id: '1NJq5Zu',
     date: Date.now()
   },
   {
     title: 'Is this a News Article?',
     abstract: 'Some micro news text.',
-    id: '1RztcJr',
+    id: '1lMExtd',
     date: Date.now()
   },
   {
     title: 'BREAKING: A News Article',
     abstract: 'Some micro news text.',
-    id: '1RztcJr',
+    id: '1M1qbut',
     date: Date.now()
   }
 ];
