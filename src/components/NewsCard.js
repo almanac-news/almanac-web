@@ -14,7 +14,7 @@ export class NewsCard extends React.Component {
     id : React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     abstract: React.PropTypes.string.isRequired,
-    date: React.PropTypes.object
+    date: React.PropTypes.number
   }
 
   render () {
