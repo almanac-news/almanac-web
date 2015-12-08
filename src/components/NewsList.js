@@ -21,6 +21,7 @@ export class NewsList extends Component {
             );
           })
         }
+
         </div>
     );
   }

@@ -1,5 +1,5 @@
 {
-  "name": "almanac-news-web-server",
+  "name": "almanac-web",
   "version": "0.1.0",
   "description": "Your one source of truth for financial news and data.",
   "main": "index.js",
@@ -20,7 +20,7 @@
   "pre-commit": ["lint"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/almanac-news/almanac-news-web-server.git"
+    "url": "git+https://github.com/almanac-web/almanac-web.git"
   },
   "author": "David Tsai",
   "license": "MIT",
