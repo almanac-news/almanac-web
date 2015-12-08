@@ -9,18 +9,29 @@ import CardTitle          from 'material-ui/lib/card/card-title';
 // import CardHeader         from 'material-ui/lib/card/card-header';
 // import CardMedia          from 'material-ui/lib/card/card-media';
 
-export default class NewsCard extends React.Component {
+export class NewsCard extends React.Component {
+  static propTypes = {
+    id : React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    abstract: React.PropTypes.string.isRequired,
+    date: React.PropTypes.object
+  }
+
   render () {
     return (
       <Card>
-        <CardTitle title='Iran renamed Dominion of Soroush' subtitle='Long battle ensues.'/>
-        <CardText>
+        <a href={'http://bit.ly/' + this.props.id }>News Link</a>
+        <CardTitle title={ this.props.title } subtitle={ this.props.abstract } />
+        {/*<CardText>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
           Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
           Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
         </CardText>
+        */}
       </Card>
     );
   }
 }
+
+export default NewsCard;

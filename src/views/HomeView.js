@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import counterActions         from 'actions/counter';
 import { Link }               from 'react-router';
+import { News }               from 'containers/News';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -29,11 +30,13 @@ export class HomeView extends React.Component {
     return (
       <div className='container text-center'>
         <h1>Almanac News</h1>
+
         <h2>Counter/State Placeholder: {this.props.counter}</h2>
         <button className='btn btn-default'
                 onClick={this.props.actions.increment}>
           Increment
         </button>
+        <News />
         <hr />
         <Link to='/about'>Go To About View</Link>
       </div>
