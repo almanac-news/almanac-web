@@ -2683,7 +2683,7 @@
     },
     "lodash": {
       "version": "3.10.1",
-      "from": "lodash@>=3.2.0 <4.0.0",
+      "from": "lodash@*",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
     },
     "lodash._arraycopy": {
@@ -3111,6 +3111,11 @@
           "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
         }
       }
+    },
+    "moment": {
+      "version": "2.10.6",
+      "from": "moment@*",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.10.6.tgz"
     },
     "ms": {
       "version": "0.7.1",
