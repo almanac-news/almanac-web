@@ -6,8 +6,8 @@ export class LineChartViz extends React.Component {
   static propTypes = {
     chartTitle : React.PropTypes.string.isRequired,
     chartData: React.PropTypes.array.isRequired,
-    useLegend : React.PropTypes.string.isRequired,
-    useGridHorizontal : React.PropTypes.string.isRequired,
+    useLegend : React.PropTypes.bool.isRequired,
+    useGridHorizontal : React.PropTypes.bool.isRequired,
     yAxisLabel: React.PropTypes.string,
     xAxisLabel: React.PropTypes.string
   }
@@ -18,8 +18,8 @@ export class LineChartViz extends React.Component {
         title={this.props.chartTitle}
         data={this.props.chartData}
         legend={this.props.useLegend}
-        width='100%'
-        height='400'
+        width={500}
+        height={400}
         viewBoxObject={ {x:0, y:0, width:500, height:400} }
         yAxisLabel={this.props.yAxisLabel}
         xAxisLabel={this.props.xAxisLabel}
