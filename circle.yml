@@ -6,7 +6,7 @@ machine:
     - docker
 
 dependencies:
-  pre:
+  override:
     - pip install awscli
 
 test:
