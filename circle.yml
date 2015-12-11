@@ -6,12 +6,10 @@ machine:
 dependencies:
   pre:
     - sudo apt-get install build-essential g++
-    - rm -rf node_modules/
 
 test:
-  override:
+  pre:
     - npm run lint
-    - npm test
 
 notify:
   webhooks:
