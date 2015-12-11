@@ -1,29 +1,29 @@
 {
   "news": [
     {
-      "title": "A News Article",
-      "abstract": "Some micro news text.",
+      "title": "Demo News Article 1",
+      "abstract": "Article abstract goes here",
       "id": "1RztcJr"
     },
     {
-      "title": "Another Article",
-      "abstract": "Some micro news text.",
-      "id": "1RztcJr"
+      "title": "Demo News Article 2",
+      "abstract": "Article abstract goes here",
+      "id": "1XQzgT9"
     },
     {
-      "title": "This is Clearly the Best News Article",
-      "abstract": "Some micro news text.",
-      "id": "1RztcJr"
+      "title": "Demo News Article 3",
+      "abstract": "Article abstract goes here",
+      "id": "1NJq5Zu"
     },
     {
-      "title": "Is this a News Article?",
-      "abstract": "Some micro news text.",
-      "id": "1RztcJr"
+      "title": "Demo News Article 4",
+      "abstract": "Article abstract goes here",
+      "id": "1lMExtd"
     },
     {
-      "title": "BREAKING: A News Article",
-      "abstract": "Some micro news text.",
-      "id": "1RztcJr"
+      "title": "Demo News Article 5",
+      "abstract": "Article abstract goes here",
+      "id": "1M1qbut"
     }
   ]
 }
