@@ -1,0 +1,35 @@
+# circle.yml
+machine:
+  node:
+    version: 5.0.0
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - pip install awscli
+
+test:
+  override:
+    - docker build -t almanac/web-server:$CIRCLE_SHA1 .
+  post:
+    - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=abcd1234" almanac/web-server:$CIRCLE_SHA1; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:3000
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/c2658ec4ce7f0836941c
+
+deployment:
+  development:
+    branch: dev
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - chmod u+x deploy.sh
+      - ./deploy.sh $CIRCLE_SHA1 almanacNews-web-dev
+  production:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - chmod u+x deploy.sh
+      - ./deploy.sh $CIRCLE_SHA1 almanacNews-web

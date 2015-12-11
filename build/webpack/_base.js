@@ -41,7 +41,7 @@ const webpackConfig = {
     loaders : [
       {
         test : /\.(js|jsx)$/,
-        exclude : /node_modules/,
+        exclude : [ /node_modules/, /node_modules\/material-ui/ ],
         loader  : 'babel',
         query   : {
           stage    : 0,
