@@ -1,5 +1,5 @@
-import React, { Component }           from 'react';
-import { NewsCard }                   from 'components/NewsCard';
+import React, { Component } from 'react';
+import { NewsCard } from 'components/NewsCard';
 
 export class NewsList extends Component {
   static propTypes = {
@@ -9,19 +9,20 @@ export class NewsList extends Component {
   render () {
     return (
         <div>
-          { this.props.data.map(function (newsItem) {
+          { this.props.data.map((newsItem) => {
             return (
-              <NewsCard
-                key = { newsItem.id }
-                id = { newsItem.id }
-                title = { newsItem.title }
-                abstract = { newsItem.abstract }
-                date = { newsItem.date }
-              />
+              // NOTE: unique key moved to wrapper div to add line break
+              <div className='news-card-wrapper' key={ newsItem.url }>
+                <NewsCard
+                  url = { newsItem.url }
+                  title = { newsItem.title }
+                  abstract = { newsItem.abstract }
+                  date = { newsItem.date }
+                />
+                <br/>
+              </div>
             );
-          })
-        }
-
+          }) }
         </div>
     );
   }

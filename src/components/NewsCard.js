@@ -1,7 +1,7 @@
-import React              from 'react';
-import Card               from 'material-ui/lib/card/card';
-import CardText           from 'material-ui/lib/card/card-text';
-import CardTitle          from 'material-ui/lib/card/card-title';
+import React from 'react';
+import Card from 'material-ui/lib/card/card';
+import CardText from 'material-ui/lib/card/card-text';
+import CardTitle from 'material-ui/lib/card/card-title';
 
 // TODO: Disabled these elements since they are not being used
 // import CardActions        from 'material-ui/lib/card/card-actions';
@@ -11,7 +11,7 @@ import CardTitle          from 'material-ui/lib/card/card-title';
 
 export class NewsCard extends React.Component {
   static propTypes = {
-    id : React.PropTypes.string.isRequired,
+    url : React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     abstract: React.PropTypes.string.isRequired,
     date: React.PropTypes.number
@@ -27,7 +27,7 @@ export class NewsCard extends React.Component {
           Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
           Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
         </CardText>
-        <a href={'http://bit.ly/' + this.props.id }>News Link</a>
+        <a href={ this.props.url }>News Link</a>
       </Card>
     );
   }
