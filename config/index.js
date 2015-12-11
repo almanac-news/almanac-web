@@ -42,7 +42,9 @@ config.set('dir_test',   'tests');  // where tests live
 // ------------------------------------
 // Server Configuration
 // ------------------------------------
-config.set('server_host', 'localhost');
+
+// second param to server_host is the host name
+config.set('server_host', '0.0.0.0');
 config.set('server_port', process.env.PORT || 3000);
 
 // ------------------------------------
