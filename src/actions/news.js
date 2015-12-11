@@ -1,5 +1,20 @@
-// import { GET_NEWS } from 'constants/news';
-//
-// export default {
-//   getNews: () => ({ type : GET_NEWS })
-// };
+import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED } from 'constants/news';
+import fetch from 'isomorphic-fetch';
+
+export function fetchNews () {
+  return dispatch => {
+    dispatch({ type: FETCH_NEWS_STARTED });
+
+    return fetch('http://almanacnews-app-dev.elasticbeanstalk.com/news')
+      .then( response => response.json() )
+      .then( data => {
+        return {
+          type: FETCH_NEWS_COMPLETED,
+          news: data.map(newsItem => newsItem)
+        };
+      })
+      .then( data => dispatch(data) );
+      // NOTE: uncomment to catch error
+      // .catch( err => console.log(err) );
+  };
+}
