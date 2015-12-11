@@ -1,9 +1,12 @@
 # circle.yml
 machine:
+pre:
+    - |
+      sudo curl -L -o /usr/bin/docker 'http://s3-external-1.amazonaws.com/circle-downloads/docker-1.8.1-circleci'
+      sudo chmod 0755 /usr/bin/docker
+      sudo service docker start
   node:
     version: 5.0.0
-  services:
-    - docker
 
 dependencies:
   pre:
@@ -15,7 +18,7 @@ test:
   pre:
     - docker run almanac/web-server:$CIRCLE_SHA1 npm run lint
   override:
-    - docker run --net=host almanac/web-server:$CIRCLE_SHA1 npm run test
+    - docker run -it almanac/web-server:$CIRCLE_SHA1 npm run test
   post:
     - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=abcd1234" almanac/web-server:$CIRCLE_SHA1; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://localhost:3000
