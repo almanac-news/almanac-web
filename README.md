@@ -17,7 +17,7 @@ Table of Contents
 Requirements
 ------------
 
-Node `^4.0.0` or `^5.0.0` ([npm3](https://www.npmjs.com/package/npm3) recommended).
+Node `^5.0.0` ([npm3](https://www.npmjs.com/package/npm3) recommended) - our team uses the `n` version manager.
 
 Features
 --------
@@ -62,7 +62,7 @@ Before delving into the descriptions for each available npm script, here's a bri
 
 Great, now that introductions have been made here's everything in full detail:
 
-#### `npm start` (alias for `npm run dev`)
+#### `npm start` (alias for `node bin/server.js`)
 Runs the webpack build system with HMR enabled (by default found at `localhost:3000`).
 
 #### `npm run dev:nw`
