@@ -1,3 +1,5 @@
+[![Build Status](https://circleci.com/gh/almanac-news/almanac-web.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/almanac-news/almanac-web)
+
 Almanac News
 =======================
 
