@@ -22,4 +22,5 @@ deployment:
       - $DEPLOY
   development:
     branch: dev
+    commands:
       - $DEPLOY_DEV
