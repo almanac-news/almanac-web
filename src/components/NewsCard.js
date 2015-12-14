@@ -23,13 +23,8 @@ export class NewsCard extends React.Component {
 
     return (
       <Card>
-<<<<<<< 17ec7f1aace199ae7b5d80d15b96735befbc1390
         <CardTitle title={ title } subtitle={ abstract } />
         <Link to={'/news/' + url.slice(-7) }>Read More</Link>
-=======
-        <CardTitle title={ this.props.title } subtitle={ this.props.abstract } />
-        <Link to={'/news/' + this.props.url.slice(-6) }>Read More</Link>
->>>>>>> Adding in data constants and reducers and NewsCard
       </Card>
     );
   }
