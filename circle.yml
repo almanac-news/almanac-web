@@ -13,9 +13,7 @@ test:
   pre:
     - npm run lint
   override:
-    - npm run test
-        environment:
-          NODE_ENV: production
+    - NODE_ENV=production npm run test
   post:
     - echo Praise Yeezus
 
