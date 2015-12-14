@@ -5,11 +5,19 @@ machine:
 
 dependencies:
   pre:
+    - npm cache clean -f
+    - npm install npm -g
     - sudo apt-get install build-essential g++
 
 test:
   pre:
     - npm run lint
+  override:
+    - npm run test
+        environment:
+          NODE_ENV: production
+  post:
+    - echo Praise Yeezus
 
 notify:
   webhooks:
