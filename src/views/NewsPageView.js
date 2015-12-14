@@ -42,18 +42,25 @@ export class NewsPageView extends React.Component {
         <h1>News View</h1>
         <hr />
         {/* Currently our route param contains a bit.ly ID which allows us to revisit */}
-        <div><a href={'http://bit.ly/' + id}>{id}</a></div>
+        <div><a href={'http://bit.ly/' + id}><h2>Donald Trump Forgets Muslim Champions During Obama Criticism</h2></a></div>
         <hr />
         {/* TODO: Labels will most likely become a prop based on state */}
-        <LineChartViz
-          chartTitle={'USD/EUR (EUR=X)'}
-          chartData={lineData}
-          useLegend={false}
-          yAxisLabel={'Value'}
-          xAxisLabel={'Time'}
-          useGridHorizontal={false}
-        />
+        <div className='row'>
+          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+            <iframe src={'http://bit.ly/' + id} width='500' height='420' allowFullScreen></iframe>
+          </div>
+          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+            <LineChartViz
+            chartTitle={'USD/EUR (EUR=X)'}
+            chartData={lineData}
+            useLegend={false}
+            yAxisLabel={'Value'}
+            xAxisLabel={'Time'}
+            useGridHorizontal={false}
+            />
+          </div>
         <br />
+        </div>
         <hr />
         <Link to='/'>Back to Home View</Link>
       </div>
