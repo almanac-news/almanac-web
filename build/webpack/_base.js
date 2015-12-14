@@ -41,7 +41,7 @@ const webpackConfig = {
     loaders : [
       {
         test : /\.(js|jsx)$/,
-        exclude : /node_modules/,
+        exclude : [ /node_modules/, /node_modules\/material-ui/ ],
         loader  : 'babel',
         query   : {
           stage    : 0,
@@ -75,7 +75,9 @@ const webpackConfig = {
       { test: /\.woff2(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2" },
       { test: /\.ttf(\?.*)?$/,   loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?.*)?$/,   loader: "file-loader?prefix=fonts/&name=[path][name].[ext]" },
-      { test: /\.svg(\?.*)?$/,   loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml" }
+      { test: /\.svg(\?.*)?$/,   loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml" },
+      { test: /\.png$/,          loader: 'file?name=[name].[ext]' },
+      { test: /\.jpg$/,          loader: 'file?name=[name].[ext]' },
       /* eslint-enable */
     ]
   },

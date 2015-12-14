@@ -1,5 +1,5 @@
 {
-  "name": "almanac-news-web-server",
+  "name": "almanac-web",
   "version": "0.1.0",
   "description": "Your one source of truth for financial news and data.",
   "main": "index.js",
@@ -8,28 +8,39 @@
     "lint": "eslint ./src/**/*.js",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "webpack",
-    "start": "npm run dev",
-    "dev": "node --harmony bin/server",
+    "start": "node --harmony bin/server",
+    "dev": "NODE_ENV=development npm start",
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
     "test": "node ./node_modules/karma/bin/karma start",
     "test:dev": "npm run test -- --watch",
-    "deploy": "npm run lint && npm run test && npm run compile"
+    "deploy": "npm run lint && npm run test && npm run compile",
+    "validate": "npm ls"
   },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/almanac-news/almanac-news-web-server.git"
+    "url": "git+https://github.com/almanac-web/almanac-web.git"
   },
   "author": "David Tsai",
   "license": "MIT",
   "dependencies": {
     "babel": "^5.8.23",
     "chalk": "^1.1.1",
-    "cssnano": "^3.3.2",
     "dotenv": "^1.2.0",
+    "express": "^4.13.3",
     "history": "^1.9.0",
+    "isomorphic-fetch": "^2.2.0",
+    "lodash": "^3.10.1",
     "material-ui": "^0.13.4",
+    "moment": "^2.10.6",
     "react": "^0.14.0",
+    "react-addons-css-transition-group": "^0.14.3",
+    "react-d3": "^0.4.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
     "react-router": "1.0.0",
@@ -40,6 +51,7 @@
     "yargs": "^3.18.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.0.3",
     "babel-eslint": "^4.1.1",
     "babel-loader": "^5.0.0",
     "babel-plugin-react-transform": "^1.1.0",
@@ -50,7 +62,6 @@
     "eslint": "^1.0.0",
     "eslint-config-airbnb": "^1.0.0",
     "eslint-plugin-react": "^3.3.1",
-    "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.0",
     "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.6.1",
@@ -69,11 +80,12 @@
     "phantomjs": "^1.9.17",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.8.0",
+    "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^0.14.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.0",
     "redbox-react": "^1.0.4",
-    "redux-devtools": "3.0.0-beta-3",
+    "redux-devtools": "^3.0.0-beta-3",
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "sass-loader": "^3.0.0",

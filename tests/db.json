@@ -1,0 +1,29 @@
+{
+  "news": [
+    {
+      "title": "Demo News Article 1",
+      "abstract": "Article abstract goes here",
+      "id": "1RztcJr"
+    },
+    {
+      "title": "Demo News Article 2",
+      "abstract": "Article abstract goes here",
+      "id": "1XQzgT9"
+    },
+    {
+      "title": "Demo News Article 3",
+      "abstract": "Article abstract goes here",
+      "id": "1NJq5Zu"
+    },
+    {
+      "title": "Demo News Article 4",
+      "abstract": "Article abstract goes here",
+      "id": "1lMExtd"
+    },
+    {
+      "title": "Demo News Article 5",
+      "abstract": "Article abstract goes here",
+      "id": "1M1qbut"
+    }
+  ]
+}

@@ -3,10 +3,13 @@ import { Route, IndexRoute } from 'react-router';
 import CoreLayout            from 'layouts/CoreLayout';
 import HomeView              from 'views/HomeView';
 import AboutView             from 'views/AboutView';
+import NewsPageView          from 'views/NewsPageView';
 
 export default (
-  <Route        component={CoreLayout} path='/'>
+  <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
-    <Route      component={AboutView}  path='/about' />
+    <Route path='about' component={AboutView} />
+    <Route path='news' component={NewsPageView} />
+    <Route path='news/:id' component={NewsPageView} />
   </Route>
 );

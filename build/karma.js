@@ -19,6 +19,7 @@ function makeDefaultConfig () {
     },
     reporters : ['spec'],
     browsers : ['PhantomJS'],
+    captureTimeout : 300000,
     webpack : {
       devtool : 'inline-source-map',
       resolve : webpackConfig.resolve,

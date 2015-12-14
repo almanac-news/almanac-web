@@ -1,0 +1,32 @@
+# circle.yml
+machine:
+  node:
+    version: 5.0.0
+
+dependencies:
+  pre:
+    - npm cache clean -f
+    - npm install npm -g
+    - sudo apt-get install build-essential g++
+
+test:
+  pre:
+    - npm run lint
+  override:
+    - NODE_ENV=production npm run test
+  post:
+    - echo Praise Yeezus
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/c2658ec4ce7f0836941c
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - $DEPLOY
+  development:
+    branch: dev
+    commands:
+      - $DEPLOY_DEV

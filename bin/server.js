@@ -8,7 +8,7 @@ const host = config.get('server_host');
 const port = config.get('server_port');
 
 server.listen(port, host, function () {
-  console.log(chalk.green(
+  console.log(chalk.green.underline.bold(
     `Server is now running at ${host}:${port}.`
   ));
 });
