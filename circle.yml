@@ -5,6 +5,8 @@ machine:
 
 dependencies:
   pre:
+    - npm cache clean -f
+    - npm install npm -g
     - sudo apt-get install build-essential g++
 
 test:
