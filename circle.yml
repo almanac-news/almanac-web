@@ -12,6 +12,12 @@ dependencies:
 test:
   pre:
     - npm run lint
+  override:
+    - npm run test
+        environment:
+          NODE_ENV: production
+  post:
+    - echo Praise Yeezus
 
 notify:
   webhooks:
