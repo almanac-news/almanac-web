@@ -13,8 +13,8 @@ export function fetchNews () {
           news: data.map(newsItem => newsItem)
         };
       })
-      .then( data => dispatch(data) );
+      .then( data => dispatch(data) )
       // NOTE: uncomment to catch error
-      // .catch( err => console.log(err) );
+      .catch( err => console.log(err) );
   };
 }
