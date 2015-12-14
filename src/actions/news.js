@@ -5,7 +5,7 @@ export function fetchNews () {
   return dispatch => {
     dispatch({ type: FETCH_NEWS_STARTED });
 
-    return fetch('app-service/news')
+    return fetch('app-service:5000/news')
       .then( response => response.json() )
       .then( data => {
         return {
