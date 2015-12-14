@@ -5,7 +5,7 @@ export function fetchNews () {
   return dispatch => {
     dispatch({ type: FETCH_NEWS_STARTED });
 
-    return fetch('http://almanacnews-app-dev.elasticbeanstalk.com/news')
+    return fetch('app-service/news')
       .then( response => response.json() )
       .then( data => {
         return {
