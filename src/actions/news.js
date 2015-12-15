@@ -5,7 +5,8 @@ export function fetchNews () {
   return dispatch => {
     dispatch({ type: FETCH_NEWS_STARTED });
 
-    return fetch('app-service:5000/news')
+    // NOTE: Please look at 'Fetch API'
+    return fetch('http://172.17.0.2:5000/news', { mode: 'no-cors' })
       .then( response => response.json() )
       .then( data => {
         return {
@@ -14,7 +15,6 @@ export function fetchNews () {
         };
       })
       .then( data => dispatch(data) )
-      // NOTE: uncomment to catch error
-      .catch( err => console.log(err) );
+      .catch( err => console.error(err) );
   };
 }

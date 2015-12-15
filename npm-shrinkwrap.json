@@ -1493,7 +1493,7 @@
         },
         "boom": {
           "version": "2.10.1",
-          "from": "boom@^2.8.x",
+          "from": "boom@2.x.x",
           "resolved": "https://registry.npmjs.org/boom/-/boom-2.10.1.tgz"
         },
         "caseless": {
@@ -1513,7 +1513,7 @@
         },
         "commander": {
           "version": "2.9.0",
-          "from": "commander@^2.8.1",
+          "from": "commander@^2.9.0",
           "resolved": "https://registry.npmjs.org/commander/-/commander-2.9.0.tgz"
         },
         "core-util-is": {
@@ -1593,7 +1593,8 @@
           "dependencies": {
             "minimatch": {
               "version": "3.0.0",
-              "from": "minimatch@>=3.0.0 <4.0.0",
+              "from": "minimatch@^3.0.0",
+              "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.0.tgz",
               "dependencies": {
                 "brace-expansion": {
                   "version": "1.1.1",
@@ -1847,7 +1848,7 @@
           "dependencies": {
             "minimist": {
               "version": "1.2.0",
-              "from": "minimist@^1.1.2",
+              "from": "minimist@^1.2.0",
               "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.0.tgz"
             }
           }
@@ -1869,7 +1870,7 @@
           "dependencies": {
             "glob": {
               "version": "5.0.15",
-              "from": "glob@>=5.0.14 <6.0.0",
+              "from": "glob@^5.0.14",
               "resolved": "https://registry.npmjs.org/glob/-/glob-5.0.15.tgz",
               "dependencies": {
                 "inflight": {
@@ -2003,7 +2004,7 @@
                 },
                 "inherits": {
                   "version": "2.0.1",
-                  "from": "inherits@~2.0.1",
+                  "from": "inherits@~2.0.0",
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                 },
                 "isarray": {
@@ -2610,7 +2611,8 @@
       "dependencies": {
         "esprima": {
           "version": "2.7.1",
-          "from": "esprima@>=2.7.0 <2.8.0"
+          "from": "esprima@2.7.1",
+          "resolved": "https://registry.npmjs.org/esprima/-/esprima-2.7.1.tgz"
         },
         "supports-color": {
           "version": "3.1.2",
