@@ -12,7 +12,8 @@ export class NewsList extends Component {
           { this.props.data.map((newsItem) => {
             return (
               // NOTE: unique key moved to wrapper div to add line break
-              <div className='news-card-wrapper' key={ newsItem.url }>
+              // FIXME: Look into giving a unique identifier to the key instead of random
+              <div className='news-card-wrapper' key={ newsItem.url + Math.random() }>
                 <NewsCard
                   url = { newsItem.url }
                   title = { newsItem.title }

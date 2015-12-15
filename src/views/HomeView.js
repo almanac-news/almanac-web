@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as ActionCreators from 'actions/news';
 import { Link } from 'react-router';
 import { NewsContainer } from 'containers/NewsContainer';
+const CircularProgress = require('material-ui/lib/circular-progress');
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -48,7 +49,7 @@ export class HomeView extends React.Component {
     let newsContainerPending;
 
     if (this.props.isFetching) {
-      newsContainerPending = <div>Please Wait</div>;
+      newsContainerPending = <CircularProgress mode='indeterminate' size={2} />;
     } else if (this.props.news) {
       newsContainerPending = <NewsContainer data={ this.props.news } />;
     }
@@ -57,7 +58,7 @@ export class HomeView extends React.Component {
       <div className='container text-center'>
         <h1>Almanac News</h1>
           <hr />
-        {newsContainerPending}
+        <div>{newsContainerPending}</div>
           <hr />
         <Link to='/about'>Go To About View</Link>
           <br/>
