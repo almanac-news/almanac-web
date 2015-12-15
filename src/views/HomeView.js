@@ -58,7 +58,7 @@ export class HomeView extends React.Component {
       <div className='container text-center'>
         <h1>Almanac News</h1>
           <hr />
-        {newsContainerPending}
+        <div>{newsContainerPending}</div>
           <hr />
         <Link to='/about'>Go To About View</Link>
           <br/>
