@@ -1,13 +1,10 @@
-import express              from 'express';
-import historyApiFallback   from 'connect-history-api-fallback';
-import config               from '../config';
-import chalk                from 'chalk';
+import express from 'express';
+import historyApiFallback from 'connect-history-api-fallback';
+import config from '../config';
+import chalk from 'chalk';
+import fetch from 'node-fetch';
 
 const app = express();
-
-app.use(historyApiFallback({
-  verbose : false
-}));
 
 // Enable webpack middleware if the application is being
 // run in development mode.
@@ -32,5 +29,16 @@ if (config.get('globals').__PROD__) {
   // Serve the static files from the 'dist' directory
   app.use(express.static('dist'));
 }
+
+app.get('/api/news', function (req, res) {
+  fetch('http://app-service:5000/news')
+    .then( response => response.json() )
+    .then( data => res.send(data) )
+    .catch( err => console.error(err) );
+});
+
+app.use(historyApiFallback({
+  verbose : false
+}));
 
 export default app;
