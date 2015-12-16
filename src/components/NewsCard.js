@@ -19,10 +19,12 @@ export class NewsCard extends React.Component {
   }
 
   render () {
+    const { url, title, abstract } = this.props;
+
     return (
       <Card>
-        <CardTitle title={ this.props.title } subtitle={ this.props.abstract } />
-        <Link to={'/news/' + this.props.url.slice(-6) }>Read More</Link>
+        <CardTitle title={ title } subtitle={ abstract } />
+        <Link to={'/news/' + url.slice(-6) }>Read More</Link>
       </Card>
     );
   }
