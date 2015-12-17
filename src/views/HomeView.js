@@ -2,8 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ActionCreators from 'actions/news';
-import { Link } from 'react-router';
 import { NewsContainer } from 'containers/NewsContainer';
+import { NewsError } from 'components/NewsError';
 const CircularProgress = require('material-ui/lib/circular-progress');
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
@@ -46,24 +46,24 @@ export class HomeView extends React.Component {
   }
 
   render () {
+    const { isFetching, news } = this.props;
+
     let newsContainerPending;
 
-    if (this.props.isFetching) {
+    if (!isFetching && !news) {
+      newsContainerPending = <NewsError />;
+    } else if (isFetching) {
       newsContainerPending = <CircularProgress mode='indeterminate' size={2} />;
-    } else if (this.props.news) {
-      newsContainerPending = <NewsContainer data={ this.props.news } />;
+    } else if (!isFetching && news) {
+      newsContainerPending = <NewsContainer data={ news } />;
     }
 
     return (
       <div className='container text-center'>
-        <h1>Almanac News</h1>
+        <h1>News Feed</h1>
           <hr />
         <div>{newsContainerPending}</div>
           <hr />
-        <Link to='/about'>Go To About View</Link>
-          <br/>
-        {/* Demo of bit.ly shortened URL, random Trump news article */}
-        <Link to='/news/1RztcJr'>Demo Unique News Page View</Link>
       </div>
     );
   }

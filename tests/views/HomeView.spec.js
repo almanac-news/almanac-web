@@ -38,6 +38,6 @@ describe('(View) Home', function () {
     const h1 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h1');
 
     expect(h1).to.exist;
-    expect(h1.textContent).to.match(/Almanac News/);
+    expect(h1.textContent).to.match(/News Feed/);
   });
 });
