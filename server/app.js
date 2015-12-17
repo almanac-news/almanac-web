@@ -6,10 +6,6 @@ import fetch from 'node-fetch';
 
 const app = express();
 
-app.use(historyApiFallback({
-  verbose : false
-}));
-
 // Enable webpack middleware if the application is being
 // run in development mode.
 if (config.get('globals').__DEV__) {
@@ -38,8 +34,11 @@ app.get('/api/news', function (req, res) {
   fetch('http://app-service:5000/news')
     .then( response => response.json() )
     .then( data => res.send(data) )
-    .catch( err => console.error(err) );
+    .catch( () => res.sendStatus(404) );
 });
 
+app.use(historyApiFallback({
+  verbose : false
+}));
 
 export default app;
