@@ -2,9 +2,10 @@ import express from 'express';
 import historyApiFallback from 'connect-history-api-fallback';
 import config from '../config';
 import chalk from 'chalk';
-import fetch from 'node-fetch';
+import Redis from 'ioredis';
 
 const app = express();
+const client = new Redis(6379, 'data-cache');
 
 // Enable webpack middleware if the application is being
 // run in development mode.
@@ -31,10 +32,19 @@ if (config.get('globals').__PROD__) {
 }
 
 app.get('/api/news', function (req, res) {
-  fetch('http://app-service:5000/news')
-    .then( response => response.json() )
-    .then( data => res.send(data) )
-    .catch( () => res.sendStatus(404) );
+  client.keys('*', (err, keys) => {
+    if (err) res.sendStatus(404);
+
+    const pipeline = client.pipeline();
+
+    keys.forEach( key => {
+      pipeline.hgetall(key);
+    });
+
+    pipeline.exec( (error, result) => {
+      res.send(result);
+    });
+  });
 });
 
 app.use(historyApiFallback({
