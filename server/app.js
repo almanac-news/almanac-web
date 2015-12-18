@@ -1,3 +1,4 @@
+/*jshint esnext: true */
 import express from 'express';
 import config from '../config';
 import chalk from 'chalk';
@@ -32,7 +33,7 @@ if (config.get('globals').__PROD__) {
   app.use(express.static('dist'));
 }
 
-app.get('/api/news', function (req, res) {
+app.get('/api/news', (req, res) => {
   client.keys('*', (err, keys) => {
     if (err) res.sendStatus(404);
 
@@ -43,7 +44,11 @@ app.get('/api/news', function (req, res) {
     });
 
     pipeline.exec( (error, result) => {
-      res.send(result);
+      let prunedResult = [];
+      for (let article of result) {
+        prunedResult.push(article[1]);
+      }
+      res.send(prunedResult);
     });
   });
 });
