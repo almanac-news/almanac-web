@@ -63,7 +63,7 @@ export class NewsPageView extends React.Component {
         <div className='row'>
           <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
             <div> { text } </div>
-            {/*<iframe src={'http://bit.ly/' + id} width='500' height='420' allowFullScreen></iframe>*/}
+            {/* <iframe src={'http://bit.ly/' + id} width='500' height='420' allowFullScreen></iframe> */}
           </div>
           <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
             <LineChartViz
