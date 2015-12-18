@@ -13,7 +13,7 @@ const CircularProgress = require('material-ui/lib/circular-progress');
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 
 const mapStateToProps = (state) => ({
-  routerState : state.routing,
+  routerState: state.routing,
   news: state.news.data,
   isFetching: state.news.isFetching
 });
