@@ -53,7 +53,7 @@ export class HomeView extends React.Component {
     if (!isFetching && !news) {
       newsContainerPending = <NewsError />;
     } else if (isFetching) {
-      newsContainerPending = <CircularProgress mode='indeterminate' size={2} />;
+      newsContainerPending = <CircularProgress className='loading' mode='indeterminate' size={2} />;
     } else if (!isFetching && news) {
       newsContainerPending = <NewsContainer data={ news } />;
     }

@@ -13,12 +13,12 @@ export class NewsList extends Component {
             return (
               // NOTE: unique key moved to wrapper div to add line break
               // FIXME: Look into giving a unique identifier to the key instead of random
-              <div className='news-card-wrapper' key={ newsItem.url + Math.random() }>
+              <div className='news-card-wrapper' key={ newsItem[1].url + Math.random() }>
                 <NewsCard
-                  url = { newsItem.url }
-                  title = { newsItem.title }
-                  abstract = { newsItem.abstract }
-                  date = { newsItem.date }
+                  url = { newsItem[1].url }
+                  title = { newsItem[1].title }
+                  abstract = { newsItem[1].abstract }
+                  date = { newsItem[1].date }
                 />
                 <br/>
               </div>
