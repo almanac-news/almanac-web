@@ -1,4 +1,4 @@
-import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED } from 'constants/news';
+import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED, FETCH_NEWS_FAILED } from 'constants/news';
 import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill();
 
@@ -15,6 +15,6 @@ export function fetchNews () {
         };
       })
       .then( data => dispatch(data) )
-      .catch( err => console.error(err) );
+      .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) );
   };
 }
