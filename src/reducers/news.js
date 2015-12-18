@@ -18,6 +18,11 @@ export default function newsReducer (state = initialState, action) {
       data: action.news
     });
 
+  case types.FETCH_NEWS_FAILED:
+    return Object.assign({}, state, {
+      isFetching: false
+    });
+
   default:
     return state;
   }
