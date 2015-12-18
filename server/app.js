@@ -1,8 +1,8 @@
 import express from 'express';
-import historyApiFallback from 'connect-history-api-fallback';
 import config from '../config';
 import chalk from 'chalk';
 import Redis from 'ioredis';
+import path from 'path';
 
 const app = express();
 const client = new Redis(6379, 'data-cache');
@@ -20,6 +20,7 @@ if (config.get('globals').__DEV__) {
     compiler,
     publicPath : webpackConfig.output.publicPath
   }));
+
   app.use(require('./middleware/webpack-hmr')({ compiler }));
 }
 
@@ -47,8 +48,8 @@ app.get('/api/news', function (req, res) {
   });
 });
 
-app.use(historyApiFallback({
-  verbose : false
-}));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../dist/index.html'));
+});
 
 export default app;
