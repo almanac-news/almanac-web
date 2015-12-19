@@ -27,7 +27,7 @@ export class HomeView extends React.Component {
   static propTypes = {
     actions: React.PropTypes.object,
     data: React.PropTypes.array,
-    news: React.PropTypes.object,
+    news: React.PropTypes.array,
     isFetching: React.PropTypes.bool.isRequired
   }
 

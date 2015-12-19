@@ -40,19 +40,13 @@ app.get('/api/news', (req, res) => {
     const pipeline = client.pipeline();
 
     keys.forEach( key => {
-      pipeline.echo(key);
       pipeline.hgetall(key);
     });
 
     pipeline.exec( (error, result) => {
-      let prunedResult = {};
-      let articleKey;
+      let prunedResult = [];
       for (let article of result) {
-        if (typeof article[1] === 'string') {
-          articleKey = article[1];
-        } else {
-          prunedResult[articleKey] = article[1];
-        }
+        prunedResult.push(article[1]);
       }
       res.send(prunedResult);
     });

@@ -4,7 +4,7 @@ import { NewsList } from 'components/NewsList';
 export class NewsContainer extends Component {
 
   static propTypes = {
-    data: React.PropTypes.object.isRequired
+    data: React.PropTypes.array.isRequired
   }
 
   render () {

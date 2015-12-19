@@ -1,18 +1,15 @@
-/*jshint esnext: true */
 import React, { Component } from 'react';
 import { NewsCard } from 'components/NewsCard';
 
 export class NewsList extends Component {
   static propTypes = {
-    data: React.PropTypes.object.isRequired
+    data: React.PropTypes.array.isRequired
   }
 
   render () {
-    let newsData = this.props.data;
     return (
         <div>
-          { Object.keys(newsData).map((newsKey) => {
-            let newsItem = newsData[newsKey];
+          { this.props.data.map((newsItem) => {
             return (
               // NOTE: unique key moved to wrapper div to add line break
               // FIXME: Look into giving a unique identifier to the key instead of random
