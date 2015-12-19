@@ -1,4 +1,4 @@
-/*jshint esnext: true */
+/* jshint esnext: true */
 import express from 'express';
 import config from '../config';
 import chalk from 'chalk';
