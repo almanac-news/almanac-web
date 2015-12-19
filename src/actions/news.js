@@ -11,7 +11,7 @@ export function fetchNews () {
       .then( data => {
         return {
           type: FETCH_NEWS_COMPLETED,
-          news: data.map(newsItem => newsItem)
+          news: data
         };
       })
       .then( data => dispatch(data) )
