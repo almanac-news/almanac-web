@@ -14,8 +14,8 @@ const CircularProgress = require('material-ui/lib/circular-progress');
 
 const mapStateToProps = (state) => ({
   routerState: state.routing,
-  news: state.news.data,
-  isFetching: state.news.isFetching
+  isFetching: state.news.isFetching,
+  newsData: state.news.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -25,10 +25,9 @@ const mapDispatchToProps = (dispatch) => ({
 export class HomeView extends React.Component {
 
   static propTypes = {
+    isFetching: React.PropTypes.bool.isRequired,
     actions: React.PropTypes.object,
-    data: React.PropTypes.array,
-    news: React.PropTypes.object,
-    isFetching: React.PropTypes.bool.isRequired
+    newsData: React.PropTypes.object
   }
 
   constructor (props) {
@@ -46,16 +45,16 @@ export class HomeView extends React.Component {
   }
 
   render () {
-    const { isFetching, news } = this.props;
+    const { isFetching, newsData } = this.props;
 
     let newsContainerPending;
 
-    if (!isFetching && !news) {
+    if (!isFetching && !newsData) {
       newsContainerPending = <NewsError />;
     } else if (isFetching) {
       newsContainerPending = <CircularProgress className='loading' mode='indeterminate' size={2} />;
-    } else if (!isFetching && news) {
-      newsContainerPending = <NewsContainer data={ news } />;
+    } else if (!isFetching && newsData) {
+      newsContainerPending = <NewsContainer data={ newsData } />;
     }
 
     return (
