@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 export class HomeView extends React.Component {
 
   static propTypes = {
-    isFetching: React.PropTypes.bool.isRequired,
+    isFetching: React.PropTypes.bool,
     actions: React.PropTypes.object,
     newsData: React.PropTypes.object
   }
