@@ -15,11 +15,6 @@ export function fetchNews () {
         };
       })
       .then( data => dispatch(data) )
-<<<<<<< 3435806990d27a2b438e8b6c08a078bffd242853
       .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) );
-=======
-      // NOTE: uncomment to catch error
-      .catch( err => console.log(err) );
->>>>>>> Adding in data constants and reducers and NewsCard
   };
 }
