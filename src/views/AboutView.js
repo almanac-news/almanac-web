@@ -12,10 +12,7 @@ export class AboutView extends React.Component {
         <hr />
         <Tools />
         <hr />
-        <hr />
         <Link to='/'>Back To Home View</Link>
-        <Link to='/news/123'>Fake News</Link>
-
       </div>
     );
   }

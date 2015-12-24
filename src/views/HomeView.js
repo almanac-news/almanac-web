@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as ActionCreators from 'actions/news';
 import { NewsContainer } from 'containers/NewsContainer';
 import { NewsError } from 'components/NewsError';
-const CircularProgress = require('material-ui/lib/circular-progress');
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -60,9 +60,11 @@ export class HomeView extends React.Component {
     return (
       <div className='container text-center'>
         <h1>News Feed</h1>
-          <hr />
-        <div>{newsContainerPending}</div>
-          <hr />
+        <hr />
+        <div>
+          {newsContainerPending}
+        </div>
+        <hr />
       </div>
     );
   }
