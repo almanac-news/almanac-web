@@ -1,7 +1,6 @@
 import * as types from 'constants/news';
 
 const initialState = {
-  news: [],
   isFetching: false
 };
 

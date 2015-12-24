@@ -24,7 +24,7 @@ export class NewsCard extends React.Component {
     return (
       <Card>
         <CardTitle title={ title } subtitle={ abstract } />
-        <Link to={'/news/' + url.slice(-6) }>Read More</Link>
+        <Link to={'/news/' + url.slice(-7) }>Read More</Link>
       </Card>
     );
   }

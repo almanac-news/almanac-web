@@ -1,4 +1,3 @@
-/* jshint esnext: true */
 import React, { Component } from 'react';
 import { NewsCard } from 'components/NewsCard';
 

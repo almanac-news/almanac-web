@@ -1,4 +1,3 @@
-/* jshint esnext: true */
 import express from 'express';
 import config from '../config';
 import chalk from 'chalk';
@@ -45,9 +44,9 @@ app.get('/api/news', (req, res) => {
     });
 
     pipeline.exec( (error, result) => {
-      let prunedResult = {};
+      const prunedResult = {};
       let articleKey;
-      for (let article of result) {
+      for (const article of result) {
         if (typeof article[1] === 'string') {
           articleKey = article[1];
         } else {
