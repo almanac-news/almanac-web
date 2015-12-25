@@ -14,9 +14,9 @@ export class ReaderTools extends React.Component {
 
     return (
       <ButtonGroup justified>
-        <Button href='#'>Smaller</Button>
-        <Button href='#'>Bigger</Button>
-        <Button href='#'>Show/Hide</Button>
+        <Button href='#' onClick={console.log('Increase Text Size')}>Smaller</Button>
+        <Button href='#' onClick={console.log('Decrease Text Size')}>Bigger</Button>
+        <Button href='#' onClick={console.log('Show/Hide Box')}>Show/Hide</Button>
       </ButtonGroup>
     );
   }
