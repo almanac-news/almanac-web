@@ -15,7 +15,8 @@
     "test": "node ./node_modules/karma/bin/karma start",
     "test:dev": "npm run test -- --watch",
     "deploy": "npm run lint && npm run test && npm run compile",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "postinstall": "npm rebuild node-sass"
   },
   "pre-commit": [
     "lint",

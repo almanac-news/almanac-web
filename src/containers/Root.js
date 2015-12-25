@@ -1,8 +1,8 @@
-import React                    from 'react';
-import { Provider }             from 'react-redux';
-import { Router }               from 'react-router';
-import routes                   from '../routes';
-import DevTools                 from './DevTools';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import routes from '../routes';
+import DevTools from './DevTools';
 import { createDevToolsWindow } from '../utils';
 
 export default class Root extends React.Component {
@@ -24,7 +24,7 @@ export default class Root extends React.Component {
     }
 
     return this.props.debugExternal ?
-      createDevToolsWindow(this.props.store) : <DevTools />;
+      createDevToolsWindow(this.props.store) : <DevTools visibleOnLoad={false} />;
   }
 
   render () {
