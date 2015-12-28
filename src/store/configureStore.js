@@ -2,6 +2,7 @@ import rootReducer from '../reducers';
 import thunk       from 'redux-thunk';
 import DevTools    from 'containers/DevTools';
 import { setupRealtime } from './Realtime';
+import { addResponsiveHandlers } from 'redux-responsive';
 import {
   applyMiddleware,
   compose,
@@ -25,6 +26,7 @@ export default function configureStore (initialState, debug = false) {
   const store = createStoreWithMiddleware(createStore)(
     rootReducer, initialState
   );
+
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextRootReducer = require('../reducers/index');
@@ -34,6 +36,8 @@ export default function configureStore (initialState, debug = false) {
   }
 
   setupRealtime(store);
+  // the reducer we created captures the responsive state of the app
+  addResponsiveHandlers(store);
 
   return store;
 }
