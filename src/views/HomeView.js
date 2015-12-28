@@ -19,7 +19,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions : bindActionCreators(ActionCreators, dispatch)
+  actions: bindActionCreators(ActionCreators, dispatch)
 });
 
 export class HomeView extends React.Component {

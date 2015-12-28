@@ -1,10 +1,10 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as ActionCreators from 'actions/newsPageView';
 import { Reader } from 'components/Reader';
-
-// TODO: Please check the ES6 import syntax for this
-const moment = require('moment');
-const _ = require('lodash');
+import moment from 'moment';
+import _ from 'lodash';
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz';
@@ -12,6 +12,10 @@ import { LineChartViz } from 'components/LineChartViz';
 const mapStateToProps = (state) => ({
   routerState: state.routing,
   newsData: state.news.data
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch)
 });
 
 export class NewsPageView extends React.Component {
@@ -76,4 +80,4 @@ export class NewsPageView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(NewsPageView);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView);

@@ -1,5 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
+import { ReaderTools } from 'components/ReaderTools';
+import Card from 'material-ui/lib/card/card';
+import CardTitle from 'material-ui/lib/card/card-title';
 
 @Radium
 export class Reader extends React.Component {
@@ -26,7 +29,6 @@ export class Reader extends React.Component {
         background: bg_color,
         textAlign: 'justify',
         color: text_color,
-        border: '1px solid black',
         padding: '1.5em',
         height: '400px',
         overflow: 'scroll'
@@ -39,9 +41,14 @@ export class Reader extends React.Component {
     const bodyText = `<div class='reader-text-block'>${ body }</div>`;
 
     return (
-      <div className='reader-outer-container'>
+      <Card>
+        <ReaderTools />
         <div dangerouslySetInnerHTML={{ __html: bodyText }} style={ styles.base } />
-      </div>
+
+      </Card>
+      // <div className='reader-outer-container'>
+      //   <ReaderTools />
+      // </div>
     );
   }
 }
