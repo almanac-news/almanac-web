@@ -39,18 +39,16 @@ if (config.get('globals').__PROD__) {
 
 app.get('/api/news', (req, res) => {
 
-  r.connect({ host: 'rt-database', port: 28015}, (err, conn) => {
-    if (err) {
-      console.error(err);
-    }
-    else {
-      r.table('finance').changes().run(conn, (err, cursor)  => {
-        cursor.each((err, change) => {
-          io.emit('REACT', change);
-        });
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      return r.table('finance').changes().run(conn);
+    })
+    .then( cursor => {
+      cursor.each((err, change) => {
+        io.emit('REACT', change);
       })
-    }
-  });
+    });
+
   client.keys('*', (err, keys) => {
     if (err) res.sendStatus(404);
 
