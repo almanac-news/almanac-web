@@ -5,7 +5,7 @@ export function setupRealtime (store) {
   const io = socketClient();
 
   io.on('REACT', (data) => {
-    // console.log('inside client socket');
+    console.log('inside client socket');
     // let state = store.getState();
 
     if (actions.receiveEvent) {
