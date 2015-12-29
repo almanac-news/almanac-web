@@ -5,7 +5,6 @@ import * as ActionCreators from 'actions/news';
 import { NewsContainer } from 'containers/NewsContainer';
 import { NewsError } from 'components/NewsError';
 import CircularProgress from 'material-ui/lib/circular-progress';
-// import * as realtimeActions from 'actions/realtime';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -16,14 +15,12 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 const mapStateToProps = (state) => ({
   routerState: state.routing,
   isFetching: state.news.isFetching,
-  newsData: state.news.data
+  newsData: state.news.data,
+  browser: state.browser
 });
-
-// realtimeActions.receiveEvent();
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(ActionCreators, dispatch)
-  // realtime: bindActionCreators(realtimeActions, dispatch)
 });
 
 export class HomeView extends React.Component {
@@ -31,8 +28,8 @@ export class HomeView extends React.Component {
   static propTypes = {
     isFetching: React.PropTypes.bool,
     actions: React.PropTypes.object,
-    newsData: React.PropTypes.object
-    // realtime: React.PropTypes.object
+    newsData: React.PropTypes.object,
+    browser: React.PropTypes.object
   }
 
   constructor (props) {
@@ -43,9 +40,6 @@ export class HomeView extends React.Component {
     if (this.props.actions.fetchNews) {
       this.props.actions.fetchNews();
     }
-    // if (this.props.realtime.receiveEvent) {
-    //   this.props.realtime.receiveEvent();
-    // }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -53,7 +47,7 @@ export class HomeView extends React.Component {
   }
 
   render () {
-    const { isFetching, newsData } = this.props;
+    const { isFetching, newsData, browser } = this.props;
 
     let newsContainerPending;
 
@@ -62,7 +56,7 @@ export class HomeView extends React.Component {
     } else if (isFetching) {
       newsContainerPending = <CircularProgress className='loading' mode='indeterminate' size={2} />;
     } else if (!isFetching && newsData) {
-      newsContainerPending = <NewsContainer data={ newsData } />;
+      newsContainerPending = <NewsContainer data={ newsData } browser={ browser } />;
     }
 
     return (
@@ -70,7 +64,7 @@ export class HomeView extends React.Component {
         <h1>News Feed</h1>
         <hr />
         <div>
-          {newsContainerPending}
+          { newsContainerPending }
         </div>
         <hr />
       </div>

@@ -36,7 +36,7 @@ export default function configureStore (initialState, debug = false) {
   }
 
   setupRealtime(store);
-  // the reducer we created captures the responsive state of the app
+  // Reducer created to capture responsive state of app
   addResponsiveHandlers(store);
 
   return store;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'material-ui/lib/card/card';
-// import CardText from 'material-ui/lib/card/card-text';
+import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
 import { Link } from 'react-router';
 
@@ -15,16 +15,28 @@ export class NewsCard extends React.Component {
     url : React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     abstract: React.PropTypes.string.isRequired,
+    browser: React.PropTypes.object.isRequired,
     date: React.PropTypes.number
   }
 
-  render () {
-    const { url, title, abstract } = this.props;
+  responsiveRender () {
+    if (this.props.browser.lessThan.small) {
+      return (
+        <CardText>{ this.props.title }</CardText>
+      );
+    } else {
+      return (
+        <CardTitle title={ this.props.title } subtitle={ this.props.abstract } />
+      );
+    }
+  }
 
+  render () {
     return (
       <Card>
-        <CardTitle title={ title } subtitle={ abstract } />
-        <Link to={'/news/' + url.slice(-7) }>Read More</Link>
+        <Link to={'/news/' + this.props.url.slice(-7) }>
+          { this.responsiveRender() }
+        </Link>
       </Card>
     );
   }

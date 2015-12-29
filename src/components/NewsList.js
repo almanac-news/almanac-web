@@ -3,7 +3,8 @@ import { NewsCard } from 'components/NewsCard';
 
 export class NewsList extends Component {
   static propTypes = {
-    data: React.PropTypes.object.isRequired
+    data: React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired
   }
 
   render () {
@@ -21,6 +22,7 @@ export class NewsList extends Component {
                   title = { newsItem.title }
                   abstract = { newsItem.abstract }
                   date = { newsItem.date }
+                  browser = { this.props.browser }
                 />
                 <br/>
               </div>
