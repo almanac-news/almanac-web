@@ -5,6 +5,7 @@ import Redis from 'ioredis';
 import path from 'path';
 import http from 'http';
 import socketIO from 'socket.io';
+import r from 'rethinkdb';
 
 const app = express();
 const httpServer = http.Server(app);
@@ -37,8 +38,19 @@ if (config.get('globals').__PROD__) {
 }
 
 app.get('/api/news', (req, res) => {
-  const num = 0;
-  io.emit('REACT', {react: num});
+
+  r.connect({ host: 'rt-database', port: 28015}, (err, conn) => {
+    if (err) {
+      console.error(err);
+    }
+    else {
+      r.table('finance').changes().run(conn, (err, cursor)  => {
+        cursor.each((err, change) => {
+          io.emit('REACT', change);
+        });
+      })
+    }
+  });
   client.keys('*', (err, keys) => {
     if (err) res.sendStatus(404);
 
