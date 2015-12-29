@@ -1,6 +1,7 @@
 import rootReducer from '../reducers';
 import thunk       from 'redux-thunk';
 import DevTools    from 'containers/DevTools';
+import { setupRealtime } from './Realtime';
 import {
   applyMiddleware,
   compose,
@@ -31,5 +32,8 @@ export default function configureStore (initialState, debug = false) {
       store.replaceReducer(nextRootReducer);
     });
   }
+
+  setupRealtime(store);
+
   return store;
 }
