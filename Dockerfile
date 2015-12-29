@@ -7,6 +7,7 @@ COPY package.json /usr/src/app/
 RUN npm install
 COPY . /usr/src/app
 RUN npm run compile
+RUN npm rebuild node-sass
 
 EXPOSE 3000
 

@@ -4,6 +4,7 @@ web-server:
    - 80:3000
   links:
    - data-cache
+   - rt-database
   volumes:
    - .:/usr/src/app
   command: npm run dev
@@ -12,7 +13,15 @@ app-service:
   image: almanac/app-service:dev
   links:
    - data-cache
+   - rt-database
   restart: always
+
+rt-database:
+  image: rethinkdb
+  ports:
+   - 8080:8080
+  volumes_from:
+   - rtdb
 
 data-cache:
   image: redis

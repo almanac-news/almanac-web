@@ -24,7 +24,7 @@ export default class Root extends React.Component {
     }
 
     return this.props.debugExternal ?
-      createDevToolsWindow(this.props.store) : <DevTools visibleOnLoad={false} />;
+      createDevToolsWindow(this.props.store) : <DevTools />;
   }
 
   render () {
