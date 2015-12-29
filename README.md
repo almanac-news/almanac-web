@@ -1,6 +1,6 @@
 [![Build Status](https://circleci.com/gh/almanac-news/almanac-web.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/almanac-news/almanac-web)
 
-[![Coverage Status](https://coveralls.io/repos/almanac-news/almanac-web/badge.svg?branch=master&service=github)](https://coveralls.io/github/almanac-news/almanac-web?branch=master)
+[![Coverage Status](https://coveralls.io/repos/almanac-news/almanac-web/badge.svg?branch=dev&service=github)](https://coveralls.io/github/almanac-news/almanac-web?branch=dev)
 
 Almanac News
 =======================
