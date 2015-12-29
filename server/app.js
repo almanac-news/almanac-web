@@ -3,9 +3,13 @@ import config from '../config';
 import chalk from 'chalk';
 import Redis from 'ioredis';
 import path from 'path';
+import http from 'http';
+import socketIO from 'socket.io';
 
 const app = express();
+const httpServer = http.Server(app);
 const client = new Redis(6379, 'data-cache');
+const io = socketIO(httpServer);
 
 // Enable webpack middleware if the application is being
 // run in development mode.
@@ -33,6 +37,8 @@ if (config.get('globals').__PROD__) {
 }
 
 app.get('/api/news', (req, res) => {
+  const num = 0;
+  io.emit('REACT', {react: num});
   client.keys('*', (err, keys) => {
     if (err) res.sendStatus(404);
 
@@ -62,4 +68,4 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/index.html'));
 });
 
-export default app;
+export default httpServer;
