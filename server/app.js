@@ -61,6 +61,40 @@ if (config.get('globals').__PROD__) {
 }
 
 /**
+ * This is used for infinite scrolling on the news-feed.
+ * Will return :num? articles before the provided date.
+ * Defaults to 5 articles.
+ * Assumes that the 'news' table exists in RethinkDB.
+ * This is created by the App-Service Python script.
+ */
+
+app.get('/api/news/:date/:num?', (req, res) => {
+  const date = req.params.date;
+  let num = null;
+  if (req.params.num && !isNaN(+req.params.num)) {
+    num = +req.params.num;
+  }
+  else {
+    num = 5;
+  }
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      console.log(date, typeof date, num, typeof num);
+      return r.table('news').between(r.minval, date, {index: "created_date"}) .orderBy({index: r.desc("created_date")}).limit(num).run(conn);
+    })
+    .then( cursor => {
+      cursor.toArray(function(err, result) {
+        if (err) throw err;
+        res.send(result).status(200);
+      });
+    })
+    .catch( err => {
+      console.log(err);
+      res.sendStatus(503);
+    })
+});
+
+/**
  * This is hit on the news-feed page.
  * Assumes that the 'news' table exists in RethinkDB.
  * This is created by the App-Service Python script.
