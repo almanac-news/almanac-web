@@ -101,9 +101,6 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
   } else {
     let categories = req.body.categories;
     let email = req.body.email;
-    let subscriptions = categories.map( cat => {
-      return {category: cat, email: email};
-    });
     r.connect({ host: 'rt-database', port: 28015})
      .then( conn => {
        return r.table('subscriptions').filter(function(sub) {
