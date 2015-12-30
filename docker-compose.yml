@@ -1,0 +1,35 @@
+web-server:
+  build: .
+  ports:
+   - 80:3000
+  links:
+   - data-cache
+   - rt-database
+  volumes:
+   - .:/usr/src/app
+  command: npm run dev
+
+app-service:
+  image: almanac/app-service:dev
+  restart: always
+  links:
+  - data-cache
+  - rt-database
+  environment:
+   - USERID=NYT_USERNAME
+   - PASSWORD=NYT_PASSWORD
+   - BITLY_TOKEN=BITLY_ACCESS_TOKEN
+   - NYT_KEY=NYT_ACCESS_KEY
+
+rt-database:
+  image: rethinkdb
+  ports:
+   - 8080:8080
+  volumes_from:
+   - rtdb
+
+data-cache:
+  image: redis
+  volumes_from:
+    - cachedb
+  command: redis-server --appendonly yes

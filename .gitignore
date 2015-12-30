@@ -8,5 +8,3 @@ coverage
 
 .jshintignore
 .jshintrc
-
-docker-compose.yml
