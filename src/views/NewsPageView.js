@@ -29,7 +29,8 @@ export class NewsPageView extends React.Component {
     browser: React.PropTypes.object.isRequired,
     newsData: React.PropTypes.object,
     financeData: React.PropTypes.object,
-    realtimeData: React.PropTypes.object
+    realtimeData: React.PropTypes.object,
+    likeStatus: React.PropTypes.number
   }
 
   constructor(props) {
