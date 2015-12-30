@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert } from 'react-bootstrap';
+import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 /**
  * React allows for 'stateless components, but the export must happen here.'
@@ -12,5 +12,5 @@ export const NewsError = () => {
       <br />
       Please try again in a few minutes.
     </Alert>
-  );
-};
+  )
+}

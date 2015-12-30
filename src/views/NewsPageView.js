@@ -1,83 +1,119 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as ActionCreators from 'actions/newsPageView';
-import { Reader } from 'components/Reader';
-import moment from 'moment';
-import _ from 'lodash';
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as ActionCreators from 'actions/newsPageView'
+import { Reader } from 'components/Reader'
+import moment from 'moment'
+import _ from 'lodash'
+import CircularProgress from 'material-ui/lib/circular-progress'
 
 /* components */
-import { LineChartViz } from 'components/LineChartViz';
+import { LineChartViz } from 'components/LineChartViz'
 
 const mapStateToProps = (state) => ({
-  routerState: state.routing,
-  newsData: state.news.data
-});
+  browser: state.browser,
+  newsData: state.news.data,
+  financeData: state.finance.data,
+  realtimeData: state.realtime.data,
+  routerState: state.routing
+})
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(ActionCreators, dispatch)
-});
+})
 
 export class NewsPageView extends React.Component {
   static propTypes = {
+    actions: React.PropTypes.object.isRequired,
     params : React.PropTypes.object.isRequired,
-    newsData: React.PropTypes.object.isRequired
+    browser: React.PropTypes.object.isRequired,
+    newsData: React.PropTypes.object,
+    financeData: React.PropTypes.object,
+    realtimeData: React.PropTypes.object
   }
 
-  render () {
-    const { id } = this.props.params;
-    const article = this.props.newsData[id];
+  constructor(props) {
+    super(props)
+  }
 
-    // FIXME: Do not store data in here, should be in redux store.
-    const demoLineData = [{'date': '2015-12-09', 'value': '0.91794'}, {'date': '2015-12-08', 'value': '0.92302'}, {'date': '2015-12-07', 'value': '0.91878'}, {'date': '2015-12-04', 'value': '0.91609'}, {'date': '2015-12-03', 'value': '0.94224'}, {'date': '2015-12-02', 'value': '0.9411'}, {'date': '2015-12-01', 'value': '0.94581'}, {'date': '2015-11-30', 'value': '0.94491'}, {'date': '2015-11-27', 'value': '0.943'}, {'date': '2015-11-26', 'value': '0.94118'}, {'date': '2015-11-25', 'value': '0.93951'}, {'date': '2015-11-24', 'value': '0.93967'}, {'date': '2015-11-23', 'value': '0.93976'}];
+  componentWillMount() {
+    // call time parsing function
+    this.props.actions.fetchFinance(this.props.params).then( () => console.log(this.props.financeData.result) )
+  }
 
-    function parseData (dataArray) {
-      return _.map(dataArray, (dataPoint) => {
-        return {
-          x: moment(dataPoint.date).toDate(),
-          y: +dataPoint.value
-        };
-      });
-    }
+  // computeTimeRange(article_published, range) {
+  // }
 
-    const lineData = [
-      {
-        name: 'Demo Line Series',
-        values: parseData(demoLineData),
-        strokeWidth: 3,
-        strokeDashArray: '5,5'
+  parseData(dataArray) {
+    return _.map(dataArray, (dataPoint) => {
+      return {
+        x: moment(dataPoint.time).toDate(),
+        y: +dataPoint.price
       }
-    ];
+    })
+  }
 
-    return (
-      <div className='container text-center'>
-        <div><a href={'http://bit.ly/' + id}><h2>{ article.title }</h2></a></div>
-        <hr />
-        {/* TODO: Labels will most likely become a prop based on state */}
-        <div className='row'>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <Reader
-              title={ article.title }
-              body={ article.article_text }
-              bg_color={ 'white' }
-              text_color={ 'black' }
-              text_size={ 10 }
-            />
-          </div>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <LineChartViz
-              chartTitle={ 'USD/EUR (EUR=X)' }
-              chartData={ lineData }
-              useLegend={ false }
-              yAxisLabel={ 'Value' }
-              xAxisLabel={ 'Time' }
-              useGridHorizontal={ false }
-            />
+  render() {
+    const { id } = this.props.params
+    const article = this.props.newsData[id]
+
+    if (!this.props.financeData) {
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <CircularProgress className='loading' mode='indeterminate' size={4} />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      )
+    } else {
+      const lineData = [
+        {
+          name: 'Almanac Graphed Data',
+          values: this.parseData(this.props.financeData.result),
+          strokeWidth: 1,
+          strokeDashArray: '3,3'
+        }
+      ]
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <LineChartViz
+                chartTitle={ this.props.financeData.result[0].symbol }
+                chartData={ lineData }
+                useLegend={ false }
+                useGridHorizontal={ true }
+              />
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView)

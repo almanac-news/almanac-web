@@ -11,10 +11,15 @@ web-server:
 
 app-service:
   image: almanac/app-service:dev
-  links:
-   - data-cache
-   - rt-database
   restart: always
+  links:
+  - data-cache
+  - rt-database
+  environment:
+   - USERID=NYT_USERNAME
+   - PASSWORD=NYT_PASSWORD
+   - BITLY_TOKEN=BITLY_ACCESS_TOKEN
+   - NYT_KEY=NYT_ACCESS_KEY
 
 rt-database:
   image: rethinkdb

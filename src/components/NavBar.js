@@ -1,10 +1,10 @@
-import React from 'react';
-import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import React from 'react'
+import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap'
+import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
 export class NavBar extends React.Component {
 
-  render () {
+  render() {
     return (
       <Navbar inverse>
         <Navbar.Header>
@@ -37,8 +37,8 @@ export class NavBar extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    );
+    )
   }
 }
 
-export default NavBar;
+export default NavBar

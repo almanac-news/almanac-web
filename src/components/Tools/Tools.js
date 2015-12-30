@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 /* images */
-const reactjs = require('./files/reactjs.png');
-const redux = require('./files/redux.png');
-const babel = require('./files/babel.png');
-const webpack = require('./files/webpack.png');
-const bootstrap = require('./files/bootstrap.png');
-const mocha = require('./files/mocha.png');
+const reactjs = require('./files/reactjs.png')
+const redux = require('./files/redux.png')
+const babel = require('./files/babel.png')
+const webpack = require('./files/webpack.png')
+const bootstrap = require('./files/bootstrap.png')
+const mocha = require('./files/mocha.png')
 
 /**
  * Note the use of bootstrap's columns to properly arrange these elements
  */
 export class Tools extends Component {
-  render () {
+  render() {
     return (
       <section>
         <div className='container'>
@@ -57,6 +57,6 @@ export class Tools extends Component {
 
         </div>
       </section>
-    );
+    )
   }
 }

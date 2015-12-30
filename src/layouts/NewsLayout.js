@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 export default class NewsLayout extends React.Component {
 
-  render () {
+  render() {
     return (
       <div className='news-container'>
         <div className='news-text-container'>
@@ -12,6 +12,6 @@ export default class NewsLayout extends React.Component {
           Article data goes here.
         </div>
       </div>
-    );
+    )
   }
 }

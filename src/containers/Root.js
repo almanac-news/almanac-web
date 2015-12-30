@@ -1,9 +1,9 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import routes from '../routes';
-import DevTools from './DevTools';
-import { createDevToolsWindow } from '../utils';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { Router } from 'react-router'
+import routes from '../routes'
+import DevTools from './DevTools'
+import { createDevToolsWindow } from '../utils'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -18,16 +18,16 @@ export default class Root extends React.Component {
     debugExternal : false
   }
 
-  renderDevTools () {
+  renderDevTools() {
     if (!this.props.debug) {
-      return null;
+      return null
     }
 
     return this.props.debugExternal ?
-      createDevToolsWindow(this.props.store) : <DevTools />;
+      createDevToolsWindow(this.props.store) : <DevTools />
   }
 
-  render () {
+  render() {
     return (
       <Provider store={this.props.store}>
         <div>
@@ -37,6 +37,6 @@ export default class Root extends React.Component {
           {this.renderDevTools()}
         </div>
       </Provider>
-    );
+    )
   }
 }
