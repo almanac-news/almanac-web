@@ -16,6 +16,7 @@ const jsonParser = bodyParser.json();
 
 /**
  * Used for /api/subscribe and /api/unsubscribe.
+ * Helper functions, to be moved to utils
  */
 const isValidEmail = email => {
   if (!email || typeof email !== 'string') return false;
@@ -147,6 +148,21 @@ app.get('/api/news', (req, res) => {
  * Assumes that the 'subscribe' table exists in RethinkDB.
  * This is created by the App-Service Python script.
  */
+app.get('/api/finance', (req, res) => {
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      return r.table('finance').filter(r.row('symbol').eq('XLU')).run(conn);
+    })
+    .then( cursor => {
+      cursor.toArray((err, result) => {
+        res.send({
+          result: result,
+          id: req.query.id
+        });
+      });
+    });
+});
+
 app.post('/api/subscribe', jsonParser, (req, res) => {
   if (!req.body || !isValidEmail(req.body.email) || !areValidCategories(req.body.categories)) {
     res.sendStatus(400);

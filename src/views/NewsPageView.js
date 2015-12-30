@@ -37,7 +37,7 @@ export class NewsPageView extends React.Component {
 
   componentDidMount () {
     if (this.props.actions.fetchFinance) {
-      this.props.actions.fetchFinance();
+      this.props.actions.fetchFinance(this.props.params);
       // this.props.actions.fetchNews();
     }
   }
@@ -46,14 +46,11 @@ export class NewsPageView extends React.Component {
     const { id } = this.props.params;
     const article = this.props.newsData[id];
 
-    // FIXME: Do not store data in here, should be in redux store.
-    const demoLineData = [{'date': '2015-12-09', 'value': '0.91794'}, {'date': '2015-12-08', 'value': '0.92302'}, {'date': '2015-12-07', 'value': '0.91878'}, {'date': '2015-12-04', 'value': '0.91609'}, {'date': '2015-12-03', 'value': '0.94224'}, {'date': '2015-12-02', 'value': '0.9411'}, {'date': '2015-12-01', 'value': '0.94581'}, {'date': '2015-11-30', 'value': '0.94491'}, {'date': '2015-11-27', 'value': '0.943'}, {'date': '2015-11-26', 'value': '0.94118'}, {'date': '2015-11-25', 'value': '0.93951'}, {'date': '2015-11-24', 'value': '0.93967'}, {'date': '2015-11-23', 'value': '0.93976'}];
-
     function parseData (dataArray) {
       return _.map(dataArray, (dataPoint) => {
         return {
-          x: moment(dataPoint.date).toDate(),
-          y: +dataPoint.value
+          x: moment(dataPoint.time).toDate(),
+          y: +dataPoint.price
         };
       });
     }
@@ -61,7 +58,7 @@ export class NewsPageView extends React.Component {
     const lineData = [
       {
         name: 'Demo Line Series',
-        values: parseData(demoLineData),
+        values: parseData(this.props.financeData.result),
         strokeWidth: 3,
         strokeDashArray: '5,5'
       }
@@ -84,12 +81,12 @@ export class NewsPageView extends React.Component {
           </div>
           <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
             <LineChartViz
-              chartTitle={ 'USD/EUR (EUR=X)' }
+              chartTitle={ 'Stocks' }
               chartData={ lineData }
               useLegend={ false }
               yAxisLabel={ 'Value' }
               xAxisLabel={ 'Time' }
-              useGridHorizontal={ false }
+              useGridHorizontal={ true }
             />
           </div>
         </div>
