@@ -181,7 +181,7 @@ app.post('/api/like/:id', jsonParser, (req, res) => {
   } else {
     r.connect({ host: 'rt-database', port: 28015})
       .then( conn => {
-        return r.table('news').get(req.params.id).update({ likes: r.row('likes').add(req.body.vote).default(0) }).run(conn);
+        return r.table('news').get(req.params.id).update({ likes: r.row('likes').add(req.body.vote).default(1) }).run(conn);
       })
      .then( () => {
        res.sendStatus(201);
