@@ -7,7 +7,7 @@ web-server:
    - rt-database
   volumes:
    - .:/usr/src/app
-  # command: npm run dev
+  command: npm run dev
 
 app-service:
   image: almanac/app-service:dev
