@@ -10,8 +10,11 @@ import _ from 'lodash';
 import { LineChartViz } from 'components/LineChartViz';
 
 const mapStateToProps = (state) => ({
-  routerState: state.routing,
-  newsData: state.news.data
+  browser: state.browser,
+  newsData: state.news.data,
+  financeData: state.finance.data,
+  realtimeData: state.realtime.data,
+  routerState: state.routing
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -20,8 +23,23 @@ const mapDispatchToProps = (dispatch) => ({
 
 export class NewsPageView extends React.Component {
   static propTypes = {
+    actions: React.PropTypes.object.isRequired,
     params : React.PropTypes.object.isRequired,
-    newsData: React.PropTypes.object.isRequired
+    browser: React.PropTypes.object.isRequired,
+    newsData: React.PropTypes.object,
+    financeData: React.PropTypes.object,
+    realtimeData: React.PropTypes.object
+  }
+
+  constructor (props) {
+    super(props);
+  }
+
+  componentDidMount () {
+    if (this.props.actions.fetchFinance) {
+      this.props.actions.fetchFinance();
+      // this.props.actions.fetchNews();
+    }
   }
 
   render () {

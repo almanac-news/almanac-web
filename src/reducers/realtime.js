@@ -1,7 +1,7 @@
 import * as types from 'constants/realtime';
 
 const initialState = {
-  data: ''
+  data: {}
 };
 
 export default function realtimeReducer (state = initialState, action) {
