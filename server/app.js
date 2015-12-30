@@ -68,7 +68,6 @@ if (config.get('globals').__PROD__) {
  * Assumes that the 'news' table exists in RethinkDB.
  * This is created by the App-Service Python script.
  */
-
 app.get('/api/news/:date/:num?', (req, res) => {
   const date = req.params.date
   let num = null
@@ -123,8 +122,10 @@ app.get('/api/news', (req, res) => {
       pipeline.hgetall(key)
     })
 
-    // pipeline pads data - this code prunes the result to
-    // make it easier to work with on the frontend
+    /**
+     * pipeline pads data - this code prunes the result to
+     * make it easier to work with on the frontend
+     */
     pipeline.exec( (error, result) => {
       const prunedResult = {}
       let articleKey
