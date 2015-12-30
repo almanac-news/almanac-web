@@ -176,7 +176,7 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
  * This is created by the App-Service Python script.
  */
 app.post('/api/like/:id', jsonParser, (req, res) => {
-  if (!req.body || typeof req.body.vote !== 'number' ||  req.body.vote > 1 || req.body.vote < 1) {
+  if (!req.body || typeof req.body.vote !== 'number' ||  req.body.vote > 1 || req.body.vote < -1) {
     res.sendStatus(400);
   } else {
     r.connect({ host: 'rt-database', port: 28015})
