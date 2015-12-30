@@ -37,6 +37,10 @@ export class NewsPageView extends React.Component {
     super(props)
   }
 
+  render () {
+    const { id } = this.props.params;
+    const article = this.props.newsData[id];
+
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
     const timeRange = this.computeTimeRange(article.created_date, 1, 'h')

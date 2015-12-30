@@ -13,6 +13,7 @@ export default class Root extends React.Component {
     debugExternal : React.PropTypes.bool
   }
 
+
   static defaultProps = {
     debug : false,
     debugExternal : false
