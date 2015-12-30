@@ -113,6 +113,21 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
    }
 })
 
+app.post('/api/like/:id', jsonParser, (req, res) => {
+  if (!req.body || typeof req.body.vote !== 'number' ||  req.body.vote > 1 || req.body.vote < 1) {
+    res.sendStatus(400);
+  } else {
+    r.connect({ host: 'rt-database', port: 28015})
+      .then( conn => {
+        return r.table('news').get(req.params.id).update({ likes: r.row('likes').add(req.body.vote).default(0) }).run(conn);
+     })
+     .then( () => {
+       res.sendStatus(201);
+     })
+  }
+})
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/index.html'));
 });
