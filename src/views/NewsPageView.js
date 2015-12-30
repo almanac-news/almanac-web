@@ -1,13 +1,13 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as ActionCreators from 'actions/newsPageView';
-import { Reader } from 'components/Reader';
-import moment from 'moment';
-import _ from 'lodash';
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as ActionCreators from 'actions/newsPageView'
+import { Reader } from 'components/Reader'
+import moment from 'moment'
+import _ from 'lodash'
 
 /* components */
-import { LineChartViz } from 'components/LineChartViz';
+import { LineChartViz } from 'components/LineChartViz'
 
 const mapStateToProps = (state) => ({
   browser: state.browser,
@@ -15,11 +15,11 @@ const mapStateToProps = (state) => ({
   financeData: state.finance.data,
   realtimeData: state.realtime.data,
   routerState: state.routing
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(ActionCreators, dispatch)
-});
+})
 
 export class NewsPageView extends React.Component {
   static propTypes = {
@@ -31,44 +31,56 @@ export class NewsPageView extends React.Component {
     realtimeData: React.PropTypes.object
   }
 
-  constructor (props) {
-    super(props);
+  constructor(props) {
+    super(props)
   }
 
-  componentDidMount () {
+  componentWillMount() {
+
+  }
+
+  componentDidMount() {
     if (this.props.actions.fetchFinance) {
-      this.props.actions.fetchFinance(this.props.params);
+      this.props.actions.fetchFinance(this.props.params)
       // this.props.actions.fetchNews();
     }
   }
 
-  render () {
-    const { id } = this.props.params;
-    const article = this.props.newsData[id];
+  parseData(dataArray) {
+    return _.map(dataArray, (dataPoint) => {
+      return {
+        x: moment(dataPoint.time).toDate(),
+        y: +dataPoint.price
+      }
+    })
+  }
 
-    function parseData (dataArray) {
+  render() {
+    const { id } = this.props.params
+    const article = this.props.newsData[id]
+
+    function parseData(dataArray) {
       return _.map(dataArray, (dataPoint) => {
         return {
           x: moment(dataPoint.time).toDate(),
           y: +dataPoint.price
-        };
-      });
+        }
+      })
     }
 
     const lineData = [
       {
-        name: 'Demo Line Series',
+        name: 'Almanac Graphed Data',
         values: parseData(this.props.financeData.result),
-        strokeWidth: 3,
-        strokeDashArray: '5,5'
+        strokeWidth: 1,
+        strokeDashArray: '3,3'
       }
-    ];
+    ]
 
     return (
       <div className='container text-center'>
-        <div><a href={'http://bit.ly/' + id}><h2>{ article.title }</h2></a></div>
+        <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
         <hr />
-        {/* TODO: Labels will most likely become a prop based on state */}
         <div className='row'>
           <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
             <Reader
@@ -81,18 +93,16 @@ export class NewsPageView extends React.Component {
           </div>
           <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
             <LineChartViz
-              chartTitle={ 'Stocks' }
+              chartTitle={ this.props.financeData.result[0].symbol }
               chartData={ lineData }
               useLegend={ false }
-              yAxisLabel={ 'Value' }
-              xAxisLabel={ 'Time' }
               useGridHorizontal={ true }
             />
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView)

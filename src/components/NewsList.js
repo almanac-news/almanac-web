@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { NewsCard } from 'components/NewsCard';
+import React, { Component } from 'react'
+import { NewsCard } from 'components/NewsCard'
 
 export class NewsList extends Component {
   static propTypes = {
@@ -7,12 +7,12 @@ export class NewsList extends Component {
     browser: React.PropTypes.object.isRequired
   }
 
-  render () {
-    const newsData = this.props.data;
+  render() {
+    const newsData = this.props.data
     return (
         <div>
           { Object.keys(newsData).map((newsKey) => {
-            const newsItem = newsData[newsKey];
+            const newsItem = newsData[newsKey]
             return (
               // NOTE: unique key moved to wrapper div to add line break
               // FIXME: Look into giving a unique identifier to the key instead of random
@@ -26,11 +26,11 @@ export class NewsList extends Component {
                 />
                 <br/>
               </div>
-            );
+            )
           }) }
         </div>
-    );
+    )
   }
 }
 
-export default NewsCard;
+export default NewsCard

@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import React, { Component } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 /* utils */
-import { setParallax } from 'utils';
+import { setParallax } from 'utils'
 
 /* component styles */
-// import styles from './styles';
+// import styles from './styles'
 
 export class TopImage extends Component {
 
-  constructor (props) {
-    super(props);
-    this.handleScroll = this.handleScroll.bind(this);
+  constructor(props) {
+    super(props)
+    this.handleScroll = this.handleScroll.bind(this)
   }
 
-  componentDidMount () {
-    window.addEventListener('scroll', this.handleScroll);
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
   }
 
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleScroll);
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
-  handleScroll () {
-    setParallax(this.refs.parallax, 10);
+  handleScroll() {
+    setParallax(this.refs.parallax, 10)
   }
 
 // FIXME: Component is currently not used, transitionAppear boolean must be used
-  render () {
+  render() {
     return (
       <section ref='parallax'>
         <div className='container'>
@@ -51,6 +51,6 @@ export class TopImage extends Component {
           </div>
         </div>
       </section>
-    );
+    )
   }
 }

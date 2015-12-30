@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { NewsList } from 'components/NewsList';
+import React, { Component } from 'react'
+import { NewsList } from 'components/NewsList'
 
 export class NewsContainer extends Component {
 
@@ -8,7 +8,7 @@ export class NewsContainer extends Component {
     browser: React.PropTypes.object.isRequired
   }
 
-  render () {
+  render() {
     return (
       <section>
         <NewsList
@@ -17,8 +17,8 @@ export class NewsContainer extends Component {
           browser={ this.props.browser }
         />
       </section>
-    );
+    )
   }
 }
 
-export default NewsContainer;
+export default NewsContainer

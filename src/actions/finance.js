@@ -1,10 +1,10 @@
-import { FETCH_FINANCE_STARTED, FETCH_FINANCE_COMPLETED, FETCH_FINANCE_FAILED } from 'constants/finance';
-import fetch from 'isomorphic-fetch';
-require('es6-promise').polyfill();
+import { FETCH_FINANCE_STARTED, FETCH_FINANCE_COMPLETED, FETCH_FINANCE_FAILED } from 'constants/finance'
+import fetch from 'isomorphic-fetch'
+require('es6-promise').polyfill()
 
-export function fetchFinance (id) {
+export function fetchFinance(id) {
   return dispatch => {
-    dispatch({ type: FETCH_FINANCE_STARTED });
+    dispatch({ type: FETCH_FINANCE_STARTED })
 
     return fetch('/api/finance?id=' + id)
       .then( response => response.json() )
@@ -12,9 +12,9 @@ export function fetchFinance (id) {
         return {
           type: FETCH_FINANCE_COMPLETED,
           finance: data
-        };
+        }
       })
       .then( data => dispatch(data) )
-      .catch( () => dispatch({ type: FETCH_FINANCE_FAILED }) );
-  };
+      .catch( () => dispatch({ type: FETCH_FINANCE_FAILED }) )
+  }
 }

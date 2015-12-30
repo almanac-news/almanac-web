@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 /* component styles */
 // import styles from './styles';
 
 /* authors */
-const AUTHORS = ['tsaiDavid', 'sushiogoto', 'natelevine', 'smehraein'];
+const AUTHORS = ['tsaiDavid', 'sushiogoto', 'natelevine', 'smehraein']
 
 export class Footer extends Component {
-  render () {
-    function renderGitHubFollowButton (user) {
+  render() {
+    function renderGitHubFollowButton(user) {
       return (
         <a key={user}
            className='github-button' href={`https://github.com/${user}`}
@@ -18,7 +18,7 @@ export class Footer extends Component {
            aria-label={`Follow @${user} on GitHub`}>
           @{user}
         </a>
-      );
+      )
     }
     return (
       <footer>
@@ -41,6 +41,6 @@ export class Footer extends Component {
           </div>
         </div>
       </footer>
-    );
+    )
   }
 }

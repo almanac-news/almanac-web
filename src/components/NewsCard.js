@@ -1,8 +1,8 @@
-import React from 'react';
-import Card from 'material-ui/lib/card/card';
-import CardText from 'material-ui/lib/card/card-text';
-import CardTitle from 'material-ui/lib/card/card-title';
-import { Link } from 'react-router';
+import React from 'react'
+import Card from 'material-ui/lib/card/card'
+import CardText from 'material-ui/lib/card/card-text'
+import CardTitle from 'material-ui/lib/card/card-title'
+import { Link } from 'react-router'
 
 // TODO: Disabled these elements since they are not being used
 // import CardActions        from 'material-ui/lib/card/card-actions';
@@ -19,27 +19,27 @@ export class NewsCard extends React.Component {
     date: React.PropTypes.number
   }
 
-  responsiveRender () {
+  responsiveRender() {
     if (this.props.browser.lessThan.small) {
       return (
         <CardText>{ this.props.title }</CardText>
-      );
+      )
     } else {
       return (
         <CardTitle title={ this.props.title } subtitle={ this.props.abstract } />
-      );
+      )
     }
   }
 
-  render () {
+  render() {
     return (
       <Card>
         <Link to={'/news/' + this.props.url.slice(-7) }>
           { this.responsiveRender() }
         </Link>
       </Card>
-    );
+    )
   }
 }
 
-export default NewsCard;
+export default NewsCard
