@@ -1,13 +1,11 @@
 web-server:
-  build: .
+  image: almanac/web-server:dev
   ports:
    - 80:3000
+  restart: always
   links:
    - data-cache
    - rt-database
-  volumes:
-   - .:/usr/src/app
-  command: npm run dev
 
 app-service:
   image: almanac/app-service:dev

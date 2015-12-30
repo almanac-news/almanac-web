@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export class NewsPageView extends React.Component {
   static propTypes = {
-    actions: React.PropTypes.object.isRequired,
+    actions: React.PropTypes.object,
     params : React.PropTypes.object.isRequired,
     browser: React.PropTypes.object.isRequired,
     newsData: React.PropTypes.object,
