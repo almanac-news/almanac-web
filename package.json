@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "lint": "eslint ./src/**/*.js",
+    "lint": "eslint ./src/**/*.js && eslint ./server/*.js",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "webpack",
     "start": "node --harmony bin/server",

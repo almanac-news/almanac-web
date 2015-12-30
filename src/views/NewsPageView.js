@@ -5,6 +5,7 @@ import * as ActionCreators from 'actions/newsPageView'
 import { Reader } from 'components/Reader'
 import moment from 'moment'
 import _ from 'lodash'
+import CircularProgress from 'material-ui/lib/circular-progress'
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -36,15 +37,12 @@ export class NewsPageView extends React.Component {
   }
 
   componentWillMount() {
-
+    // call time parsing function
+    this.props.actions.fetchFinance(this.props.params).then( () => console.log(this.props.financeData.result) )
   }
 
-  componentDidMount() {
-    if (this.props.actions.fetchFinance) {
-      this.props.actions.fetchFinance(this.props.params)
-      // this.props.actions.fetchNews();
-    }
-  }
+  // computeTimeRange(article_published, range) {
+  // }
 
   parseData(dataArray) {
     return _.map(dataArray, (dataPoint) => {
@@ -59,49 +57,62 @@ export class NewsPageView extends React.Component {
     const { id } = this.props.params
     const article = this.props.newsData[id]
 
-    function parseData(dataArray) {
-      return _.map(dataArray, (dataPoint) => {
-        return {
-          x: moment(dataPoint.time).toDate(),
-          y: +dataPoint.price
-        }
-      })
-    }
-
-    const lineData = [
-      {
-        name: 'Almanac Graphed Data',
-        values: parseData(this.props.financeData.result),
-        strokeWidth: 1,
-        strokeDashArray: '3,3'
-      }
-    ]
-
-    return (
-      <div className='container text-center'>
-        <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
-        <hr />
-        <div className='row'>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <Reader
-              title={ article.title }
-              body={ article.article_text }
-              bg_color={ 'white' }
-              text_color={ 'black' }
-              text_size={ 10 }
-            />
-          </div>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <LineChartViz
-              chartTitle={ this.props.financeData.result[0].symbol }
-              chartData={ lineData }
-              useLegend={ false }
-              useGridHorizontal={ true }
-            />
+    if (!this.props.financeData) {
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <CircularProgress className='loading' mode='indeterminate' size={4} />
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      const lineData = [
+        {
+          name: 'Almanac Graphed Data',
+          values: this.parseData(this.props.financeData.result),
+          strokeWidth: 1,
+          strokeDashArray: '3,3'
+        }
+      ]
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <LineChartViz
+                chartTitle={ this.props.financeData.result[0].symbol }
+                chartData={ lineData }
+                useLegend={ false }
+                useGridHorizontal={ true }
+              />
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
 }
 
