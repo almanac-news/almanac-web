@@ -10,4 +10,4 @@ coverage
 .jshintrc
 
 Dockerfile
-
+docker-compose.yml
