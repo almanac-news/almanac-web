@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export class LikeComponent extends React.Component {
   static propTypes = {
@@ -11,19 +11,19 @@ export class LikeComponent extends React.Component {
     actions: React.PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props);
+  constructor(props) {
+    super(props)
   }
 
-  render () {
-    const { likeStatus } = this.props;
-    function buttonClass () {
+  render() {
+    const { likeStatus } = this.props
+    function buttonClass() {
       if (likeStatus === 1) {
         console.log('-------------------------1')
-        return 'btn btn-large';
+        return 'btn btn-large'
       } else {
         console.log('-------------------------11111')
-        return 'btn btn-large disabled';
+        return 'btn btn-large disabled'
       }
     }
 
@@ -37,8 +37,8 @@ export class LikeComponent extends React.Component {
           {likeStatus}<span className='glyphicon glyphicon-heart' aria-hidden='true'></span>
         </button>
       </div>
-    );
+    )
   }
 }
 
-export default LikeComponent;
+export default LikeComponent

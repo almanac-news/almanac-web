@@ -6,6 +6,7 @@ import { Reader } from 'components/Reader'
 import moment from 'moment'
 import _ from 'lodash'
 import CircularProgress from 'material-ui/lib/circular-progress'
+import { LikeComponent } from 'components/Like'
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export class NewsPageView extends React.Component {
+
   static propTypes = {
     actions: React.PropTypes.object,
     params : React.PropTypes.object.isRequired,
@@ -33,13 +35,18 @@ export class NewsPageView extends React.Component {
     likeStatus: React.PropTypes.number
   }
 
+  static childContextTypes = {
+    actions: React.PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props)
   }
 
-  render () {
-    const { id } = this.props.params;
-    const article = this.props.newsData[id];
+  getChildContext() {
+    return {actions: this.props.actions}
+  }
+
 
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
@@ -73,6 +80,8 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
+          {this.props.likeStatus}
+          <LikeComponent articleId={ id } likeStatus={ this.props.likeStatus } />
           <div className='row'>
             <div className='col-xs-12'>
               <Reader
@@ -95,6 +104,8 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
+          {this.props.likeStatus}
+          <LikeComponent articleId={ id } likeStatus={ this.props.likeStatus } />
           <div className='row'>
             <div className='col-xs-12'>
               <Reader

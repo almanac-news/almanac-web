@@ -13,7 +13,6 @@ export default class Root extends React.Component {
     debugExternal : React.PropTypes.bool
   }
 
-
   static defaultProps = {
     debug : false,
     debugExternal : false
@@ -32,7 +31,7 @@ export default class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <div>
-          <Router history={this.props.history}>
+          <Router history={this.props.history} >
             {routes}
           </Router>
           {this.renderDevTools()}

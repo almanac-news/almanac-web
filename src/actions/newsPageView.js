@@ -54,11 +54,11 @@ export function fetchFinance(timeRange) {
 }
 
 export function toggleLike(articleId, likeStatus) {
-  console.log('inside toggleLike');
+  console.log('inside toggleLike')
   return dispatch => {
     if (likeStatus === 1) {
       // /api/likes/:article
-      console.log('inside status 1');
+      console.log('inside status 1')
       return fetch('/api/like/' + articleId, {
         method: 'POST',
         headers: {
@@ -73,16 +73,15 @@ export function toggleLike(articleId, likeStatus) {
             console.log(response)
           }
           // check if data.value is 201, if it is, send relevant payload
-          return {
+          return dispatch({
             type: TOGGLE_LIKE,
             articleId: articleId,
             likeStatus: -1
-          }
+          })
         })
-        .then( data => dispatch(data) )
         // .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) );
     } else {
-      console.log('inside status -1');
+      console.log('inside status -1')
       return fetch('/api/like/' + articleId, {
         method: 'POST',
         headers: {
@@ -97,13 +96,13 @@ export function toggleLike(articleId, likeStatus) {
             console.log(response)
           }
           // check if data.value is 201, if it is, send relevant payload
-          return {
+          console.log('HELP ME')
+          dispatch({
             type: TOGGLE_LIKE,
             articleId: articleId,
             likeStatus: 1
-          }
+          })
         })
-        .then( data => dispatch(data) )
         // .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) );
     }
   }
