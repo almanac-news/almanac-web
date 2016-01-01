@@ -33,11 +33,11 @@ export function fetchNews() {
   }
 }
 
-export function fetchFinance() {
+export function fetchFinance(timeRange) {
   return dispatch => {
     dispatch({ type: FETCH_FINANCE_STARTED })
 
-    return fetch('/api/finance')
+    return fetch('/api/finance/' + timeRange.lower + '/' + timeRange.upper)
     .then( response => response.json() )
     .then( data => {
       return {
@@ -46,6 +46,9 @@ export function fetchFinance() {
       }
     })
     .then( data => dispatch(data) )
-    .catch( () => dispatch({ type: FETCH_FINANCE_FAILED }) )
+    .catch( () => dispatch({
+      type: FETCH_FINANCE_FAILED
+    })
+    )
   }
 }

@@ -36,8 +36,8 @@ export class HomeView extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
-    if (this.props.actions.fetchNews) {
+  componentWillMount() {
+    if (this.props.actions) {
       this.props.actions.fetchNews()
     }
   }

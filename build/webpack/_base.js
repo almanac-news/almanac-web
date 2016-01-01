@@ -1,9 +1,9 @@
-import webpack           from 'webpack';
-import cssnano           from 'cssnano';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import config            from '../../config';
+import webpack           from 'webpack'
+import cssnano           from 'cssnano'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import config            from '../../config'
 
-const paths = config.get('utils_paths');
+const paths = config.get('utils_paths')
 
 const webpackConfig = {
   name    : 'client',
@@ -34,7 +34,7 @@ const webpackConfig = {
     })
   ],
   resolve : {
-    extensions : ['', '.js', '.jsx'],
+    extensions : ['', '.js', '.jsx', '.json'],
     alias      : config.get('utils_aliases')
   },
   module : {
@@ -42,7 +42,7 @@ const webpackConfig = {
       {
         test : /\.(js|jsx)$/,
         exclude : [ /node_modules/, /node_modules\/material-ui/ ],
-        loader  : 'babel',
+        loader  : 'babel?optional=es7.objectRestSpread',
         query   : {
           stage    : 0,
           optional : ['runtime'],
@@ -61,6 +61,7 @@ const webpackConfig = {
           }
         }
       },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
         test    : /\.scss$/,
         loaders : [
@@ -77,7 +78,7 @@ const webpackConfig = {
       { test: /\.eot(\?.*)?$/,   loader: "file-loader?prefix=fonts/&name=[path][name].[ext]" },
       { test: /\.svg(\?.*)?$/,   loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml" },
       { test: /\.png$/,          loader: 'file?name=[name].[ext]' },
-      { test: /\.jpg$/,          loader: 'file?name=[name].[ext]' },
+      { test: /\.jpg$/,          loader: 'file?name=[name].[ext]' }
       /* eslint-enable */
     ]
   },
@@ -97,15 +98,15 @@ const webpackConfig = {
       }
     })
   ]
-};
+}
 
 // NOTE: this is a temporary workaround. I don't know how to get Karma
 // to include the vendor bundle that webpack creates, so to get around that
 // we remove the bundle splitting when webpack is used with Karma.
 const commonChunkPlugin = new webpack.optimize.CommonsChunkPlugin(
   'vendor', '[name].[hash].js'
-);
-commonChunkPlugin.__KARMA_IGNORE__ = true;
-webpackConfig.plugins.push(commonChunkPlugin);
+)
+commonChunkPlugin.__KARMA_IGNORE__ = true
+webpackConfig.plugins.push(commonChunkPlugin)
 
-export default webpackConfig;
+export default webpackConfig
