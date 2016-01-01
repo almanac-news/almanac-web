@@ -42,7 +42,7 @@ const webpackConfig = {
       {
         test : /\.(js|jsx)$/,
         exclude : [ /node_modules/, /node_modules\/material-ui/ ],
-        loader  : 'babel?optional=es7.objectRestSpread',
+        loader  : 'babel',
         query   : {
           stage    : 0,
           optional : ['runtime'],

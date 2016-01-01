@@ -558,11 +558,6 @@
       "from": "charenc@>=0.0.1 <0.1.0",
       "resolved": "https://registry.npmjs.org/charenc/-/charenc-0.0.1.tgz"
     },
-    "chartist": {
-      "version": "0.9.5",
-      "from": "chartist@>=0.9.4 <0.10.0",
-      "resolved": "https://registry.npmjs.org/chartist/-/chartist-0.9.5.tgz"
-    },
     "chokidar": {
       "version": "1.4.1",
       "from": "chokidar@>=1.0.0 <2.0.0",
