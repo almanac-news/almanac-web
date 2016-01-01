@@ -6,6 +6,9 @@ web-server:
   links:
    - data-cache
    - rt-database
+  volumes:
+   - .:/usr/src/app
+  command: npm run dev
 
 app-service:
   image: almanac/app-service:dev
@@ -14,10 +17,10 @@ app-service:
   - data-cache
   - rt-database
   environment:
-   - USERID=NYT_USERNAME
-   - PASSWORD=NYT_PASSWORD
-   - BITLY_TOKEN=BITLY_ACCESS_TOKEN
-   - NYT_KEY=NYT_ACCESS_KEY
+   - USERID=natejlevine@gmail.com
+   - PASSWORD=monkeybisness
+   - BITLY_TOKEN=ab6dbf0df548c91cffaa1ae82e0d9f4a52dfe4f8
+   - NYT_KEY=202f0d73b368cec23b977f5a141728ce:17:73664181
 
 rt-database:
   image: rethinkdb

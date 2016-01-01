@@ -79,7 +79,12 @@ export class NewsPageView extends React.Component {
   render() {
     const { id } = this.props.params
     const article = this.props.newsData[id]
-    const likeProp = this.props.likeStatus
+    let likeProp
+    if (this.props.likeStatus !== undefined) {
+      likeProp = this.props.likeStatus
+    } else {
+      likeProp = 0
+    }
 
     if (!this.props.financeData) {
       return (
