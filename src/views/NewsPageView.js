@@ -86,13 +86,8 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
-          {this.props.likeStatus}
-          <LikeComponent articleId={ id } ref={() => {
-            console.log(likeProp)
-            if (this.props.likeStatus) {
-              likeProp = this.props.likeStatus
-            }
-          }} likeStatus={ likeProp } />
+          <LikeComponent articleId={ id } likeStatus={ likeProp } />
+          <hr />
           <div className='row'>
             <div className='col-xs-12'>
               <Reader
@@ -115,8 +110,8 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
-          {this.props.likeStatus}
           <LikeComponent articleId={ id } likeStatus={ this.props.likeStatus } />
+          <hr />
           <div className='row'>
             <div className='col-xs-12'>
               <Reader

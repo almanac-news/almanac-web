@@ -74,7 +74,7 @@ export function toggleLike(articleId, likeStatus) {
             dispatch({
               type: TOGGLE_LIKE,
               articleId: articleId,
-              likeStatus: -1
+              likeStatus: 0
             })
           }
           // check if data.value is 201, if it is, send relevant payload

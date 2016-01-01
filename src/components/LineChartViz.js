@@ -8,6 +8,10 @@ export class LineChartViz extends React.Component {
     assetData: React.PropTypes.object.isRequired
   }
 
+  static contextTypes = {
+    actions: React.PropTypes.object.isRequired
+  }
+
   componentWillMount() {
     this.firstSeries = new TimeSeries({
       'name': 'BLV',
