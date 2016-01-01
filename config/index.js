@@ -24,7 +24,9 @@ config.set('vendor_dependencies', [
   'react-redux',
   'react-router',
   'redux',
-  'redux-simple-router'
+  'redux-simple-router',
+  'react-timeseries-charts',
+  'pondjs'
 ]);
 
 // ------------------------------------

@@ -37,19 +37,25 @@ export class NewsPageView extends React.Component {
   }
 
   componentWillMount() {
-    // call time parsing function
-    this.props.actions.fetchFinance(this.props.params).then( () => console.log(this.props.financeData.result) )
+    const article = this.props.newsData[this.props.params.id]
+    const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
+    console.log('timeRange: ', timeRange)
+    this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
   }
 
-  // computeTimeRange(article_published, range) {
-  // }
+  computeTimeRange(articlePublished, num, scale) {
+    const utcL = moment(articlePublished.slice(0, 19))
+    const utcH = moment(articlePublished.slice(0, 19))
+    const time = utcL.format('YYYY-MM-DDTHH:mm:ss')
+    const lower = utcL.subtract(num, scale).format('YYYY-MM-DDTHH:mm:ss')
+    const upper = utcH.add(num, scale).format('YYYY-MM-DDTHH:mm:ss')
+
+    return {'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished}
+  }
 
   parseData(dataArray) {
     return _.map(dataArray, (dataPoint) => {
-      return {
-        x: moment(dataPoint.time).toDate(),
-        y: +dataPoint.price
-      }
+      return [(moment(dataPoint.time).valueOf()), +dataPoint.price]
     })
   }
 
@@ -63,7 +69,7 @@ export class NewsPageView extends React.Component {
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
           <div className='row'>
-            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+            <div className='col-xs-12'>
               <Reader
                 title={ article.title }
                 body={ article.article_text }
@@ -72,27 +78,20 @@ export class NewsPageView extends React.Component {
                 text_size={ 10 }
               />
             </div>
-            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+          </div>
+          <hr />
+          <div className='row'>
               <CircularProgress className='loading' mode='indeterminate' size={4} />
-            </div>
           </div>
         </div>
       )
     } else {
-      const lineData = [
-        {
-          name: 'Almanac Graphed Data',
-          values: this.parseData(this.props.financeData.result),
-          strokeWidth: 1,
-          strokeDashArray: '3,3'
-        }
-      ]
       return (
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
           <div className='row'>
-            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+            <div className='col-xs-12'>
               <Reader
                 title={ article.title }
                 body={ article.article_text }
@@ -101,14 +100,17 @@ export class NewsPageView extends React.Component {
                 text_size={ 10 }
               />
             </div>
-            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+          </div>
+          <hr />
+          <div className='row'>
               <LineChartViz
-                chartTitle={ this.props.financeData.result[0].symbol }
-                chartData={ lineData }
-                useLegend={ false }
-                useGridHorizontal={ true }
+                chartData={ this.parseData(this.props.financeData.result) }
+                assetData={{
+                  avg: this.props.financeData.avg,
+                  std: this.props.financeData.std,
+                  symbol: this.props.financeData.symbol
+                }}
               />
-            </div>
           </div>
         </div>
       )

@@ -149,15 +149,30 @@ app.get('/api/news', (req, res) => {
  * This is created by the App-Service Python script.
  */
 app.get('/api/finance/:start/:end', (req, res) => {
+  let conn = null
+  let data = {}
   r.connect({ host: 'rt-database', port: 28015})
-    .then( conn => {
-      return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
+    .then( connection => {
+      conn = connection
+      return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2015-12-31T23:11:16Z').filter({'symbol': 'BLV'}).run(conn)
+      // FIXME: Please remove above and uncomment below for real times
+      // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
     })
     .then( cursor => {
       cursor.toArray((err, result) => {
-        res.send({
-          result: result,
-          id: req.query.id
+        data = result
+      })
+      .then(() => {
+        return r.table('history').filter({'id': 'BLV'}).run(conn)
+      })
+      .then( cursor2 => {
+        cursor2.toArray((err, result) => {
+          res.send({
+            result: data,
+            avg: result[0].avg,
+            std: result[0].std,
+            symbol: result[0].id
+          })
         })
       })
     })
