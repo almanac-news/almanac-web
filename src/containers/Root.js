@@ -28,6 +28,7 @@ export default class Root extends React.Component {
   }
 
   render() {
+    console.log('rerender');
     return (
       <Provider store={this.props.store}>
         <div>

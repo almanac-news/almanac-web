@@ -30,7 +30,11 @@ export class LikeComponent extends React.Component {
     return (
       <div>
         <button type='button'
-                onClick={ () => this.context.actions.toggleLike(this.props.articleId, this.props.likeStatus) }
+                onClick={ () => {
+                  this.context.actions.toggleLike(this.props.articleId, this.props.likeStatus)
+                  this.forceUpdate()
+                }
+              }
                 className={buttonClass.bind(this)()}
                 ref='heartButton'
                 aria-label='Left Align'>

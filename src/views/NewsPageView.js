@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
   newsData: state.news.data,
   financeData: state.finance.data,
   realtimeData: state.realtime.data,
-  routerState: state.routing
+  routerState: state.routing,
+  likeStatus: state.newsPageView.likeStatus
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -47,12 +48,15 @@ export class NewsPageView extends React.Component {
     return {actions: this.props.actions}
   }
 
-
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
     const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
     console.log('timeRange: ', timeRange)
     this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
+  }
+
+  componentWillUpdate() {
+    console.log(this.props, 'likeStatus')
   }
 
   computeTimeRange(articlePublished, num, scale) {
@@ -71,9 +75,11 @@ export class NewsPageView extends React.Component {
     })
   }
 
+
   render() {
     const { id } = this.props.params
     const article = this.props.newsData[id]
+    let likeProp = this.props.likeStatus
 
     if (!this.props.financeData) {
       return (
@@ -81,7 +87,12 @@ export class NewsPageView extends React.Component {
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
           {this.props.likeStatus}
-          <LikeComponent articleId={ id } likeStatus={ this.props.likeStatus } />
+          <LikeComponent articleId={ id } ref={() => {
+            console.log(likeProp)
+            if (this.props.likeStatus) {
+              likeProp = this.props.likeStatus
+            }
+          }} likeStatus={ likeProp } />
           <div className='row'>
             <div className='col-xs-12'>
               <Reader
