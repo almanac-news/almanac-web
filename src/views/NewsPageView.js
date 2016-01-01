@@ -6,6 +6,7 @@ import { Reader } from 'components/Reader'
 import moment from 'moment'
 import _ from 'lodash'
 import CircularProgress from 'material-ui/lib/circular-progress'
+import { LikeComponent } from 'components/Like'
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => ({
   newsData: state.news.data,
   financeData: state.finance.data,
   realtimeData: state.realtime.data,
-  routerState: state.routing
+  routerState: state.routing,
+  likeStatus: state.newsPageView.likeStatus
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -23,23 +25,32 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export class NewsPageView extends React.Component {
+
   static propTypes = {
-    actions: React.PropTypes.object.isRequired,
+    actions: React.PropTypes.object,
     params : React.PropTypes.object.isRequired,
     browser: React.PropTypes.object.isRequired,
     newsData: React.PropTypes.object,
     financeData: React.PropTypes.object,
-    realtimeData: React.PropTypes.object
+    realtimeData: React.PropTypes.object,
+    likeStatus: React.PropTypes.number
+  }
+
+  static childContextTypes = {
+    actions: React.PropTypes.object.isRequired
   }
 
   constructor(props) {
     super(props)
   }
 
+  getChildContext() {
+    return {actions: this.props.actions}
+  }
+
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
     const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
-    console.log('timeRange: ', timeRange)
     this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
   }
 
@@ -59,14 +70,28 @@ export class NewsPageView extends React.Component {
     })
   }
 
+
   render() {
     const { id } = this.props.params
     const article = this.props.newsData[id]
+
+    let likeProp
+
+    if (this.props.likeStatus !== undefined) {
+      likeProp = this.props.likeStatus
+    } else {
+      likeProp = 0
+    }
 
     if (!this.props.financeData) {
       return (
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <LikeComponent
+            articleId={ id }
+            likeStatus={ likeProp }
+          />
           <hr />
           <div className='row'>
             <div className='col-xs-12'>
@@ -81,7 +106,11 @@ export class NewsPageView extends React.Component {
           </div>
           <hr />
           <div className='row'>
-              <CircularProgress className='loading' mode='indeterminate' size={4} />
+              <CircularProgress
+                className='loading'
+                mode='indeterminate'
+                size={4}
+              />
           </div>
         </div>
       )
@@ -89,6 +118,11 @@ export class NewsPageView extends React.Component {
       return (
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
+          <hr />
+          <LikeComponent
+            articleId={ id }
+            likeStatus={ this.props.likeStatus }
+          />
           <hr />
           <div className='row'>
             <div className='col-xs-12'>

@@ -98,6 +98,7 @@ app.get('/api/news/:date/:num?', (req, res) => {
  * Assumes that the 'news' table exists in RethinkDB.
  * This is created by the App-Service Python script.
  */
+
 app.get('/api/news', (req, res) => {
   // Open a change-feed connection to RethinkDB
   // Listens for any changes on 'news' table
@@ -106,9 +107,19 @@ app.get('/api/news', (req, res) => {
       return r.table('news').changes().run(conn)
     })
     .then( cursor => {
-      cursor.each((err, change) => {
-        io.emit('REACT', change)
+    //   cursor.each((err, change) => {
+    //     io.emit('REACT', change)
+    //   })
+    // })
+      cursor.toArray(function(err, results) {
+        if (err) console.log(err)
+        io.emit('newsEmitEvent', results)
       })
+      // cursor.each((err, change) => {
+      //   io.emit('something', change);
+      // });
+      // cursor.
+      // cursor.close();
     })
 
   // Initially populate news-feed from Redis cache for faster load time
