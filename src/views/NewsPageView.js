@@ -51,12 +51,7 @@ export class NewsPageView extends React.Component {
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
     const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
-    console.log('timeRange: ', timeRange)
     this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
-  }
-
-  componentWillUpdate() {
-    console.log(this.props, 'likeStatus')
   }
 
   computeTimeRange(articlePublished, num, scale) {
@@ -79,7 +74,9 @@ export class NewsPageView extends React.Component {
   render() {
     const { id } = this.props.params
     const article = this.props.newsData[id]
+
     let likeProp
+
     if (this.props.likeStatus !== undefined) {
       likeProp = this.props.likeStatus
     } else {
@@ -91,7 +88,10 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
-          <LikeComponent articleId={ id } likeStatus={ likeProp } />
+          <LikeComponent
+            articleId={ id }
+            likeStatus={ likeProp }
+          />
           <hr />
           <div className='row'>
             <div className='col-xs-12'>
@@ -106,7 +106,11 @@ export class NewsPageView extends React.Component {
           </div>
           <hr />
           <div className='row'>
-              <CircularProgress className='loading' mode='indeterminate' size={4} />
+              <CircularProgress
+                className='loading'
+                mode='indeterminate'
+                size={4}
+              />
           </div>
         </div>
       )
@@ -115,7 +119,10 @@ export class NewsPageView extends React.Component {
         <div className='container text-center'>
           <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
           <hr />
-          <LikeComponent articleId={ id } likeStatus={ this.props.likeStatus } />
+          <LikeComponent
+            articleId={ id }
+            likeStatus={ this.props.likeStatus }
+          />
           <hr />
           <div className='row'>
             <div className='col-xs-12'>

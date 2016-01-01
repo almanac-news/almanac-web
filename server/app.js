@@ -113,7 +113,7 @@ app.get('/api/news', (req, res) => {
     // })
       cursor.toArray(function(err, results) {
         if (err) console.log(err)
-        io.emit('something', results)
+        io.emit('newsEmitEvent', results)
       })
       // cursor.each((err, change) => {
       //   io.emit('something', change);

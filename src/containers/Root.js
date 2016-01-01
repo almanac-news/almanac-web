@@ -28,11 +28,10 @@ export default class Root extends React.Component {
   }
 
   render() {
-    console.log('rerender')
     return (
       <Provider store={this.props.store}>
         <div>
-          <Router history={this.props.history} >
+          <Router history={this.props.history}>
             {routes}
           </Router>
           {this.renderDevTools()}

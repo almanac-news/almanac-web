@@ -19,10 +19,8 @@ export class LikeComponent extends React.Component {
     const { likeStatus } = this.props
     function buttonClass() {
       if (likeStatus === 1) {
-        console.log('-------------------------1')
         return 'btn btn-large'
       } else {
-        console.log('-------------------------11111')
         return 'btn btn-large disabled'
       }
     }
@@ -30,14 +28,15 @@ export class LikeComponent extends React.Component {
     return (
       <div>
         <button type='button'
-                onClick={ () => {
-                  this.context.actions.toggleLike(this.props.articleId, this.props.likeStatus)
-                }
-              }
-                className={buttonClass.bind(this)()}
+                onClick={ () => { this.context.actions.toggleLike(this.props.articleId, this.props.likeStatus)} }
+                className={ buttonClass.bind(this)() }
                 ref='heartButton'
                 aria-label='Left Align'>
-          <span className='glyphicon glyphicon-heart' aria-hidden='true'>{ likeStatus }</span>
+          <span
+            className='glyphicon glyphicon-heart'
+            aria-hidden='true'>
+            { likeStatus }
+          </span>
         </button>
       </div>
     )

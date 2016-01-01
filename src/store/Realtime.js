@@ -11,17 +11,13 @@ export function setupRealtime(store) {
   //
   //   if (actions.receiveEvent) {
   //     store.dispatch(actions.receiveEvent(data))
-  io.on('something', (data) => {
-    console.log('inside client socket ', data)
+  io.on('newsEmitEvent', (data) => {
+    console.log('Inside client socket: ', data)
     // let state = store.getState();
 
-    console.log('inside something')
-    console.log(data)
     if (!data.old_val) {
-      console.log(1)
       store.dispatch(actions.receiveEvent(data))
     } else {
-      console.log(2)
       store.dispatch(likeActions.toggleLike(data.new_val.id))
     }
     // if (!change.old_val) {
