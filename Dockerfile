@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 RUN npm cache clean -f
+RUN npm install y18n
 RUN npm install
 COPY . /usr/src/app
 RUN npm run compile
