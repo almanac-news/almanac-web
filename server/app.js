@@ -7,6 +7,9 @@ import http from 'http'
 import socketIO from 'socket.io'
 import r from 'rethinkdb'
 import bodyParser from 'body-parser'
+import mailgunSetup from 'mailgun-js'
+import _ from 'lodash'
+import { secrets } from './config/secrets'
 
 const app = express()
 const httpServer = http.Server(app)
@@ -62,6 +65,20 @@ if (config.get('globals').__PROD__) {
 }
 
 /**
+ * TODO: We may need this cache endpoint below to load the persistent data
+ * after Redis has initialized the page
+ */
+// app.get('/api/news/cached', (req, res) => {
+//   r.connect({ host: 'rt-database', port: 28015})
+//     .then( conn => {
+//       return r.table('news').orderBy({index: r.desc('created_date')}).limit(10).run(conn)
+//     })
+//     .then( array => {
+//
+//     })
+// })
+
+/**
  * This is used for infinite scrolling on the news-feed.
  * Will return :num? articles before the provided date.
  * Defaults to 5 articles.
@@ -107,19 +124,13 @@ app.get('/api/news', (req, res) => {
       return r.table('news').changes().run(conn)
     })
     .then( cursor => {
-    //   cursor.each((err, change) => {
-    //     io.emit('REACT', change)
-    //   })
-    // })
-      cursor.toArray(function(err, results) {
-        if (err) console.log(err)
-        io.emit('newsEmitEvent', results)
+      cursor.each((err, change) => {
+        io.emit('newsEmitEvent', change)
       })
-      // cursor.each((err, change) => {
-      //   io.emit('something', change);
-      // });
-      // cursor.
-      // cursor.close();
+    })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
     })
 
   // Initially populate news-feed from Redis cache for faster load time
@@ -161,29 +172,29 @@ app.get('/api/news', (req, res) => {
  */
 app.get('/api/finance/:start/:end', (req, res) => {
   let conn = null
-  let data = {}
   r.connect({ host: 'rt-database', port: 28015})
     .then( connection => {
       conn = connection
-      return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2015-12-31T23:11:16Z').filter({'symbol': 'BLV'}).run(conn)
+      return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2016-01-01T21:48:16').filter({'symbol': 'BLV'}).run(conn)
       // FIXME: Please remove above and uncomment below for real times
       // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
     })
     .then( cursor => {
       cursor.toArray((err, result) => {
-        data = result
-      })
-      .then(() => {
-        return r.table('history').filter({'id': 'BLV'}).run(conn)
-      })
-      .then( cursor2 => {
-        cursor2.toArray((err, result) => {
-          res.send({
-            result: data,
-            avg: result[0].avg,
-            std: result[0].std,
-            symbol: result[0].id
+        r.table('history').filter({'id': 'BLV'}).run(conn)
+        .then( cursor2 => {
+          cursor2.toArray((error, array) => {
+            res.send({
+              result: result,
+              avg: array[0].avg,
+              std: array[0].std,
+              symbol: array[0].id
+            })
           })
+        })
+        .catch( err2 => {
+          console.log(err2)
+          res.sendStatus(503)
         })
       })
     })
@@ -210,7 +221,111 @@ app.post('/api/subscribe', jsonParser, (req, res) => {
      .then( () => {
        res.sendStatus(201)
      })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
+     })
   }
+})
+
+// TODO: Add endpoint that listens for changes on history table, and uses node mailer to send emails when there are big events
+// endpoint should then loop through all subscriptions and send them an email
+// need to create a map of categories to stocks, call this endpoint on webpage load
+
+const mailgun = mailgunSetup({apiKey: secrets.apiKey, domain: secrets.domain})
+
+app.get('/api/subscribe/email', (req, res) => {
+  let conn = null
+  const emails = []
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( connection => {
+      conn = connection
+      return r.table('history').changes().run(conn)
+    })
+    .then( cursor => {
+      cursor.each((err, change) => {
+        r.table('subscriptions').filter({}).coerceTo('array').run(conn)
+        .then( cursor2 => {
+          cursor2.forEach( subscriber => {
+            if (_.includes(change.new_val.categories, subscriber.category)) {
+              emails.push(subscriber.email)
+            }
+          })
+          emails.forEach( email => {
+            const emailData = {
+              from: 'Almanac News Team <almncnews@gmail.com>',
+              to: email,
+              subject: 'Almanac News Alert!',
+              text: JSON.stringify(change.new_val)
+            }
+            mailgun.messages().send(emailData, (error, body) => {
+              if (error) res.send(JSON.stringify(err))
+              res.send(JSON.stringify(body))
+            })
+          })
+        })
+        .catch( err2 => {
+          console.log(err2)
+          res.sendStatus(503)
+        })
+      })
+      .catch( err => {
+        console.log(err)
+        res.sendStatus(503)
+      })
+    })
+})
+
+// FIXME: janky table creation - please create comments table on the app-service
+
+
+// TODO: Add live comment listener
+app.get('/api/comments/:time', jsonParser, (req, res) => {
+  const time = new Date(req.params.time)
+  let startTime = new Date(req.params.time)
+  startTime.setMinutes(startTime.getMinutes() - 1000)
+  startTime = startTime.toISOString()
+  let endTime = new Date(req.params.time)
+  endTime.setMinutes(endTime.getMinutes() + 1000)
+  endTime = endTime.toISOString()
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      return r.table('comments').orderBy({index:'created_at'}).between(startTime, endTime).run(conn)
+    })
+    .then( cursor => {
+      return cursor.toArray()
+    })
+    .then( result => {
+      console.log('---------------------------------------------', result)
+      res.send(result)
+    })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
+})
+
+// TODO: created_at should be tied to a specific point - use 'selected'
+app.post('/api/comments/', jsonParser, (req, res) => {
+  r.tableList().contains('comments')
+  .do( (tableExists) => {
+    return r.branch(
+      tableExists,
+      { created: 0 },
+      r.tableCreate('comments')
+    )
+  })
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      return r.table('comments').insert({ comment: req.body.text, username: req.body.username, created_at: req.body.createdAt }).run(conn)
+    })
+   .then( () => {
+     res.sendStatus(201)
+   })
+   .catch( err => {
+     console.log(err)
+     res.sendStatus(503)
+   })
 })
 
 /**
@@ -237,6 +352,10 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
      .then( () => {
        res.sendStatus(201)
      })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
+     })
   }
 })
 
@@ -260,7 +379,11 @@ app.post('/api/like/:id', jsonParser, (req, res) => {
         return r.table('news').get(req.params.id).update({ likes: r.row('likes').add(req.body.vote).default(1) }).run(conn)
       })
      .then( () => {
-       res.sendStatus(201)
+       res.send().status(201)
+     })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
      })
   }
 })

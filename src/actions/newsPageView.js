@@ -1,6 +1,7 @@
 import { SHOW_READER, HIDE_READER, TOGGLE_LIKE } from 'constants/newsPageView'
 import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED, FETCH_NEWS_FAILED } from 'constants/news'
 import { FETCH_FINANCE_STARTED, FETCH_FINANCE_COMPLETED, FETCH_FINANCE_FAILED } from 'constants/finance'
+import { FETCH_COMMENTS_STARTED, FETCH_COMMENTS_COMPLETED, FETCH_COMMENTS_FAILED, POST_COMMENT_STARTED, POST_COMMENT_COMPLETED, POST_COMMENT_FAILED, } from 'constants/comments'
 import fetch from 'isomorphic-fetch'
 require('es6-promise').polyfill()
 
@@ -33,6 +34,55 @@ export function fetchNews() {
   }
 }
 
+export function fetchComments(time) {
+  return dispatch => {
+    dispatch({ type: FETCH_COMMENTS_STARTED })
+
+    return fetch('/api/comments/' + time)
+      .then( response => response.json() )
+      .then( data => {
+        return {
+          type: FETCH_COMMENTS_COMPLETED,
+          comments: data
+        }
+      })
+      .then( data => dispatch(data) )
+      .catch( () => dispatch({ type: FETCH_COMMENTS_FAILED }) )
+  }
+}
+
+export function postComment(username, text) {
+  return dispatch => {
+    dispatch({ type: POST_COMMENT_STARTED })
+    console.log(username)
+    console.log(text)
+    return fetch('/api/comments/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        text: text,
+        createdAt: new Date()
+      })
+    })
+      .then( response => {
+        // check if post was successful or not, then send relevant payload
+        console.log(response)
+        if (response.status === 201) {
+          dispatch({
+            type: POST_COMMENT_COMPLETED,
+            comment: text
+          })
+        } else {
+          dispatch({ type: POST_COMMENT_FAILED })
+        }
+      })
+      // .catch( () => dispatch({ type: POST_COMMENT_FAILED }) )
+  }
+}
+
 export function fetchFinance(timeRange) {
   return dispatch => {
     dispatch({ type: FETCH_FINANCE_STARTED })
@@ -40,6 +90,7 @@ export function fetchFinance(timeRange) {
     return fetch('/api/finance/' + timeRange.lower + '/' + timeRange.upper)
     .then( response => response.json() )
     .then( data => {
+      console.log(data)
       return {
         type: FETCH_FINANCE_COMPLETED,
         finance: data
@@ -89,7 +140,7 @@ export function toggleLike(articleId, likeStatus) {
       })
         .then( response => {
           if (response) {
-            console.log(response)
+            // console.log(response)
           }
           // check if data.value is 201, if it is, send relevant payload
           dispatch({

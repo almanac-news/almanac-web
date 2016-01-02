@@ -1,15 +1,34 @@
 import React from 'react'
-import { Charts, ChartContainer, ChartRow, YAxis, LineChart, Baseline, Resizable } from 'react-timeseries-charts'
+import { Charts, ChartContainer, ChartRow, YAxis, LineChart, Baseline, Resizable, Tracker } from 'react-timeseries-charts'
 import { TimeSeries } from 'pondjs'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+// import * as ActionCreators from 'actions/newsPageView'
+
+const mapStateToProps = (state) => ({
+  tracker: this.state.tracker
+})
+
+// const mapDispatchToProps = (dispatch) => ({
+//   actions: bindActionCreators(ActionCreators, dispatch)
+// })
+// Fire some action from prop
 
 export class LineChartViz extends React.Component {
   static propTypes = {
     chartData: React.PropTypes.array.isRequired,
-    assetData: React.PropTypes.object.isRequired
+    assetData: React.PropTypes.object.isRequired,
+    tracker: React.PropTypes.object
   }
 
   static contextTypes = {
     actions: React.PropTypes.object.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.tracker = null
   }
 
   componentWillMount() {
@@ -23,6 +42,12 @@ export class LineChartViz extends React.Component {
   firstSeriesStyle = {
     color: '#FF0000',
     width: 2
+  }
+
+  handleTrackerChanged = (t) => {
+    this.setState({tracker: t})
+    // console.log(this.state)
+    this.context.actions.fetchComments(t)
   }
 
   render() {
@@ -39,9 +64,11 @@ export class LineChartViz extends React.Component {
             timeRange={this.firstSeries.timerange()}
             enablePanZoom={true}
             padding='-10'
+            trackerPosition={this.props.tracker}
+            onTrackerChanged={this.handleTrackerChanged}
             >
             <ChartRow height='250' debug={false}>
-              <YAxis id='axis1' label={symbol} min={avg - (std * 2)} max={avg + (std * 2)} width='60' type='linear' format='$,.' />
+              <YAxis id='axis1' label={symbol} min={70} max={90} width='60' type='linear' format='$,.' />
               <Charts>
                 <LineChart axis='axis1' series={this.firstSeries} style={this.firstSeriesStyle} />
                 <Baseline axis='axis1' value={avg} label='Average' position='right'/>
@@ -54,4 +81,4 @@ export class LineChartViz extends React.Component {
   }
 }
 
-export default LineChartViz
+export default connect(mapStateToProps)(LineChartViz)

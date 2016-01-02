@@ -39,6 +39,7 @@ export class HomeView extends React.Component {
   componentWillMount() {
     if (this.props.actions) {
       this.props.actions.fetchNews()
+      this.props.actions.initEmailSubscriptions()
     }
   }
 

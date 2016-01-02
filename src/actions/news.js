@@ -18,3 +18,25 @@ export function fetchNews() {
       .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) )
   }
 }
+
+export function initEmailSubscriptions() {
+  return dispatch => {
+    return fetch('/api/subscribe/email')
+      .then( response => response.json() )
+      .then( data => {
+        // console.log(data)
+      })
+      .catch( (err) => {
+        // console.log(err)
+      })
+  }
+}
+
+export function getRealtimeNews(data) {
+  return dispatch => {
+    dispatch({
+      type: FETCH_NEWS_COMPLETED,
+      news: data
+    })
+  }
+}

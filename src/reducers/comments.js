@@ -1,25 +1,24 @@
-import * as types from 'constants/news'
+import * as types from 'constants/comments'
 
 const initialState = {
   isFetching: false
 }
 
-export default function newsReducer(state = initialState, action) {
+export default function commentsReducer(state = initialState, action) {
   switch (action.type) {
-    case types.FETCH_NEWS_STARTED:
+    case types.FETCH_COMMENTS_STARTED:
       return Object.assign({}, state, {
         isFetching: true
       })
 
-    case types.FETCH_NEWS_COMPLETED:
-      console.log(action.news)
-      const extendData = Object.assign({}, state.data, action.news)
+    case types.FETCH_COMMENTS_COMPLETED:
+      console.log(action.comments)
       return Object.assign({}, state, {
         isFetching: false,
-        data: extendData
+        data: action.comments
       })
 
-    case types.FETCH_NEWS_FAILED:
+    case types.FETCH_COMMENTS_FAILED:
       return Object.assign({}, state, {
         isFetching: false
       })
