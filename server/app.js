@@ -168,28 +168,24 @@ app.get('/api/news', (req, res) => {
  */
 app.get('/api/finance/:start/:end', (req, res) => {
   let conn = null
-  let data = {}
   r.connect({ host: 'rt-database', port: 28015})
     .then( connection => {
       conn = connection
-      return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2015-12-31T23:11:16Z').filter({'symbol': 'BLV'}).run(conn)
+      // return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2016-01-01T21:48:16').filter({'symbol': 'BLV'}).run(conn)
       // FIXME: Please remove above and uncomment below for real times
-      // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
+      return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
     })
     .then( cursor => {
       cursor.toArray((err, result) => {
-        data = result
-      })
-      .then(() => {
-        return r.table('history').filter({'id': 'BLV'}).run(conn)
-      })
-      .then( cursor2 => {
-        cursor2.toArray((err, result) => {
-          res.send({
-            result: data,
-            avg: result[0].avg,
-            std: result[0].std,
-            symbol: result[0].id
+        r.table('history').filter({'id': 'BLV'}).run(conn)
+        .then( cursor2 => {
+          cursor2.toArray((error, array) => {
+            res.send({
+              result: result,
+              avg: array[0].avg,
+              std: array[0].std,
+              symbol: array[0].id
+            })
           })
         })
       })
@@ -258,6 +254,47 @@ app.get('/api/subscribe/email', (req, res) => {
         })
       })
     })
+})
+
+// FIXME: janky table creation - please create comments table on the app-service
+
+// r.tableList().contains('comments')
+// .do( (tableExists) => {
+//   return r.branch(
+//     tableExists,
+//     { created: 0 },
+//     r.tableCreate('comments')
+//   )
+// })
+
+// TODO: Add live comment listener
+app.get('/api/comments/:time', (req, res) => {
+  let conn = null
+  const time = req.params.time
+  let startTime;
+  startTime.setMinutes(time.getMinutes() - 30)
+  let endTime;
+  endTime.setMinutes(time.getMinutes() + 30)
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( connection => {
+      conn = connection
+      return r.table('comments').between(startTime, endTime).run(conn)
+      // FIXME: Please remove above and uncomment below for real times
+      // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
+    })
+    .then( data => {
+      res.send(data).status(200)
+    })
+})
+
+app.post('/api/comments/', jsonParser, (req, res) => {
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( conn => {
+      return r.table('comments').insert({ comment: req.body.text, username: req.body.username }).run(conn)
+    })
+   .then( () => {
+     res.sendStatus(201)
+   })
 })
 
 /**

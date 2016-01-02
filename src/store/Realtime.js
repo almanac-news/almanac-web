@@ -21,7 +21,7 @@ export function setupRealtime(store) {
 
   io.on('anotherEmitEvent', (data) => {
     // console.log('inside update')
-    // console.log(data)
+    console.log(data)
   })
 
   return io

@@ -8,6 +8,7 @@ import _ from 'lodash'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import { LikeComponent } from 'components/Like'
 import Paper from 'material-ui/lib/paper'
+import { Input } from 'react-bootstrap'
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -75,6 +76,12 @@ export class NewsPageView extends React.Component {
     })
   }
 
+  submitComment(e) {
+    e.preventDefault()
+    const username = this.refs.username.value
+    const commentText = this.refs.commentText.value
+    this.props.actions.postComment(username, commentText)
+  }
 
   render() {
     const { id } = this.props.params
@@ -137,12 +144,32 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+<<<<<<< 5cc9fdde19a80a2c60ea4db5e443b0561c7a5823
               <Paper style={{padding: '5'}}>
                 <LikeComponent
                   articleId={ id }
                   likeStatus={ this.props.likeStatus }
                 />
               </Paper>
+              <form>
+                <div className='input-group'>
+                  <span className='input-group-addon' id='basic-addon1'>@</span>
+                  <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
+                </div>
+                <br />
+                <div className='form-group'>
+                  <textarea className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></textarea>
+                </div>
+                <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
+              </form>
+              <hr />
+                <LineChartViz
+                  chartData={ this.parseData(this.props.financeData.result) }
+                  assetData={{
+                    avg: this.props.financeData.avg,
+                    std: this.props.financeData.std,
+                    symbol: this.props.financeData.symbol
+                  }}
               <br />
               <LineChartViz
                 chartData={ this.parseData(this.props.financeData.result) }
