@@ -33,11 +33,14 @@ export class LikeComponent extends React.Component {
                 ref='heartButton'
                 aria-label='Left Align'>
           <span
+            style={{color: 'red'}}
             className='glyphicon glyphicon-heart'
             aria-hidden='true'>
-            { likeStatus }
           </span>
         </button>
+        <span style={{padding: '10'}}>
+          { likeStatus }
+        </span>
       </div>
     )
   }
