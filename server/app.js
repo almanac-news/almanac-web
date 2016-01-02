@@ -222,6 +222,10 @@ app.post('/api/subscribe', jsonParser, (req, res) => {
   }
 })
 
+// TODO: Add endpoint that listens for changes on history table, and uses node mailer to send emails when there are big events
+// endpoint should then loop through all subscriptions and send them an email
+// need to create a map of categories to stocks
+
 /**
  * Will be hit from the sub/unsub page.
  * Expects a body with {categories: ARRAY OF A/N STRINGS, email: VALID EMAIL STRING}
