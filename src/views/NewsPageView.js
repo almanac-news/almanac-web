@@ -94,7 +94,7 @@ export class NewsPageView extends React.Component {
           />
           <hr />
           <div className='row'>
-            <div className='col-xs-12'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
               <Reader
                 title={ article.title }
                 body={ article.article_text }
@@ -103,15 +103,15 @@ export class NewsPageView extends React.Component {
                 text_size={ 10 }
               />
             </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                <CircularProgress
+                  className='loading'
+                  mode='indeterminate'
+                  size={2}
+                />
+            </div>
           </div>
           <hr />
-          <div className='row'>
-              <CircularProgress
-                className='loading'
-                mode='indeterminate'
-                size={4}
-              />
-          </div>
         </div>
       )
     } else {
@@ -125,7 +125,7 @@ export class NewsPageView extends React.Component {
           />
           <hr />
           <div className='row'>
-            <div className='col-xs-12'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
               <Reader
                 title={ article.title }
                 body={ article.article_text }
@@ -134,18 +134,18 @@ export class NewsPageView extends React.Component {
                 text_size={ 10 }
               />
             </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                <LineChartViz
+                  chartData={ this.parseData(this.props.financeData.result) }
+                  assetData={{
+                    avg: this.props.financeData.avg,
+                    std: this.props.financeData.std,
+                    symbol: this.props.financeData.symbol
+                  }}
+                />
+            </div>
           </div>
           <hr />
-          <div className='row'>
-              <LineChartViz
-                chartData={ this.parseData(this.props.financeData.result) }
-                assetData={{
-                  avg: this.props.financeData.avg,
-                  std: this.props.financeData.std,
-                  symbol: this.props.financeData.symbol
-                }}
-              />
-          </div>
         </div>
       )
     }
