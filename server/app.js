@@ -62,6 +62,20 @@ if (config.get('globals').__PROD__) {
 }
 
 /**
+ * TODO: We may need this cache endpoint below to load the persistent data
+ * after Redis has initialized the page
+ */
+// app.get('/api/news/cached', (req, res) => {
+//   r.connect({ host: 'rt-database', port: 28015})
+//     .then( conn => {
+//       return r.table('news').orderBy({index: r.desc('created_date')}).limit(10).run(conn)
+//     })
+//     .then( array => {
+//
+//     })
+// })
+
+/**
  * This is used for infinite scrolling on the news-feed.
  * Will return :num? articles before the provided date.
  * Defaults to 5 articles.
@@ -107,7 +121,7 @@ app.get('/api/news', (req, res) => {
       return r.table('news').changes().run(conn)
     })
     .then( cursor => {
-      // cursor.toArray(function(err, results) {
+      // cursor.toArray((err, results) => {
       //   io.emit('newsEmitEvent', results)
       // })
       cursor.each((err, change) => {

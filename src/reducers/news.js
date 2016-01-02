@@ -12,9 +12,10 @@ export default function newsReducer(state = initialState, action) {
       })
 
     case types.FETCH_NEWS_COMPLETED:
+      const extendData = Object.assign({}, state.data, action.news)
       return Object.assign({}, state, {
         isFetching: false,
-        data: action.news
+        data: extendData
       })
 
     case types.FETCH_NEWS_FAILED:

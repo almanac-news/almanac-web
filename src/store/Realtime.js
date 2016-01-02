@@ -14,9 +14,12 @@ export function setupRealtime(store) {
   //   if (actions.receiveEvent) {
   //     store.dispatch(actions.receiveEvent(data))
   io.on('newsEmitEvent', (data) => {
-    // let state = store.getState();
-    console.log(data)
-    store.dispatch(newsActions.getRealtimeNews(data.new_val.article))
+    // modify the data to fit the format we send initial redis news load
+    // FIXME: maybe fix this on app-service insertion?
+    const key = data.new_val.article.url.slice(-7)
+    const modifiedDataObj = {}
+    modifiedDataObj[key] =  data.new_val.article
+    store.dispatch(newsActions.getRealtimeNews(modifiedDataObj))
 
     // if (!data.old_val) {
     //   store.dispatch(actions.receiveEvent(data))
