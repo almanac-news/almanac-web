@@ -25,7 +25,6 @@ export class SubscriptionView extends React.Component {
     Object.keys(this.refs).forEach( key => {
       if (this.refs[key].checked) categories.push(key)
     })
-    console.log(categories)
     this.props.actions.subscribe(categories, email)
   }
   render() {

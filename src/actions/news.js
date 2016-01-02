@@ -20,15 +20,14 @@ export function fetchNews() {
 }
 
 export function initEmailSubscriptions() {
-  console.log('init email subscriptions')
   return dispatch => {
     return fetch('/api/subscribe/email')
       .then( response => response.json() )
       .then( data => {
-        console.log(data)
+        // console.log(data)
       })
       .catch( (err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }

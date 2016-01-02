@@ -89,7 +89,7 @@ export function toggleLike(articleId, likeStatus) {
       })
         .then( response => {
           if (response) {
-            console.log(response)
+            // console.log(response)
           }
           // check if data.value is 201, if it is, send relevant payload
           dispatch({
