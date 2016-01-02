@@ -6,6 +6,7 @@ import chalk    from 'chalk';
 import pkg      from '../package.json';
 
 dotenv.load();
+
 const config = new Map();
 
 // ------------------------------------
@@ -134,5 +135,6 @@ config.set('utils_aliases', [
   'views'
 ].reduce((acc, dir) => ((acc[dir] = paths.client(dir)) && acc), {}));
 
-export default config;
+export default config
+
 /* eslint-enable */
