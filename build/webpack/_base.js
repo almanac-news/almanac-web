@@ -2,6 +2,7 @@ import webpack           from 'webpack'
 import cssnano           from 'cssnano'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import config            from '../../config'
+import 'babel-polyfill'
 
 const paths = config.get('utils_paths')
 
@@ -41,24 +42,17 @@ const webpackConfig = {
     loaders : [
       {
         test : /\.(js|jsx)$/,
-        exclude : [ /node_modules/, /node_modules\/material-ui/ ],
+        exclude: /node_modules/,
         loader  : 'babel',
-        query   : {
-          stage    : 0,
-          optional : ['runtime'],
-          env      : {
-            development : {
-              plugins : ['react-transform'],
-              extra   : {
-                'react-transform' : {
-                  transforms : [{
-                    transform : 'react-transform-catch-errors',
-                    imports   : ['react', 'redbox-react']
-                  }]
-                }
-              }
-            }
-          }
+        query: {
+          cacheDirectory: true,
+          presets: [require.resolve('babel-preset-es2015'), require.resolve('babel-preset-react'), require.resolve('babel-preset-stage-0')],
+          plugins: [
+            'transform-runtime',
+            'add-module-exports',
+            'transform-decorators-legacy',
+            'transform-react-display-name'
+          ]
         }
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },

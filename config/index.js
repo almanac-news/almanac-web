@@ -25,8 +25,13 @@ config.set('vendor_dependencies', [
   'react-router',
   'redux',
   'redux-simple-router',
+  'moment',
+  'redux-responsive',
+  'react-router-bootstrap',
+  'react-tap-event-plugin',
   'react-timeseries-charts',
-  'pondjs'
+  'pondjs',
+  'radium'
 ]);
 
 // ------------------------------------
