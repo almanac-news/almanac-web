@@ -2,6 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ActionCreators from 'actions/subscription'
+import Paper from 'material-ui/lib/paper'
 
 const mapStateToProps = (state) => ({
   routerState: state.routing,
@@ -27,76 +28,56 @@ export class SubscriptionView extends React.Component {
     })
     this.props.actions.subscribe(categories, email)
   }
+
   render() {
+    const categories = [
+      'Africa',
+      'Asia Pacifc',
+      'Americas',
+      'Business',
+      'Europe',
+      'Health',
+      'Middle East',
+      'National',
+      'Politics',
+      'Science',
+      'Technology'
+    ]
     return (
       <div className='container text-center'>
-        <h1>Subscribe to Alerts</h1>
+        <h1>Subscribe</h1>
         <hr />
-        <form>
-          <div className='form-group'>
-            <label htmlFor='email'>Email address</label>
-            <input type='email' className='form-control' id='email' placeholder='Email' ref='email' required />
+        <div className='row'>
+          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+            <Paper style={{padding: '15'}}>
+              <form>
+                <div className='form-group'>
+                  {categories.map((category) => {
+                    return (
+                      <div className='checkbox'>
+                        <label>
+                          <input type='checkbox' ref={category} />{category}
+                        </label>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='email'>Email address</label>
+                  <input type='email' className='form-control' id='email' placeholder='Email' ref='email' required />
+                </div>
+                <button type='submit' className='btn btn-default' onClick={ this.submitForm.bind(this) }>
+                Submit</button>
+              </form>
+            </Paper>
           </div>
-          <div className='form-group'>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Africa' />Africa
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Asia Pacific' />Asia Pacific
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Americas' />Americas
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Business' />Business
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Europe' />Europe
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Politics' />Politics
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='National' />National
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Science' />Science
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Technology' />Technology
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Middle East' />Middle East
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input type='checkbox' ref='Health' />Health
-              </label>
-            </div>
+          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6' style={{padding: '15'}}>
+            <h4>Almanac News Alerts</h4>
+            <hr />
+            <p>Almanac News is committed to helping you keep track of the latest changes in the economy as it relates to what's happening in the world.
+            Easily subscribe to your favorite news categories to keep track of breaking changes as they roll out.</p>
           </div>
-          <button type='submit' className='btn btn-default' onClick={ this.submitForm.bind(this) }>
-          Submit</button>
-        </form>
+        </div>
       </div>
     )
   }

@@ -78,7 +78,7 @@ export class NewsPageView extends React.Component {
     const lower = utcL.subtract(num, scale).format('YYYY-MM-DDTHH:mm:ss')
     const upper = utcH.add(num, scale).format('YYYY-MM-DDTHH:mm:ss')
 
-    return {'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished}
+    return { 'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished }
   }
 
   parseData(dataArray) {
@@ -123,7 +123,7 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-              <Paper style={{padding: '5'}}>
+              <Paper style={{ padding: '5' }}>
                 <LikeComponent
                   articleId={ id }
                   likeStatus={ likeProp }
@@ -156,7 +156,7 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-              <Paper style={{padding: '5'}}>
+              <Paper style={{ padding: '5' }}>
                 <LikeComponent
                   articleId={ id }
                   likeStatus={ this.props.likeStatus }
