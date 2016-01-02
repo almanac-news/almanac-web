@@ -15,6 +15,11 @@ export class Reader extends React.Component {
     text_size: React.PropTypes.number
   }
 
+  static contextTypes = {
+    actions: React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props)
   }
@@ -31,7 +36,7 @@ export class Reader extends React.Component {
         textAlign: 'justify',
         color: text_color,
         padding: '1.5em',
-        height: '100px',
+        height: (this.context.browser.height / 2),
         overflow: 'scroll'
       }
     }

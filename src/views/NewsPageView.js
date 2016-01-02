@@ -37,7 +37,8 @@ export class NewsPageView extends React.Component {
   }
 
   static childContextTypes = {
-    actions: React.PropTypes.object.isRequired
+    actions: React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -45,7 +46,10 @@ export class NewsPageView extends React.Component {
   }
 
   getChildContext() {
-    return {actions: this.props.actions}
+    return {
+      actions: this.props.actions,
+      browser: this.props.browser
+    }
   }
 
   componentWillMount() {
