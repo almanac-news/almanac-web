@@ -144,7 +144,6 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-<<<<<<< 5cc9fdde19a80a2c60ea4db5e443b0561c7a5823
               <Paper style={{padding: '5'}}>
                 <LikeComponent
                   articleId={ id }
