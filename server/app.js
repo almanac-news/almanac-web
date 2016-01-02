@@ -36,6 +36,20 @@ const areValidCategories = categories => {
   return true
 }
 
+/**
+ * Expects the following : {'article_name': ARTICLE NAME, 'article_id': BITLY ID, 'timestamp': TIMESTAMP, 'category': CATEGORY, 'comment': TEXT}
+ * This is used for the /api/comment endpoint.
+ */
+const isValidComment = body => {
+  if (!body || typeof body.article_name !== 'string' || typeof body.article_id !== 'string' || typeof body.timestamp !== 'string' || typeof body.category !== 'string' || typeof body.comment !== 'string') {
+  return false
+  }
+  else {
+    return true
+  }
+}
+
+
 // Enable webpack middleware if the application is being
 // run in development mode.
 if (config.get('globals').__DEV__) {
@@ -79,7 +93,7 @@ app.get('/api/news/:date/:num?', (req, res) => {
   r.connect({ host: 'rt-database', port: 28015})
     .then( conn => {
       console.log(date, typeof date, num, typeof num)
-      return r.table('news').between(r.minval, date, {index: 'created_date'}) .orderBy({index: r.desc('created_date')}).limit(num).run(conn)
+      return r.table('news').between(r.minval, date, {index: 'created_date'}).orderBy({index: r.desc('created_date')}).limit(num).run(conn)
     })
     .then( cursor => {
       cursor.toArray(function(err, result) {
@@ -120,6 +134,10 @@ app.get('/api/news', (req, res) => {
       // });
       // cursor.
       // cursor.close();
+    })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
     })
 
   // Initially populate news-feed from Redis cache for faster load time
@@ -187,6 +205,10 @@ app.get('/api/finance/:start/:end', (req, res) => {
         })
       })
     })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
 })
 
 app.post('/api/subscribe', jsonParser, (req, res) => {
@@ -204,12 +226,16 @@ app.post('/api/subscribe', jsonParser, (req, res) => {
       return { id: cat + '@' + email, category: cat, email: email }
     })
     r.connect({ host: 'rt-database', port: 28015})
-     .then( conn => {
-       return r.table('subscriptions').insert(subscriptions).run(conn)
-     })
-     .then( () => {
-       res.sendStatus(201)
-     })
+    .then( conn => {
+      return r.table('subscriptions').insert(subscriptions).run(conn)
+    })
+    .then( () => {
+      res.sendStatus(201)
+    })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
   }
 })
 
@@ -237,6 +263,10 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
      .then( () => {
        res.sendStatus(201)
      })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
   }
 })
 
@@ -262,6 +292,34 @@ app.post('/api/like/:id', jsonParser, (req, res) => {
      .then( () => {
        res.sendStatus(201)
      })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
+  }
+})
+
+/**
+ * This will be hit from within an article page. Comments are associated with a category (not article).
+ * Expects the following : {'article_name': ARTICLE NAME, 'article_id': BITLY ID, 'timestamp': TIMESTAMP, 'category': CATEGORY, 'comment': TEXT}
+ * Assumes that the 'comments' table exists in RethinkDB.
+ * This is created by the App-Service Python script.
+ */
+app.post('/api/comment', jsonParser, (req, res) => {
+  if (!isValidComment(req.body)) {
+    res.sendStatus(400);
+  } else {
+    r.connect({ host: 'rt-database', port: 28015})
+      .then( conn => {
+        return r.table('comments').insert(req.body).run(conn)
+      })
+     .then( () => {
+       res.sendStatus(201)
+     })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
   }
 })
 
