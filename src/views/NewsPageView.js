@@ -161,18 +161,18 @@ export class NewsPageView extends React.Component {
                   articleId={ id }
                   likeStatus={ this.props.likeStatus }
                 />
+                <hr />
+                <form>
+                  <span className='input-group'>
+                    <span className='input-group-addon' id='basic-addon1'>@</span>
+                    <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
+                  </span>
+                  <span className='form-group'>
+                    <input className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></input>
+                  </span>
+                  <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
+                </form>
               </Paper>
-              <form>
-                <div className='input-group'>
-                  <span className='input-group-addon' id='basic-addon1'>@</span>
-                  <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
-                </div>
-                <br />
-                <div className='form-group'>
-                  <textarea className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></textarea>
-                </div>
-                <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
-              </form>
               <hr />
               <br />
               <LineChartViz
