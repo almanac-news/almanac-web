@@ -107,17 +107,12 @@ app.get('/api/news', (req, res) => {
       return r.table('news').changes().run(conn)
     })
     .then( cursor => {
-    //   cursor.each((err, change) => {
-    //     io.emit('REACT', change)
-    //   })
-    // })
-      cursor.toArray(function(err, results) {
-        if (err) console.log(err)
-        io.emit('newsEmitEvent', results)
+      // cursor.toArray(function(err, results) {
+      //   io.emit('newsEmitEvent', results)
+      // })
+      cursor.each((err, change) => {
+        io.emit('newsEmitEvent', change)
       })
-      // cursor.each((err, change) => {
-      //   io.emit('something', change);
-      // });
       // cursor.
       // cursor.close();
     })

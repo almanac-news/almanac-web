@@ -18,3 +18,12 @@ export function fetchNews() {
       .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) )
   }
 }
+
+export function getRealtimeNews(data) {
+  return dispatch => {
+    dispatch({
+      type: FETCH_NEWS_COMPLETED,
+      news: data
+    })
+  }
+}
