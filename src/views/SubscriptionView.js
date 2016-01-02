@@ -1,6 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
-import { Panel, Input, ButtonInput } from 'react-bootstrap'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ActionCreators from 'actions/subscription'
@@ -43,57 +41,57 @@ export class SubscriptionView extends React.Component {
           <div className='form-group'>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='africa' />Africa
+                <input type='checkbox' ref='Africa' />Africa
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='apac' />Asia Pacific
+                <input type='checkbox' ref='Asia Pacific' />Asia Pacific
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='americas' />Americas
+                <input type='checkbox' ref='Americas' />Americas
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='business' />Business
+                <input type='checkbox' ref='Business' />Business
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='europe' />Europe
+                <input type='checkbox' ref='Europe' />Europe
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='politics' />Politics
+                <input type='checkbox' ref='Politics' />Politics
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='national' />National
+                <input type='checkbox' ref='National' />National
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='science' />Science
+                <input type='checkbox' ref='Science' />Science
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='technology' />Technology
+                <input type='checkbox' ref='Technology' />Technology
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='mideast' />Middle East
+                <input type='checkbox' ref='Middle East' />Middle East
               </label>
             </div>
             <div className='checkbox'>
               <label>
-                <input type='checkbox' ref='health' />Health
+                <input type='checkbox' ref='Health' />Health
               </label>
             </div>
           </div>

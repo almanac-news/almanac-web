@@ -7,6 +7,9 @@ import http from 'http'
 import socketIO from 'socket.io'
 import r from 'rethinkdb'
 import bodyParser from 'body-parser'
+import mailgunSetup from 'mailgun-js'
+import _ from 'lodash'
+import { secrets } from './config/secrets'
 
 const app = express()
 const httpServer = http.Server(app)
@@ -121,14 +124,9 @@ app.get('/api/news', (req, res) => {
       return r.table('news').changes().run(conn)
     })
     .then( cursor => {
-      // cursor.toArray((err, results) => {
-      //   io.emit('newsEmitEvent', results)
-      // })
       cursor.each((err, change) => {
         io.emit('newsEmitEvent', change)
       })
-      // cursor.
-      // cursor.close();
     })
 
   // Initially populate news-feed from Redis cache for faster load time
@@ -224,7 +222,43 @@ app.post('/api/subscribe', jsonParser, (req, res) => {
 
 // TODO: Add endpoint that listens for changes on history table, and uses node mailer to send emails when there are big events
 // endpoint should then loop through all subscriptions and send them an email
-// need to create a map of categories to stocks
+// need to create a map of categories to stocks, call this endpoint on webpage load
+
+const mailgun = mailgunSetup({apiKey: secrets.apiKey, domain: secrets.domain})
+
+app.get('/api/subscribe/email', (req, res) => {
+  let conn = null
+  const emails = []
+  r.connect({ host: 'rt-database', port: 28015})
+    .then( connection => {
+      conn = connection
+      return r.table('history').changes().run(conn)
+    })
+    .then( cursor => {
+      cursor.each((err, change) => {
+        r.table('subscriptions').filter({}).coerceTo('array').run(conn)
+        .then( cursor2 => {
+          cursor2.forEach( subscriber => {
+            if (_.includes(change.new_val.categories, subscriber.category)) {
+              emails.push(subscriber.email)
+            }
+          })
+          emails.forEach( email => {
+            const emailData = {
+              from: 'Almanac News Team <almncnews@gmail.com>',
+              to: email,
+              subject: 'Almanac News Alert!',
+              text: JSON.stringify(change.new_val)
+            }
+            mailgun.messages().send(emailData, (error, body) => {
+              if (error) res.send(JSON.stringify(err))
+              res.send(JSON.stringify(body))
+            })
+          })
+        })
+      })
+    })
+})
 
 /**
  * Will be hit from the sub/unsub page.

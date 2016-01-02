@@ -13,6 +13,10 @@ export function setupRealtime(store) {
   //
   //   if (actions.receiveEvent) {
   //     store.dispatch(actions.receiveEvent(data))
+
+  io.on('emailData', (data) => {
+    console.log(data)
+  })
   io.on('newsEmitEvent', (data) => {
     // modify the data to fit the format we send initial redis news load
     // FIXME: maybe fix this on app-service insertion?
