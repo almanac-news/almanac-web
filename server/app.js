@@ -171,9 +171,9 @@ app.get('/api/finance/:start/:end', (req, res) => {
   r.connect({ host: 'rt-database', port: 28015})
     .then( connection => {
       conn = connection
-      // return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2016-01-01T21:48:16').filter({'symbol': 'BLV'}).run(conn)
+      return r.table('finance').orderBy({index:'time'}).between('2015-12-31T18:36:31Z', '2016-01-01T21:48:16').filter({'symbol': 'BLV'}).run(conn)
       // FIXME: Please remove above and uncomment below for real times
-      return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
+      // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
     })
     .then( cursor => {
       cursor.toArray((err, result) => {
@@ -258,39 +258,42 @@ app.get('/api/subscribe/email', (req, res) => {
 
 // FIXME: janky table creation - please create comments table on the app-service
 
-// r.tableList().contains('comments')
-// .do( (tableExists) => {
-//   return r.branch(
-//     tableExists,
-//     { created: 0 },
-//     r.tableCreate('comments')
-//   )
-// })
 
 // TODO: Add live comment listener
-app.get('/api/comments/:time', (req, res) => {
-  let conn = null
-  const time = req.params.time
-  let startTime;
-  startTime.setMinutes(time.getMinutes() - 30)
-  let endTime;
-  endTime.setMinutes(time.getMinutes() + 30)
+app.get('/api/comments/:time', jsonParser, (req, res) => {
+  const time = new Date(req.params.time)
+  let startTime = new Date(req.params.time)
+  startTime.setMinutes(startTime.getMinutes() - 1000)
+  startTime = startTime.toISOString()
+  let endTime = new Date(req.params.time)
+  endTime.setMinutes(endTime.getMinutes() + 1000)
+  endTime = endTime.toISOString()
   r.connect({ host: 'rt-database', port: 28015})
-    .then( connection => {
-      conn = connection
-      return r.table('comments').between(startTime, endTime).run(conn)
-      // FIXME: Please remove above and uncomment below for real times
-      // return r.table('finance').orderBy({index:'time'}).between(req.params.start, req.params.end).filter({'symbol': 'XLU'}).run(conn)
+    .then( conn => {
+      return r.table('comments').orderBy({index:'created_at'}).between(startTime, endTime).run(conn)
     })
-    .then( data => {
-      res.send(data).status(200)
+    .then( cursor => {
+      return cursor.toArray()
+    })
+    .then( result => {
+      console.log('---------------------------------------------', result)
+      res.send(result)
     })
 })
 
+// TODO: created_at should be tied to a specific point - use 'selected'
 app.post('/api/comments/', jsonParser, (req, res) => {
+  r.tableList().contains('comments')
+  .do( (tableExists) => {
+    return r.branch(
+      tableExists,
+      { created: 0 },
+      r.tableCreate('comments')
+    )
+  })
   r.connect({ host: 'rt-database', port: 28015})
     .then( conn => {
-      return r.table('comments').insert({ comment: req.body.text, username: req.body.username }).run(conn)
+      return r.table('comments').insert({ comment: req.body.text, username: req.body.username, created_at: req.body.createdAt }).run(conn)
     })
    .then( () => {
      res.sendStatus(201)

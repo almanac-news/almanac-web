@@ -12,6 +12,7 @@ export default function commentsReducer(state = initialState, action) {
       })
 
     case types.FETCH_COMMENTS_COMPLETED:
+      console.log(action.comments)
       return Object.assign({}, state, {
         isFetching: false,
         data: action.comments

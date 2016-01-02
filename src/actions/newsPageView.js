@@ -63,7 +63,8 @@ export function postComment(username, text) {
       },
       body: JSON.stringify({
         username: username,
-        text: text
+        text: text,
+        createdAt: new Date()
       })
     })
       .then( response => {
