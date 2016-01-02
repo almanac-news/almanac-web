@@ -9,7 +9,6 @@ export function fetchNews() {
     return fetch('/api/news')
       .then( response => response.json() )
       .then( data => {
-        console.log('data from normal method', data)
         return {
           type: FETCH_NEWS_COMPLETED,
           news: data
@@ -21,7 +20,6 @@ export function fetchNews() {
 }
 
 export function getRealtimeNews(data) {
-  console.log("----------------------you're in getRealtimeNews", data)
   return dispatch => {
     dispatch({
       type: FETCH_NEWS_COMPLETED,

@@ -21,6 +21,9 @@ export class NavBar extends React.Component {
             <IndexLinkContainer to='/about'>
               <NavItem eventKey={2}>About Us</NavItem>
             </IndexLinkContainer>
+            <IndexLinkContainer to='/subscription'>
+              <NavItem eventKey={3}>Subscription</NavItem>
+            </IndexLinkContainer>
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={1} href='http://www.github.com/almanac-news'>Our Github</NavItem>
