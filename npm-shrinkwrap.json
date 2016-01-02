@@ -1253,11 +1253,7 @@
     },
     "d3": {
       "version": "3.5.12",
-<<<<<<< 2dd9721295212720aed31f196e9a517a70b8c1e1
       "from": "d3@>=3.5.5 <4.0.0",
-=======
-      "from": "d3@>=3.5.0 <4.0.0",
->>>>>>> Barebones working email alerts
       "resolved": "https://registry.npmjs.org/d3/-/d3-3.5.12.tgz"
     },
     "dashdash": {
@@ -4438,9 +4434,6 @@
     "pondjs": {
       "version": "0.3.0",
       "from": "pondjs@>=0.3.0 <0.4.0",
-<<<<<<< 2dd9721295212720aed31f196e9a517a70b8c1e1
-      "resolved": "https://registry.npmjs.org/pondjs/-/pondjs-0.3.0.tgz"
-=======
       "resolved": "https://registry.npmjs.org/pondjs/-/pondjs-0.3.0.tgz",
       "dependencies": {
         "underscore": {
@@ -4449,7 +4442,6 @@
           "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
         }
       }
->>>>>>> Barebones working email alerts
     },
     "postcss": {
       "version": "5.0.13",
