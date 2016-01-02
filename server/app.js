@@ -128,6 +128,10 @@ app.get('/api/news', (req, res) => {
         io.emit('newsEmitEvent', change)
       })
     })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
 
   // Initially populate news-feed from Redis cache for faster load time
   client.keys('*', (err, keys) => {
@@ -188,6 +192,10 @@ app.get('/api/finance/:start/:end', (req, res) => {
             })
           })
         })
+        .catch( err2 => {
+          console.log(err2)
+          res.sendStatus(503)
+        })
       })
     })
 })
@@ -212,6 +220,10 @@ app.post('/api/subscribe', jsonParser, (req, res) => {
      })
      .then( () => {
        res.sendStatus(201)
+     })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
      })
   }
 })
@@ -252,6 +264,14 @@ app.get('/api/subscribe/email', (req, res) => {
             })
           })
         })
+        .catch( err2 => {
+          console.log(err2)
+          res.sendStatus(503)
+        })
+      })
+      .catch( err => {
+        console.log(err)
+        res.sendStatus(503)
       })
     })
 })
@@ -279,6 +299,10 @@ app.get('/api/comments/:time', jsonParser, (req, res) => {
       console.log('---------------------------------------------', result)
       res.send(result)
     })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(503)
+    })
 })
 
 // TODO: created_at should be tied to a specific point - use 'selected'
@@ -297,6 +321,10 @@ app.post('/api/comments/', jsonParser, (req, res) => {
     })
    .then( () => {
      res.sendStatus(201)
+   })
+   .catch( err => {
+     console.log(err)
+     res.sendStatus(503)
    })
 })
 
@@ -324,6 +352,10 @@ app.post('/api/unsubscribe', jsonParser, (req, res) => {
      .then( () => {
        res.sendStatus(201)
      })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
+     })
   }
 })
 
@@ -347,7 +379,11 @@ app.post('/api/like/:id', jsonParser, (req, res) => {
         return r.table('news').get(req.params.id).update({ likes: r.row('likes').add(req.body.vote).default(1) }).run(conn)
       })
      .then( () => {
-       res.sendStatus(201)
+       res.send().status(201)
+     })
+     .catch( err => {
+       console.log(err)
+       res.sendStatus(503)
      })
   }
 })
