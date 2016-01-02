@@ -18,7 +18,7 @@ export default function newsPageViewReducer(state = initialState, action) {
 
     case types.TOGGLE_LIKE:
       return Object.assign({}, state, {
-        articleId: action.id,
+        articleId: action.articleId,
         likeStatus: action.likeStatus
       })
 

@@ -34,16 +34,17 @@ export function fetchNews() {
   }
 }
 
-export function fetchComments(time) {
+export function fetchComments(articleId, time) {
   return dispatch => {
     dispatch({ type: FETCH_COMMENTS_STARTED })
-
+    console.log(time)
     return fetch('/api/comments/' + time)
       .then( response => response.json() )
       .then( data => {
         return {
           type: FETCH_COMMENTS_COMPLETED,
-          comments: data
+          comments: data,
+          articleId: articleId
         }
       })
       .then( data => dispatch(data) )
@@ -51,7 +52,7 @@ export function fetchComments(time) {
   }
 }
 
-export function postComment(username, text) {
+export function postComment(username, text, articleId, time) {
   return dispatch => {
     dispatch({ type: POST_COMMENT_STARTED })
     console.log(username)
@@ -64,7 +65,9 @@ export function postComment(username, text) {
       body: JSON.stringify({
         username: username,
         text: text,
-        createdAt: new Date()
+        createdAt: new Date(),
+        articleId: articleId,
+        time: time
       })
     })
       .then( response => {
@@ -73,7 +76,8 @@ export function postComment(username, text) {
         if (response.status === 201) {
           dispatch({
             type: POST_COMMENT_COMPLETED,
-            comment: text
+            comment: text,
+            articleId: articleId
           })
         } else {
           dispatch({ type: POST_COMMENT_FAILED })

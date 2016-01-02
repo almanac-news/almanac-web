@@ -23,7 +23,8 @@ export class LineChartViz extends React.Component {
   }
 
   static contextTypes = {
-    actions: React.PropTypes.object.isRequired
+    actions: React.PropTypes.object.isRequired,
+    articleId: React.PropTypes.string.isRequired
   }
 
   constructor(props) {
@@ -47,7 +48,7 @@ export class LineChartViz extends React.Component {
   handleTrackerChanged = (t) => {
     this.setState({tracker: t})
     // console.log(this.state)
-    this.context.actions.fetchComments(t)
+    this.context.actions.fetchComments(this.context.articleId, t)
   }
 
   render() {

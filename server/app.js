@@ -278,15 +278,14 @@ app.get('/api/subscribe/email', (req, res) => {
 
 // FIXME: janky table creation - please create comments table on the app-service
 
-
 // TODO: Add live comment listener
 app.get('/api/comments/:time', jsonParser, (req, res) => {
   const time = new Date(req.params.time)
   let startTime = new Date(req.params.time)
-  startTime.setMinutes(startTime.getMinutes() - 1000)
+  startTime.setMinutes(startTime.getMinutes() - 300)
   startTime = startTime.toISOString()
   let endTime = new Date(req.params.time)
-  endTime.setMinutes(endTime.getMinutes() + 1000)
+  endTime.setMinutes(endTime.getMinutes() + 300)
   endTime = endTime.toISOString()
   r.connect({ host: 'rt-database', port: 28015})
     .then( conn => {
@@ -301,7 +300,7 @@ app.get('/api/comments/:time', jsonParser, (req, res) => {
     })
     .catch( err => {
       console.log(err)
-      res.sendStatus(503)
+      res.send(req).sendStatus(503)
     })
 })
 
@@ -317,7 +316,7 @@ app.post('/api/comments/', jsonParser, (req, res) => {
   })
   r.connect({ host: 'rt-database', port: 28015})
     .then( conn => {
-      return r.table('comments').insert({ comment: req.body.text, username: req.body.username, created_at: req.body.createdAt }).run(conn)
+      return r.table('comments').insert({ comment: req.body.text, username: req.body.username, created_at: req.body.createdAt, articleId: req.body.articleId }).run(conn)
     })
    .then( () => {
      res.sendStatus(201)
