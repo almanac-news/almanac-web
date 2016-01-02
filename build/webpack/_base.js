@@ -35,7 +35,7 @@ const webpackConfig = {
     })
   ],
   resolve : {
-    extensions : ['', '.js', '.jsx', '.json'],
+    extensions : ['', '.js', '.jsx'],
     alias      : config.get('utils_aliases')
   },
   module : {
@@ -54,6 +54,10 @@ const webpackConfig = {
             'transform-react-display-name'
           ]
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
