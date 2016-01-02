@@ -7,6 +7,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import { LikeComponent } from 'components/Like'
+import Paper from 'material-ui/lib/paper'
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -90,12 +91,7 @@ export class NewsPageView extends React.Component {
     if (!this.props.financeData) {
       return (
         <div className='container text-center'>
-          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
-          <hr />
-          <LikeComponent
-            articleId={ id }
-            likeStatus={ likeProp }
-          />
+          <div><a href={ 'http://bit.ly/' + id }><h4>{ article.title }</h4></a></div>
           <hr />
           <div className='row'>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
@@ -108,11 +104,18 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-                <CircularProgress
-                  className='loading'
-                  mode='indeterminate'
-                  size={2}
+              <Paper style={{padding: '5'}}>
+                <LikeComponent
+                  articleId={ id }
+                  likeStatus={ likeProp }
                 />
+              </Paper>
+              <br />
+              <CircularProgress
+                className='loading'
+                mode='indeterminate'
+                size={2}
+              />
             </div>
           </div>
           <hr />
@@ -121,12 +124,7 @@ export class NewsPageView extends React.Component {
     } else {
       return (
         <div className='container text-center'>
-          <div><a href={ 'http://bit.ly/' + id }><h2>{ article.title }</h2></a></div>
-          <hr />
-          <LikeComponent
-            articleId={ id }
-            likeStatus={ this.props.likeStatus }
-          />
+          <div><a href={ 'http://bit.ly/' + id }><h4>{ article.title }</h4></a></div>
           <hr />
           <div className='row'>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
@@ -139,14 +137,21 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-                <LineChartViz
-                  chartData={ this.parseData(this.props.financeData.result) }
-                  assetData={{
-                    avg: this.props.financeData.avg,
-                    std: this.props.financeData.std,
-                    symbol: this.props.financeData.symbol
-                  }}
+              <Paper style={{padding: '5'}}>
+                <LikeComponent
+                  articleId={ id }
+                  likeStatus={ this.props.likeStatus }
                 />
+              </Paper>
+              <br />
+              <LineChartViz
+                chartData={ this.parseData(this.props.financeData.result) }
+                assetData={{
+                  avg: this.props.financeData.avg,
+                  std: this.props.financeData.std,
+                  symbol: this.props.financeData.symbol
+                }}
+              />
             </div>
           </div>
           <hr />
