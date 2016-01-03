@@ -8,7 +8,11 @@ import _ from 'lodash'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import { LikeComponent } from 'components/Like'
 import Paper from 'material-ui/lib/paper'
-import { Input } from 'react-bootstrap'
+import { CommentList } from 'components/CommentList'
+// import DatePicker from 'react-datepicker'
+
+console.log('comment',  CommentList)
+console.log('Paper',  Paper)
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -19,7 +23,9 @@ const mapStateToProps = (state) => ({
   financeData: state.finance.data,
   realtimeData: state.realtime.data,
   routerState: state.routing,
-  likeStatus: state.newsPageView.likeStatus
+  likeStatus: state.newsPageView.likeStatus,
+  comments: state.comments.data,
+  startDate: state.startDate
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -35,22 +41,27 @@ export class NewsPageView extends React.Component {
     newsData: React.PropTypes.object,
     financeData: React.PropTypes.object,
     realtimeData: React.PropTypes.object,
-    likeStatus: React.PropTypes.number
+    likeStatus: React.PropTypes.number,
+    comments: React.PropTypes.array,
+    startDate: React.PropTypes.object
   }
 
   static childContextTypes = {
     actions: React.PropTypes.object.isRequired,
-    browser: React.PropTypes.object.isRequired
+    browser: React.PropTypes.object.isRequired,
+    articleId: React.PropTypes.string.isRequired
   }
 
   constructor(props) {
     super(props)
+    this.startDate = moment()
   }
 
   getChildContext() {
     return {
       actions: this.props.actions,
-      browser: this.props.browser
+      browser: this.props.browser,
+      articleId: this.props.params.id
     }
   }
 
@@ -80,7 +91,8 @@ export class NewsPageView extends React.Component {
     e.preventDefault()
     const username = this.refs.username.value
     const commentText = this.refs.commentText.value
-    this.props.actions.postComment(username, commentText)
+    const time = this.props.startDate
+    this.props.actions.postComment(username, commentText, this.props.params.id, time)
   }
 
   render() {
@@ -162,13 +174,6 @@ export class NewsPageView extends React.Component {
                 <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
               </form>
               <hr />
-                <LineChartViz
-                  chartData={ this.parseData(this.props.financeData.result) }
-                  assetData={{
-                    avg: this.props.financeData.avg,
-                    std: this.props.financeData.std,
-                    symbol: this.props.financeData.symbol
-                  }}
               <br />
               <LineChartViz
                 chartData={ this.parseData(this.props.financeData.result) }
@@ -178,6 +183,7 @@ export class NewsPageView extends React.Component {
                   symbol: this.props.financeData.symbol
                 }}
               />
+              <CommentList data={ this.props.comments } />
             </div>
           </div>
           <hr />
