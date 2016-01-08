@@ -1,7 +1,3 @@
-[![Build Status](https://circleci.com/gh/almanac-news/almanac-web.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/almanac-news/almanac-web)
-
-[![Coverage Status](https://coveralls.io/repos/almanac-news/almanac-web/badge.svg?branch=dev&service=github)](https://coveralls.io/github/almanac-news/almanac-web?branch=dev)
-
 Almanac News
 =======================
 
@@ -21,7 +17,7 @@ Table of Contents
 Requirements
 ------------
 
-Node `^4.0.0` or `^5.0.0` ([npm3](https://www.npmjs.com/package/npm3) recommended).
+Node `^5.2.0` ([npm3](https://www.npmjs.com/package/npm3) recommended).
 
 Features
 --------
@@ -225,62 +221,3 @@ Here's an example:
 // can now be this:
 @import 'base';
 ```
-
-Testing
--------
-
-To add a unit test, simply create a `.spec.js` file anywhere in `~/tests`. Karma will pick up on these files automatically, and Mocha and Chai will be available within your test without the need to import them.
-
-Coverage reports will be compiled to `~/coverage` by default. If you wish to change what reporters are used and where reports are compiled, you can do so by modifying `coverage_reporters` in `~/config/index.js`.
-
-Utilities
----------
-
-This boilerplate comes with two simple utilities (thanks to [StevenLangbroek](https://github.com/StevenLangbroek)) to help speed up your Redux development process. In `~/client/utils` you'll find exports for `createConstants` and `createReducer`. The former is pretty much an even lazier `keyMirror`, so if you _really_ hate typing out those constants you may want to give it a shot. Check it out:
-
-```js
-import { createConstants } from 'utils';
-
-export default createConstants(
-  'TODO_CREATE',
-  'TODO_DESTROY',
-  'TODO_TOGGLE_COMPLETE'
-);
-```
-
-The other utility, `create-reducer`, is designed to expedite creating reducers when they're defined via an object map rather than switch statements. As an example, what once looked like this:
-
-```js
-import { TODO_CREATE } from 'constants/todo';
-
-const initialState = [];
-const handlers = {
-  [TODO_CREATE] : (state, payload) => { ... }
-};
-
-export default function todo (state = initialState, action) {
-  const handler = handlers[action.type];
-
-  return handler ? handler(state, action.payload) : state;
-}
-```
-
-Can now look like this:
-
-```js
-import { TODO_CREATE }   from 'constants/todo';
-import { createReducer } from 'utils';
-
-const initialState = [];
-
-export default createReducer(initialState, {
-  [TODO_CREATE] : (state, payload) => { ... }
-});
-```
-
-Troubleshooting
----------------
-
-### `npm run dev:nw` produces `cannot read location of undefined.`
-
-This is most likely because the new window has been blocked by your popup blocker, so make sure it's disabled before trying again.
