@@ -167,10 +167,11 @@ export class NewsPageView extends React.Component {
                     <span className='input-group-addon' id='basic-addon1'>@</span>
                     <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
                   </span>
+                  <br />
                   <span className='form-group'>
                     <input className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></input>
                   </span>
-                  <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
+                  <button style={{margin: '5'}} type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
                 </form>
               </Paper>
               <hr />
@@ -183,6 +184,7 @@ export class NewsPageView extends React.Component {
                   symbol: this.props.financeData.symbol
                 }}
               />
+              <hr />
               <CommentList data={ this.props.comments } />
             </div>
           </div>

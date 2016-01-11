@@ -9,6 +9,8 @@ import r from 'rethinkdb'
 import bodyParser from 'body-parser'
 import mailgunSetup from 'mailgun-js'
 import _ from 'lodash'
+
+// FIXME: Please move this an environment variable instead.
 import { secrets } from './config/secrets'
 
 const app = express()
@@ -39,8 +41,10 @@ const areValidCategories = categories => {
   return true
 }
 
-// Enable webpack middleware if the application is being
-// run in development mode.
+
+/**
+ * Enable webpack middleware if the app is being run in dev mode
+ */
 if (config.get('globals').__DEV__) {
   const webpack       = require('webpack')
   const webpackConfig = require('../build/webpack/development_hot')
@@ -56,7 +60,11 @@ if (config.get('globals').__DEV__) {
   app.use(require('./middleware/webpack-hmr')({ compiler }))
 }
 
-// During production mode, spin up a proper Express server
+/**
+ * During production, use a proper Express server
+ * @param  {[type]} config.get('globals').__PROD__ [description]
+ * @return {[type]}                                [description]
+ */
 if (config.get('globals').__PROD__) {
   // Linter will throw error for this console.log, please ignore
   console.log(chalk.bold.yellow('Running server in __PROD__ env.'))
@@ -115,7 +123,6 @@ app.get('/api/news/:date/:num?', (req, res) => {
  * Assumes that the 'news' table exists in RethinkDB.
  * This is created by the App-Service Python script.
  */
-
 app.get('/api/news', (req, res) => {
   // Open a change-feed connection to RethinkDB
   // Listens for any changes on 'news' table
@@ -276,7 +283,7 @@ app.get('/api/subscribe/email', (req, res) => {
     })
 })
 
-// FIXME: janky table creation - please create comments table on the app-service
+// FIXME: Incomplete table creation - please create comments table on the app-service
 
 // TODO: Add live comment listener
 app.get('/api/comments/:time', jsonParser, (req, res) => {
@@ -295,7 +302,6 @@ app.get('/api/comments/:time', jsonParser, (req, res) => {
       return cursor.toArray()
     })
     .then( result => {
-      console.log('---------------------------------------------', result)
       res.send(result)
     })
     .catch( err => {
@@ -388,7 +394,7 @@ app.post('/api/like/:id', jsonParser, (req, res) => {
 })
 
 /**
- * Default catch-all
+ * Default catch-all, fallback for single entry-point
  */
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/index.html'))

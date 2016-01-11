@@ -1,0 +1,29 @@
+$base-color: #3b3a36;
+$brand-text-color: #fff;
+$nav-text-color: #333;
+$accent-color: black;
+$bg-color: #e1e8f0;
+
+.navbar-default .navbar-brand {
+  color: $brand-text-color;
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: $brand-text-color;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+  color: $nav-text-color;
+  background-color: $bg-color;
+}
+
+.navbar {
+  background-color: transparentize($base-color, .3);
+  border: none;
+  border-radius: 0px;
+}

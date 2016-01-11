@@ -1,13 +1,14 @@
 import React from 'react'
 import { IndexLinkContainer } from 'react-router-bootstrap'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import 'styles/navbar.scss'
 
 export class NavBar extends React.Component {
 
   render() {
     return (
       <div>
-        <Navbar inverse>
+        <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
               Almanac News

@@ -17,10 +17,10 @@ app-service:
   - data-cache
   - rt-database
   environment:
-   - USERID=USERID
-   - PASSWORD=PASSWORD
-   - BITLY_TOKEN=TOKEN
-   - NYT_KEY=KEY
+   - USERID=natejlevine@gmail.com
+   - PASSWORD=monkeybisness
+   - BITLY_TOKEN=ab6dbf0df548c91cffaa1ae82e0d9f4a52dfe4f8
+   - NYT_KEY=202f0d73b368cec23b977f5a141728ce:17:73664181
 
 rt-database:
   image: rethinkdb

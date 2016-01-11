@@ -1,6 +1,4 @@
 import React from 'react'
-import CardTitle from 'material-ui/lib/card/card-title'
-import Paper from 'material-ui/lib/paper'
 
 export class CommentCard extends React.Component {
   static propTypes = {
@@ -11,9 +9,7 @@ export class CommentCard extends React.Component {
 
   render() {
     return (
-      <Paper style={{padding: '5'}}>
-        <CardTitle title={ this.props.username } subtitle={ this.props.comment } />
-      </Paper>
+        <span><strong>@{this.props.username}: </strong>{this.props.comment}</span>
     )
   }
 }

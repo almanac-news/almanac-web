@@ -17,29 +17,28 @@ const config = new Map();
 // for production?
 config.set('production_enable_source_maps', false);
 
-// What dependencies should be compiled separately from the core
-// application code?
+// Dependencies that are compiled separately from the core application code
 config.set('vendor_dependencies', [
   'history',
+  'moment',
+  'pondjs',
+  'radium',
   'react',
   'react-redux',
   'react-router',
-  'redux',
-  'redux-simple-router',
-  'moment',
-  'redux-responsive',
   'react-router-bootstrap',
   'react-tap-event-plugin',
   'react-timeseries-charts',
-  'pondjs',
-  'radium'
+  'redux',
+  'redux-responsive',
+  'redux-simple-router'
 ]);
 
 // ------------------------------------
 // Project Structure
 // ------------------------------------
 
-// Where is the root of the project in relation to this file?
+// Where is the root of the project in relation to this config file?
 config.set('dir_base', path.resolve(__dirname, '../'));
 
 config.set('dir_client', 'src');    // where React app source code lives
@@ -64,7 +63,7 @@ config.set('coverage_reporters', [
   { type : 'html', dir : 'coverage' }
 ]);
 
-/*  *********************************************
+/**********************************************
 -------------------------------------------------
 
 All Internal Configuration Below
@@ -101,6 +100,7 @@ const validVendor = vendor.filter(dep => {
     `Consider removing it from vendor_dependencies in ~/config/index.js`
   ));
 });
+
 config.set('vendor_dependencies', validVendor);
 
 // ------------------------------------

@@ -32,8 +32,8 @@ export class SubscriptionView extends React.Component {
   render() {
     const categories = [
       'Africa',
-      'Asia Pacifc',
       'Americas',
+      'Asia Pacifc',
       'Business',
       'Europe',
       'Health',
