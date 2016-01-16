@@ -16,7 +16,6 @@ export class Tools extends Component {
     return (
       <section>
         <div className='container'>
-
           <div className='row'>
             <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center'>
               <h2>What We're Using</h2>
@@ -54,7 +53,6 @@ export class Tools extends Component {
               <h4>Mocha</h4>
             </div>
           </div>
-
         </div>
       </section>
     )

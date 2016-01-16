@@ -78,7 +78,7 @@ export class NewsPageView extends React.Component {
     const lower = utcL.subtract(num, scale).format('YYYY-MM-DDTHH:mm:ss')
     const upper = utcH.add(num, scale).format('YYYY-MM-DDTHH:mm:ss')
 
-    return {'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished}
+    return { 'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished }
   }
 
   parseData(dataArray) {
@@ -123,7 +123,7 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-              <Paper style={{padding: '5'}}>
+              <Paper style={{ padding: '5' }}>
                 <LikeComponent
                   articleId={ id }
                   likeStatus={ likeProp }
@@ -156,23 +156,24 @@ export class NewsPageView extends React.Component {
               />
             </div>
             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-              <Paper style={{padding: '5'}}>
+              <Paper style={{ padding: '5' }}>
                 <LikeComponent
                   articleId={ id }
                   likeStatus={ this.props.likeStatus }
                 />
+                <hr />
+                <form>
+                  <span className='input-group'>
+                    <span className='input-group-addon' id='basic-addon1'>@</span>
+                    <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
+                  </span>
+                  <br />
+                  <span className='form-group'>
+                    <input className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></input>
+                  </span>
+                  <button style={{margin: '5'}} type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
+                </form>
               </Paper>
-              <form>
-                <div className='input-group'>
-                  <span className='input-group-addon' id='basic-addon1'>@</span>
-                  <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
-                </div>
-                <br />
-                <div className='form-group'>
-                  <textarea className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></textarea>
-                </div>
-                <button type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
-              </form>
               <hr />
               <br />
               <LineChartViz
@@ -183,6 +184,7 @@ export class NewsPageView extends React.Component {
                   symbol: this.props.financeData.symbol
                 }}
               />
+              <hr />
               <CommentList data={ this.props.comments } />
             </div>
           </div>
