@@ -46,7 +46,7 @@ export class LineChartViz extends React.Component {
   }
 
   handleTrackerChanged = (t) => {
-    this.setState({tracker: t})
+    this.setState({ tracker: t })
     // console.log(this.state)
     this.context.actions.fetchComments(this.context.articleId, t)
   }

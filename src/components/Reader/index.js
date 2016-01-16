@@ -36,7 +36,7 @@ export class Reader extends React.Component {
         textAlign: 'justify',
         color: text_color,
         padding: '1.5em',
-        height: (this.context.browser.height / 2),
+        height: (this.context.browser.height - 100),
         overflow: 'scroll'
       }
     }

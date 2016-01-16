@@ -62,7 +62,7 @@ export class HomeView extends React.Component {
 
     return (
       <div className='container text-center'>
-        <h1>News Feed</h1>
+        <div><img src='https://unsplash.it/1600/300/?image=693'/></div>
         <hr />
         <div>
           { newsContainerPending }

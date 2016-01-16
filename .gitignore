@@ -9,3 +9,4 @@ coverage
 .jshintignore
 .jshintrc
 /server/config/secrets.js
+docker-compose.yml
