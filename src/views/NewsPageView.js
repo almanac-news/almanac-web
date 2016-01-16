@@ -1,71 +1,198 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as ActionCreators from 'actions/newsPageView'
+import { Reader } from 'components/Reader'
+import moment from 'moment'
+import _ from 'lodash'
+import CircularProgress from 'material-ui/lib/circular-progress'
+import { LikeComponent } from 'components/Like'
+import Paper from 'material-ui/lib/paper'
+import { CommentList } from 'components/CommentList'
+// import DatePicker from 'react-datepicker'
 
-// TODO: Please check the ES6 import syntax for this
-const moment = require('moment');
-const _ = require('lodash');
+console.log('comment',  CommentList)
+console.log('Paper',  Paper)
 
 /* components */
-import { LineChartViz } from 'components/LineChartViz';
+import { LineChartViz } from 'components/LineChartViz'
+
+const mapStateToProps = (state) => ({
+  browser: state.browser,
+  newsData: state.news.data,
+  financeData: state.finance.data,
+  realtimeData: state.realtime.data,
+  routerState: state.routing,
+  likeStatus: state.newsPageView.likeStatus,
+  comments: state.comments.data,
+  startDate: state.startDate
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch)
+})
 
 export class NewsPageView extends React.Component {
+
   static propTypes = {
-    params : React.PropTypes.object.isRequired
+    actions: React.PropTypes.object,
+    params : React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired,
+    newsData: React.PropTypes.object,
+    financeData: React.PropTypes.object,
+    realtimeData: React.PropTypes.object,
+    likeStatus: React.PropTypes.number,
+    comments: React.PropTypes.array,
+    startDate: React.PropTypes.object
   }
 
-  render () {
-    const { id } = this.props.params;
+  static childContextTypes = {
+    actions: React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired,
+    articleId: React.PropTypes.string.isRequired
+  }
 
-    // FIXME: Do not store data in here, should be in redux store.
-    const demoLineData = [{'date': '2015-12-09', 'value': '0.91794'}, {'date': '2015-12-08', 'value': '0.92302'}, {'date': '2015-12-07', 'value': '0.91878'}, {'date': '2015-12-04', 'value': '0.91609'}, {'date': '2015-12-03', 'value': '0.94224'}, {'date': '2015-12-02', 'value': '0.9411'}, {'date': '2015-12-01', 'value': '0.94581'}, {'date': '2015-11-30', 'value': '0.94491'}, {'date': '2015-11-27', 'value': '0.943'}, {'date': '2015-11-26', 'value': '0.94118'}, {'date': '2015-11-25', 'value': '0.93951'}, {'date': '2015-11-24', 'value': '0.93967'}, {'date': '2015-11-23', 'value': '0.93976'}];
+  constructor(props) {
+    super(props)
+    this.startDate = moment()
+  }
 
-    function parseData (dataArray) {
-      return _.map(dataArray, (dataPoint) => {
-        return {
-          x: moment(dataPoint.date).toDate(),
-          y: +dataPoint.value
-        };
-      });
+  getChildContext() {
+    return {
+      actions: this.props.actions,
+      browser: this.props.browser,
+      articleId: this.props.params.id
+    }
+  }
+
+  componentWillMount() {
+    const article = this.props.newsData[this.props.params.id]
+    const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
+    this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
+  }
+
+  computeTimeRange(articlePublished, num, scale) {
+    const utcL = moment(articlePublished.slice(0, 19))
+    const utcH = moment(articlePublished.slice(0, 19))
+    const time = utcL.format('YYYY-MM-DDTHH:mm:ss')
+    const lower = utcL.subtract(num, scale).format('YYYY-MM-DDTHH:mm:ss')
+    const upper = utcH.add(num, scale).format('YYYY-MM-DDTHH:mm:ss')
+
+    return { 'lower': lower, 'upper': upper, 'time': time, 'articlePublished': articlePublished }
+  }
+
+  parseData(dataArray) {
+    return _.map(dataArray, (dataPoint) => {
+      return [(moment(dataPoint.time).valueOf()), +dataPoint.price]
+    })
+  }
+
+  submitComment(e) {
+    e.preventDefault()
+    const username = this.refs.username.value
+    const commentText = this.refs.commentText.value
+    const time = this.props.startDate
+    this.props.actions.postComment(username, commentText, this.props.params.id, time)
+  }
+
+  render() {
+    const { id } = this.props.params
+    const article = this.props.newsData[id]
+
+    let likeProp
+
+    if (this.props.likeStatus !== undefined) {
+      likeProp = this.props.likeStatus
+    } else {
+      likeProp = 0
     }
 
-    const lineData = [
-      {
-        name: 'Demo Line Series',
-        values: parseData(demoLineData),
-        strokeWidth: 3,
-        strokeDashArray: '5,5'
-      }
-    ];
-
-    return (
-      <div className='container text-center'>
-        <h1>News View</h1>
-        <hr />
-        {/* Currently our route param contains a bit.ly ID which allows us to revisit */}
-        <div><a href={'http://bit.ly/' + id}><h2>Donald Trump Forgets Muslim Champions During Obama Criticism</h2></a></div>
-        <hr />
-        {/* TODO: Labels will most likely become a prop based on state */}
-        <div className='row'>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <iframe src={'http://bit.ly/' + id} width='500' height='420' allowFullScreen></iframe>
+    if (!this.props.financeData) {
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h4>{ article.title }</h4></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Paper style={{ padding: '5' }}>
+                <LikeComponent
+                  articleId={ id }
+                  likeStatus={ likeProp }
+                />
+              </Paper>
+              <br />
+              <CircularProgress
+                className='loading'
+                mode='indeterminate'
+                size={2}
+              />
+            </div>
           </div>
-          <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-            <LineChartViz
-            chartTitle={'USD/EUR (EUR=X)'}
-            chartData={lineData}
-            useLegend={false}
-            yAxisLabel={'Value'}
-            xAxisLabel={'Time'}
-            useGridHorizontal={false}
-            />
-          </div>
-        <br />
+          <hr />
         </div>
-        <hr />
-        <Link to='/'>Back to Home View</Link>
-      </div>
-    );
+      )
+    } else {
+      return (
+        <div className='container text-center'>
+          <div><a href={ 'http://bit.ly/' + id }><h4>{ article.title }</h4></a></div>
+          <hr />
+          <div className='row'>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Reader
+                title={ article.title }
+                body={ article.article_text }
+                bg_color={ 'white' }
+                text_color={ 'black' }
+                text_size={ 10 }
+              />
+            </div>
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <Paper style={{ padding: '5' }}>
+                <LikeComponent
+                  articleId={ id }
+                  likeStatus={ this.props.likeStatus }
+                />
+                <hr />
+                <form>
+                  <span className='input-group'>
+                    <span className='input-group-addon' id='basic-addon1'>@</span>
+                    <input type='text' className='form-control' placeholder='Username' aria-describedby='basic-addon1' ref='username'/>
+                  </span>
+                  <br />
+                  <span className='form-group'>
+                    <input className='form-control' placeholder='Leave a comment' rows='3' ref='commentText'></input>
+                  </span>
+                  <button style={{margin: '5'}} type='submit' className='btn btn-default' onClick={ this.submitComment.bind(this) }>Submit</button>
+                </form>
+              </Paper>
+              <hr />
+              <br />
+              <LineChartViz
+                chartData={ this.parseData(this.props.financeData.result) }
+                assetData={{
+                  avg: this.props.financeData.avg,
+                  std: this.props.financeData.std,
+                  symbol: this.props.financeData.symbol
+                }}
+              />
+              <hr />
+              <CommentList data={ this.props.comments } />
+            </div>
+          </div>
+          <hr />
+        </div>
+      )
+    }
   }
 }
 
-export default NewsPageView;
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPageView)

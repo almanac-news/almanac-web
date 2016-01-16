@@ -17,7 +17,7 @@ function shallowRenderWithProps (props = {}) {
   return shallowRender(<CoreLayout {...props} />);
 }
 
-describe('(Layout) Core', function () {
+xdescribe('(Layout) Core', function () {
   let _component, _rendered, _props, _child;
 
   beforeEach(function () {
@@ -30,11 +30,11 @@ describe('(Layout) Core', function () {
     _rendered  = renderWithProps(_props);
   });
 
-  it('Should render as a <div>.', function () {
+  xit('Should render as a <div>.', function () {
     expect(_component.type).to.equal('div');
   });
 
-  it('Should render a child component.', function () {
+  xit('Should render a child component.', function () {
     const child = TestUtils.findRenderedDOMComponentWithClass(
       _rendered, 'child'
     );

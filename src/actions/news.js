@@ -1,20 +1,44 @@
-import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED } from 'constants/news';
-import fetch from 'isomorphic-fetch';
+import { FETCH_NEWS_STARTED, FETCH_NEWS_COMPLETED, FETCH_NEWS_FAILED } from 'constants/news'
+import fetch from 'isomorphic-fetch'
+require('es6-promise').polyfill()
 
-export function fetchNews () {
+export function fetchNews() {
   return dispatch => {
-    dispatch({ type: FETCH_NEWS_STARTED });
+    dispatch({ type: FETCH_NEWS_STARTED })
 
-    return fetch('app-service/news')
+    return fetch('/api/news')
       .then( response => response.json() )
       .then( data => {
         return {
           type: FETCH_NEWS_COMPLETED,
-          news: data.map(newsItem => newsItem)
-        };
+          news: data
+        }
       })
       .then( data => dispatch(data) )
-      // NOTE: uncomment to catch error
-      .catch( err => console.log(err) );
-  };
+      .catch( () => dispatch({ type: FETCH_NEWS_FAILED }) )
+  }
+}
+
+export function initEmailSubscriptions() {
+  return dispatch => {
+    return fetch('/api/subscribe/email')
+      .then( response => response.json() )
+      .then( data => {
+        // FIXME
+        dispatch({})
+        console.log(data)
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
+  }
+}
+
+export function getRealtimeNews(data) {
+  return dispatch => {
+    dispatch({
+      type: FETCH_NEWS_COMPLETED,
+      news: data
+    })
+  }
 }

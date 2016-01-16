@@ -1,4 +1,4 @@
-require('babel/register');
+require('babel-core/register');
 
 const chalk  = require('chalk');
 const server = require('../server/app');

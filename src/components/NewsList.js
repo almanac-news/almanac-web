@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
-import { NewsCard } from 'components/NewsCard';
+import React, { Component } from 'react'
+import { NewsCard } from 'components/NewsCard'
 
 export class NewsList extends Component {
   static propTypes = {
-    data: React.PropTypes.array.isRequired
+    data: React.PropTypes.object.isRequired,
+    browser: React.PropTypes.object.isRequired
   }
 
-  render () {
+  render() {
+    const newsData = this.props.data
     return (
         <div>
-          { this.props.data.map((newsItem) => {
+          { Object.keys(newsData).map((newsKey) => {
+            const newsItem = newsData[newsKey]
             return (
               // NOTE: unique key moved to wrapper div to add line break
               // FIXME: Look into giving a unique identifier to the key instead of random
@@ -19,14 +22,15 @@ export class NewsList extends Component {
                   title = { newsItem.title }
                   abstract = { newsItem.abstract }
                   date = { newsItem.date }
+                  browser = { this.props.browser }
                 />
                 <br/>
               </div>
-            );
+            )
           }) }
         </div>
-    );
+    )
   }
 }
 
-export default NewsCard;
+export default NewsCard
