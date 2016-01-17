@@ -11,13 +11,15 @@ export class NavBar extends React.Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              Almanac News
+              <IndexLinkContainer to='/'>
+                <a>Almanac News</a>
+              </IndexLinkContainer>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <IndexLinkContainer to='/'>
+              <IndexLinkContainer to='/home'>
                 <NavItem eventKey={1}>News Feed</NavItem>
               </IndexLinkContainer>
               <IndexLinkContainer to='/subscription'>

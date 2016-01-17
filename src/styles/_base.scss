@@ -1,12 +1,17 @@
 /* global styles */
-$bg-color: #e1e8f0;
+$bg-color: white;
 
 @import 'fonts/roboto';
 @import 'typography';
 @import 'links';
 
-:global(body) {
+:global(html) {
   position: relative;
+  min-height: 100%;
+}
+
+:global(body) {
+  margin: 0 0 100px;
   background-color: $bg-color;
 
   h1 {

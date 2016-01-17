@@ -287,7 +287,8 @@ app.get('/api/subscribe/email', (req, res) => {
 
 // TODO: Add live comment listener
 app.get('/api/comments/:time', jsonParser, (req, res) => {
-  const time = new Date(req.params.time)
+  // FIXME: Time is defined, but not used.
+  // const time = new Date(req.params.time)
   let startTime = new Date(req.params.time)
   startTime.setMinutes(startTime.getMinutes() - 300)
   startTime = startTime.toISOString()

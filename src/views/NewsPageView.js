@@ -9,10 +9,6 @@ import CircularProgress from 'material-ui/lib/circular-progress'
 import { LikeComponent } from 'components/Like'
 import Paper from 'material-ui/lib/paper'
 import { CommentList } from 'components/CommentList'
-// import DatePicker from 'react-datepicker'
-
-console.log('comment',  CommentList)
-console.log('Paper',  Paper)
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'
@@ -68,7 +64,7 @@ export class NewsPageView extends React.Component {
   componentWillMount() {
     const article = this.props.newsData[this.props.params.id]
     const timeRange = this.computeTimeRange(article.created_date, 1, 'h')
-    this.props.actions.fetchFinance(timeRange).then(() => console.log('Finance data: ', this.props.financeData))
+    this.props.actions.fetchFinance(timeRange)
   }
 
   computeTimeRange(articlePublished, num, scale) {

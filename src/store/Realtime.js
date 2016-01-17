@@ -7,8 +7,7 @@ export function setupRealtime(store) {
   const io = socketClient()
   // console.log('inside realtime')
 
-  io.on('emailData', (data) => {
-    // console.log(data)
+  io.on('emailData', () => {
   })
   io.on('newsEmitEvent', (data) => {
     // modify the data to fit the format we send initial redis news load

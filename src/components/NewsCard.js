@@ -31,11 +31,13 @@ export class NewsCard extends React.Component {
 
   render() {
     return (
-      <Card>
-        <Link to={'/news/' + this.props.url.slice(-7) }>
+      <div className='home-news-card'>
+        <Card style={{backgroundColor: '#f2f2f2'}}>
+          <Link to={'/news/' + this.props.url.slice(-7) }>
           { this.responsiveRender() }
-        </Link>
-      </Card>
+          </Link>
+        </Card>
+      </div>
     )
   }
 }
