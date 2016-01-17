@@ -1,12 +1,12 @@
 import React from 'react'
-import { Charts, ChartContainer, ChartRow, YAxis, LineChart, Baseline, Resizable, Tracker } from 'react-timeseries-charts'
+import { Charts, ChartContainer, ChartRow, YAxis, LineChart, Baseline, Resizable } from 'react-timeseries-charts'
 import { TimeSeries } from 'pondjs'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 // import * as ActionCreators from 'actions/newsPageView'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
   tracker: this.state.tracker
 })
 
@@ -52,7 +52,7 @@ export class LineChartViz extends React.Component {
   }
 
   render() {
-    const { avg, std, symbol } = this.props.assetData
+    const { avg, /* std, */ symbol } = this.props.assetData
 
     if (!this.props.chartData) {
       return (

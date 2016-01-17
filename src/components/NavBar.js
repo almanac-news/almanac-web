@@ -1,7 +1,6 @@
 import React from 'react'
 import { IndexLinkContainer } from 'react-router-bootstrap'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
-import { Link } from 'react-router'
 import 'styles/navbar.scss'
 
 export class NavBar extends React.Component {
