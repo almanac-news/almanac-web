@@ -9,10 +9,6 @@ import CircularProgress from 'material-ui/lib/circular-progress'
 import { LikeComponent } from 'components/Like'
 import Paper from 'material-ui/lib/paper'
 import { CommentList } from 'components/CommentList'
-// import DatePicker from 'react-datepicker'
-
-console.log('comment',  CommentList)
-console.log('Paper',  Paper)
 
 /* components */
 import { LineChartViz } from 'components/LineChartViz'

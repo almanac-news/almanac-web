@@ -5,6 +5,7 @@ import * as ActionCreators from 'actions/news'
 import { NewsContainer } from 'containers/NewsContainer'
 import { NewsError } from 'components/NewsError'
 import CircularProgress from 'material-ui/lib/circular-progress'
+import 'styles/homeView.scss'
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -61,7 +62,7 @@ export class HomeView extends React.Component {
     }
 
     return (
-      <div className='container text-center'>
+      <div id='home-news-feed' className='container text-center'>
         <div><img src='https://unsplash.it/1600/300/?image=693'/></div>
         <hr />
         <div>

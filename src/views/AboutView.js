@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 
 /* components */
 import { Tools } from 'components/Tools/Tools'
@@ -12,7 +11,6 @@ export class AboutView extends React.Component {
         <hr />
         <Tools />
         <hr />
-        <Link to='/'>Back To Home View</Link>
       </div>
     )
   }

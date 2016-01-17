@@ -2,7 +2,7 @@ $base-color: #3b3a36;
 $brand-text-color: #fff;
 $nav-text-color: #333;
 $accent-color: black;
-$bg-color: #e1e8f0;
+$bg-color: #ffd902;
 
 .navbar-default .navbar-brand {
   color: $brand-text-color;
@@ -23,7 +23,7 @@ $bg-color: #e1e8f0;
 }
 
 .navbar {
-  background-color: transparentize($base-color, .3);
+  background-color: $base-color;
   border: none;
-  border-radius: 0px;
+  border-radius: 0em;
 }

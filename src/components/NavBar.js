@@ -1,6 +1,7 @@
 import React from 'react'
 import { IndexLinkContainer } from 'react-router-bootstrap'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Link } from 'react-router'
 import 'styles/navbar.scss'
 
 export class NavBar extends React.Component {
@@ -11,13 +12,15 @@ export class NavBar extends React.Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              Almanac News
+              <IndexLinkContainer to='/'>
+                <a>Almanac News</a>
+              </IndexLinkContainer>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <IndexLinkContainer to='/'>
+              <IndexLinkContainer to='/home'>
                 <NavItem eventKey={1}>News Feed</NavItem>
               </IndexLinkContainer>
               <IndexLinkContainer to='/subscription'>

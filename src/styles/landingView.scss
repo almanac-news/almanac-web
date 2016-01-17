@@ -1,0 +1,20 @@
+.landing-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-box {
+  display: flex;
+  width: 50%;
+  height: 300px;
+  background-color: transparentize(#333,  .3);
+  justify-content: center;
+  align-items: center;
+}
+
+#welcome-box-text {
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}
