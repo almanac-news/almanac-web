@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { CommentCard } from 'components/CommentCard'
+import Paper from 'material-ui/lib/paper'
 
 export class CommentList extends Component {
   static propTypes = {
@@ -14,11 +15,11 @@ export class CommentList extends Component {
     const commentArray = this.props.data || null
     if (!commentArray) {
       return (
-        <p>Hi</p>
+        null
       )
     } else {
       return (
-        <div>
+        <Paper>
         { commentArray.map((comment) => {
           return (
             // NOTE: unique key moved to wrapper div to add line break
@@ -33,7 +34,7 @@ export class CommentList extends Component {
             </div>
           )
         }) }
-        </div>
+        </Paper>
       )
     }
   }

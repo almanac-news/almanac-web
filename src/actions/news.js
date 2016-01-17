@@ -24,10 +24,12 @@ export function initEmailSubscriptions() {
     return fetch('/api/subscribe/email')
       .then( response => response.json() )
       .then( data => {
-        // console.log(data)
+        // FIXME
+        dispatch({})
+        console.log(data)
       })
       .catch( (err) => {
-        // console.log(err)
+        console.log(err)
       })
   }
 }

@@ -8,6 +8,7 @@ COPY package.json /usr/src/app/
 RUN npm cache clean -f
 RUN npm install
 COPY . /usr/src/app
+RUN npm run clean
 RUN npm run compile
 RUN npm rebuild node-sass
 

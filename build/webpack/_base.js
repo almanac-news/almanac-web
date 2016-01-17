@@ -1,7 +1,7 @@
-import webpack           from 'webpack'
-import cssnano           from 'cssnano'
+import webpack from 'webpack'
+import cssnano from 'cssnano'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import config            from '../../config'
+import config from '../../config'
 import 'babel-polyfill'
 
 const paths = config.get('utils_paths')

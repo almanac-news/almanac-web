@@ -12,7 +12,7 @@ dependencies:
 test:
   pre:
     - npm run lint
-  ovverride:
+  override:
     - echo 'Skipping tests, require fix for loading'
 
 notify:
